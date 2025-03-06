@@ -1,0 +1,171 @@
+.container {
+  height: 200vh;
+  position: relative;
+  .sticky {
+    position: sticky;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    height: 180vh;
+
+    .el {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      display: flex;
+      top: -50vh;
+      align-items: center;
+      justify-content: center;
+      .imageContainer {
+        position: relative;
+        width: 30vw; /* Adjust for better visibility */
+        top: 6vh;
+        height: 30vh;
+        img {
+          object-fit: cover;
+        }
+      }
+      &:nth-of-type(1) {
+        .imageContainer {
+          top: 10vh;
+          left: -1.5vw;
+          width: 18vw;
+          height: 22.9vh;
+        }
+      }
+
+      &:nth-of-type(2) {
+        .imageContainer {
+          top: -15vh;
+          left: 4vw;
+          width: 29vw;
+          height: 22.9vh;
+        }
+      }
+      &:nth-of-type(3) {
+        .imageContainer {
+          top: -1vh;
+          left: -21.6vw;
+          width: 19vw;
+          height: 44.5vh;
+        }
+      }
+      &:nth-of-type(4) {
+        .imageContainer {
+          top: 10vh;
+          left: 18.5vw;
+          width: 19vw;
+          height: 22.9vh;
+        }
+      }
+      &:nth-of-type(5) {
+        .imageContainer {
+          top: 35.5vh;
+          left: 1.9vw;
+          width: 15vw;
+          height: 22.9vh;
+        }
+      }
+      &:nth-of-type(6) {
+        .imageContainer {
+          top: 35.5vh;
+          left: -19.5vw;
+          width: 26vw;
+          height: 22.9vh;
+        }
+      }
+      &:nth-of-type(7) {
+        .imageContainer {
+          top: 30.5vh;
+          left: 17vw;
+          width: 14vw;
+          height: 12.9vh;
+        }
+      }
+    }
+  }
+}
+
+.slidingImages {
+  display: flex;
+  flex-direction: column;
+  gap: 3vw;
+  position: relative;
+  margin-top: 200px;
+  background-color: white;
+  z-index: 1;
+  .slider {
+    display: flex;
+    position: relative;
+    gap: 3vw;
+    width: 120vw;
+    left: -10vw;
+    .project {
+      width: 25%;
+      height: 20vw;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .imageContainer {
+        position: relative;
+        width: 80%;
+        height: 80%;
+        img {
+          object-fit: cover;
+        }
+      }
+    }
+  }
+  .circleContainer {
+    background-color: red;
+    position: relative;
+    margin-top: 100px;
+    .circle {
+      height: 1550%;
+      width: 120%;
+      left: -10%;
+      border-radius: 0 0 50% 50%;
+      background-color: white;
+      z-index: 1;
+      position: absolute;
+      box-shadow: 0px 60px 50px rgba(0, 0, 0, 0.748);
+    }
+  }
+}
+
+.project {
+  border-top: 2px solid white;
+  padding-top: 0.8vw;
+  padding-bottom: 0.8vw;
+  cursor: pointer;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.project p {
+  font-size: 5vw;
+  margin: 0px;
+  color: white;
+}
+.project p:nth-of-type(1) {
+  margin-right: 0.75vw;
+}
+.project p:nth-of-type(2) {
+  margin-left: 0.75vw;
+}
+.project:last-of-type {
+  border-bottom: 2px solid black;
+}
+.project .imgContainer {
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  width: 0;
+}
+.project img {
+  width: 10vw;
+}
