@@ -6,16 +6,28 @@ import SlidingImage from "../components/SlidingImage";
 import DynastyGallery from "../components/DynastyGallery";
 import FlipText from "../components/FlipText";
 import ParallaxScroll from "../components/ParallaxScroll";
+import VirtualGuide from "../components/VirtualGuide";
 
 const Home = () => {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    // Check window width on mount & resize
-    const checkScreenSize = () => setIsMobile(window.innerWidth < 768);
-    checkScreenSize(); // Initial check
-    window.addEventListener("resize", checkScreenSize);
+    // Check if screen is mobile
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 640);
+    };
 
+    // Initial check
+    checkMobile();
+
+    // Add event listener for window resize
+    window.addEventListener("resize", checkMobile);
+
+    // Cleanup
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  useEffect(() => {
     // Lenis smooth scroll setup
     const lenis = new Lenis();
     function raf(time) {
@@ -23,10 +35,6 @@ const Home = () => {
       requestAnimationFrame(raf);
     }
     requestAnimationFrame(raf);
-
-    return () => {
-      window.removeEventListener("resize", checkScreenSize);
-    };
   }, []);
 
   const projects = [
@@ -41,9 +49,7 @@ const Home = () => {
 
   return (
     <main className={page.main}>
-      {/* Hide ZoomParallax on Mobile */}
       {!isMobile && <ZoomParallax />}
-
       <ParallaxScroll />
       <SlidingImage />
       {projects.map((project, key) => (

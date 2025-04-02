@@ -8,20 +8,43 @@ import Picture6 from "/assets/6.jpg";
 import Picture7 from "/assets/11.jpg";
 
 import { useScroll, useTransform, motion } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 
 export default function Index() {
   const container = useRef(null);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
   const { scrollYProgress } = useScroll({
     target: container,
     offset: ["start start", "end end"],
   });
 
-  const scale4 = useTransform(scrollYProgress, [0, 1], [1, 8]);
-  const scale5 = useTransform(scrollYProgress, [0, 1], [1, 9]);
-  const scale6 = useTransform(scrollYProgress, [0, 1], [1, 9.5]);
-  const scale8 = useTransform(scrollYProgress, [0, 1], [1, 10]);
-  const scale9 = useTransform(scrollYProgress, [0, 1], [1, 10.5]);
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Adjust scale values based on screen size
+  const getScaleValues = (baseScale) => {
+    if (windowWidth <= 640) {
+      return [1, baseScale * 0.5]; // Mobile - reduced scale
+    } else if (windowWidth <= 768) {
+      return [1, baseScale * 0.7]; // Tablet
+    } else if (windowWidth <= 1024) {
+      return [1, baseScale * 0.9]; // Small desktop
+    }
+    return [1, baseScale]; // Large desktop
+  };
+
+  const scale4 = useTransform(scrollYProgress, [0, 1], getScaleValues(8));
+  const scale5 = useTransform(scrollYProgress, [0, 1], getScaleValues(9));
+  const scale6 = useTransform(scrollYProgress, [0, 1], getScaleValues(9.5));
+  const scale8 = useTransform(scrollYProgress, [0, 1], getScaleValues(10));
+  const scale9 = useTransform(scrollYProgress, [0, 1], getScaleValues(10.5));
 
   const pictures = [
     {
@@ -63,7 +86,7 @@ export default function Index() {
               <div className={styles.imageContainer}>
                 <img
                   src={src}
-                  alt="image"
+                  alt={`image ${index + 1}`}
                   placeholder="blur"
                   className="w-full h-full object-cover"
                 />

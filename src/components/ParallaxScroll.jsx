@@ -1,7 +1,7 @@
-import { motion } from "framer-motion";
-import React from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import React, { useRef } from "react";
 import FlipText from "./FlipText";
-import { fadeIn } from "../utilities/variants";
+import { fadeIn } from "../utils/variants";
 
 const heading =
   "Educational website that explores the rich history, culture, and dynasties of China.";
@@ -9,78 +9,98 @@ const subHeading =
   "It provides interactive learning experiences, historical insights, and multimedia content to enhance users' understanding of China's heritage.";
 
 export default function ParallaxScroll() {
+  const containerRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"],
+  });
+
+  const y = useTransform(scrollYProgress, [0, 1], [0, -100]);
+  const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [0, 1, 0]);
+
   return (
     <motion.div
-      variants={fadeIn("up", 0.2)} // Animates the whole section
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, amount: 0.5 }} // Appears when 50% visible
-      className="w-full min-h-screen overflow-hidden relative flex flex-col lg:flex-row items-center justify-center bg-white px-4 lg:px-0"
+      ref={containerRef}
+      style={{ opacity }}
+      className="w-full min-h-screen overflow-hidden flex flex-col lg:flex-row lg:items-center lg:justify-center inset-0 bg-white px-6 md:px-12"
     >
       {/* Image & Title Section */}
       <motion.div
-        variants={fadeIn("up", 0.3)}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: false, amount: 0.5 }}
-        className="flex flex-col lg:flex-row justify-center gap-3 items-center w-full lg:w-1/2 relative z-30 p-4 lg:p-10"
+        style={{ y }}
+        className="flex flex-col items-start gap-3 justify-between lg:flex-row lg:justify-center lg:items-center w-full md:w-3/4 lg:w-1/2 pr-20"
       >
-        <div className="flex flex-col w-full lg:w-auto">
+        <div className="flex flex-col w-full items-start mt-15 lg:mt-0 lg:w-auto">
           <motion.img
-            variants={fadeIn("up", 0.5)}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: false, amount: 0.5 }}
+            whileHover={{ scale: 1.05 }}
+            transition={{ type: "spring", stiffness: 300 }}
             src="/images/qin.webp"
             alt="China Scene"
-            className="h-[30vh] lg:h-[48vh] w-full lg:w-[20vw] object-cover"
+            className="h-[45vh] md:h-[30vh] lg:h-[48vh] w-[85vw] md:w-[50%] lg:w-[20vw] object-cover"
           />
-          <div className="w-full lg:w-[20vw] h-[10vh] lg:h-[14vh] bg-[#cd201c] flex items-center justify-center mt-4">
-            <h3 className="text-xl lg:text-3xl text-white">Experience China</h3>
-          </div>
+          <motion.div
+            whileHover={{ scale: 1.02 }}
+            className="hidden w-[85vw] md:w-[50%] lg:w-[20vw] h-[8vh] md:h-[12vh] lg:h-[14vh] bg-[#cd201c] lg:flex items-center justify-center mt-4"
+          >
+            <motion.h3
+              whileHover={{ scale: 1.1 }}
+              className="hidden lg:flex text-lg md:text-2xl lg:text-3xl text-white"
+            >
+              Experience China
+            </motion.h3>
+          </motion.div>
         </div>
-        <div className="hidden lg:flex flex-col pb-18">
-          <div className="w-[20vw] h-[25vh] bg-white flex items-center justify-center"></div>
+        <div className="hidden lg:flex flex-col">
           <motion.img
-            variants={fadeIn("up", 0.7)}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: false, amount: 0.5 }}
+            whileHover={{ scale: 1.05, rotate: 1 }}
+            transition={{ type: "spring", stiffness: 300 }}
             src="/images/qin.webp"
             alt="China Scene"
-            className="h-[50vh] w-[20vw] object-cover"
+            className="h-[40vh] lg:h-[50vh] w-[20vw] object-cover mt-4"
           />
         </div>
       </motion.div>
 
       {/* Text Section */}
       <motion.div
-        variants={fadeIn("up", 0.7)}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: false, amount: 0.5 }}
-        className="font-bold text-white backdrop-blur-3xl p-4 lg:p-10 
-          relative z-30 flex flex-col items-start justify-start rounded-md 
-          w-full lg:w-[40vw] mt-8 lg:mt-0"
+        style={{ y: useTransform(scrollYProgress, [0, 1], [0, 50]) }}
+        className="font-bold w-[85vw] text-white backdrop-blur-3xl p-6 lg:p-10 flex flex-col items-start justify-start rounded-md md:w-3/4 lg:w-1/3"
       >
-        <FlipText className="text-2xl lg:text-3xl">About</FlipText>
-        <div className="flex flex-col">
-          <FlipText className="text-5xl lg:text-9xl">Lakbay</FlipText>
-          <FlipText className="text-4xl lg:text-8xl">Tsina</FlipText>
-        </div>
-
-        <p
-          className="text-sm lg:text-[22px] pt-4 lg:pt-20 font-normal text-black 
-          capitalize w-full lg:w-[40vw] text-start leading-6 tracking-widest"
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <FlipText className="text-xl md:text-2xl lg:text-3xl">About</FlipText>
+        </motion.div>
+        <motion.div
+          className="flex flex-col"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+        >
+          <FlipText className="text-4xl md:text-6xl lg:text-9xl">
+            Lakbay
+          </FlipText>
+          <FlipText className="text-3xl md:text-5xl lg:text-8xl">
+            Tsina
+          </FlipText>
+        </motion.div>
+        <motion.p
+          className="text-sm md:text-lg lg:text-xl pt-4 md:pt-10 lg:pt-10 font-normal text-black capitalize w-full text-start leading-6 tracking-widest"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
         >
           {heading}
-        </p>
-        <p
-          className="text-xs lg:text-[17px] pt-4 lg:pt-5 font-normal text-black/80 
-          capitalize w-full lg:w-[40vw] text-start leading-6 tracking-widest"
+        </motion.p>
+        <motion.p
+          className="text-xs md:text-base lg:text-lg pt-4 lg:pt-5 font-normal text-black/80 capitalize w-full text-start leading-6 tracking-widest"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.6 }}
         >
           {subHeading}
-        </p>
+        </motion.p>
       </motion.div>
     </motion.div>
   );

@@ -6,11 +6,9 @@ import { motion, useMotionValueEvent, useScroll } from "framer-motion";
 
 export default function NavBar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false); // Initialize without window reference
   const [hidden, setHidden] = useState(false);
-  const { scrollY } = useScroll(); // Destructure scrollY properly
+  const { scrollY } = useScroll();
 
-  // Track scroll direction to hide/show navbar
   useMotionValueEvent(scrollY, "change", (latest) => {
     const previous = scrollY.getPrevious();
     if (latest > previous && latest > 60) {
@@ -20,17 +18,8 @@ export default function NavBar() {
     }
   });
 
-  useEffect(() => {
-    // Set initial mobile state
-    setIsMobile(window.innerWidth < 768);
-
-    const handleResize = () => setIsMobile(window.innerWidth < 768);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
   const pages = [
-    { name: "Umpisa", link: "/" },
+    { name: "Panimula", link: "/" },
     { name: "Tungkol", link: "/about" },
     { name: "Aralin", link: "/lessons" },
     { name: "Libangan", link: "/entertainment" },
@@ -45,19 +34,15 @@ export default function NavBar() {
       initial="visible"
       animate={hidden ? "hidden" : "visible"}
       transition={{ duration: 0.35, ease: "easeInOut" }}
-      className="fixed top-0 left-0 right-0 w-full z-50 bg-[#cd201c] shadow-md"
+      className="fixed top-0 left-0 right-0 w-full bg-[#cd201c] shadow-md z-50"
     >
       <div className="container mx-auto flex items-center justify-between py-4 px-6">
         <div className="flex items-center w-[160px] h-[40px]">
-          {isMobile ? (
-            <img src={logo_1_1} alt="Lakbay Tsina Mobile" />
-          ) : (
-            <img src={logo_1_1} alt="Lakbay Tsina Desktop" />
-          )}
+          <img src={logo_1_1} alt="Lakbay Tsina Mobile" />
         </div>
         {/* Hamburger Menu (Mobile) */}
         <button
-          className="md:hidden text-white focus:outline-none"
+          className="bg-[#cd201c] border-none lg:hidden focus:outline-none"
           onClick={() => setIsOpen(!isOpen)}
         >
           {isOpen ? <X size={30} /> : <Menu size={30} />}
@@ -89,12 +74,13 @@ export default function NavBar() {
 
       {/* Mobile Dropdown Menu */}
       {isOpen && (
-        <div className="md:hidden bg-[#b10d0d]/30 backdrop-blur-md text-center py-4 space-y-4 shadow-md">
+        <div className="md:hidden backdrop-blur-md text-center py-4 space-y-4 shadow-md bg-[#cd201c]">
           {pages.map((page, idx) => (
             <NavLink
               to={page.link}
               key={idx}
               onClick={() => setIsOpen(false)}
+              style={{ color: "white" }}
               className="block text-[#efe9d7] hover:text-white transition"
             >
               {page.name}

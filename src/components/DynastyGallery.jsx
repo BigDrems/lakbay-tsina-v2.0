@@ -31,7 +31,11 @@ export default function DynastyGallery({ project }) {
         animate={isActive ? "open" : "closed"}
         className={styles.imgContainer}
       >
-        <img src={`/images/${src}`} className="w-1/2 h-[120px]"></img>
+        <img
+          src={`/images/${src}`}
+          className={styles.galleryImage}
+          alt={`${title1} ${title2}`}
+        />
       </motion.div>
       <p>{title2}</p>
     </div>
