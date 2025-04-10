@@ -1,6 +1,60 @@
 .main {
-  margin-top: 10vh;
-  margin-bottom: 120vh;
-  width: 1390px;
+  margin-top: 5vh;
+  margin-bottom: 60vh;
+  width: 100%;
   height: auto;
+  padding: 0 1rem;
+  max-width: 1390px;
+
+  @media (min-width: 640px) {
+    margin-top: 6vh;
+    margin-bottom: 80vh;
+    padding: 0 2rem;
+  }
+
+  @media (min-width: 768px) {
+    margin-top: 8vh;
+    margin-bottom: 100vh;
+    padding: 0 3rem;
+  }
+
+  @media (min-width: 1024px) {
+    margin-top: 10vh;
+    margin-bottom: 120vh;
+    padding: 0 4rem;
+  }
+
+  @media (min-width: 1280px) {
+    padding: 0;
+  }
+}
+
+// Add container class for better content organization
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  @media (min-width: 768px) {
+    gap: 3rem;
+  }
+
+  @media (min-width: 1024px) {
+    gap: 4rem;
+  }
+}
+
+// Add section class for consistent spacing
+.section {
+  width: 100%;
+  padding: 1rem 0;
+
+  @media (min-width: 768px) {
+    padding: 2rem 0;
+  }
+
+  @media (min-width: 1024px) {
+    padding: 3rem 0;
+  }
 }

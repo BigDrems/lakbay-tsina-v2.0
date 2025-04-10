@@ -28,13 +28,16 @@ function WelcomePage({ onComplete }) {
     const initSynth = async () => {
       if (typeof window !== "undefined" && window.speechSynthesis) {
         try {
-          // Just get voices but don't speak - avoid the deprecated warning
+          // Force Chrome to load voices
           window.speechSynthesis.getVoices();
 
-          // Store the synth reference without calling speak
-          setSynth(window.speechSynthesis);
-          setIsLoaded(true);
-          cleanupFunction = initializeSpeech(setIsLoaded);
+          // Add a small delay to ensure voices are loaded
+          setTimeout(() => {
+            // Store the synth reference without calling speak
+            setSynth(window.speechSynthesis);
+            setIsLoaded(true);
+            cleanupFunction = initializeSpeech(setIsLoaded);
+          }, 100);
         } catch (error) {
           console.error("Speech synthesis initialization error:", error);
           setIsLoaded(false);
@@ -76,12 +79,15 @@ function WelcomePage({ onComplete }) {
           // Force Chrome to load voices after user interaction
           window.speechSynthesis.getVoices();
           setSynth(window.speechSynthesis);
-        }
 
-        // Speak current text if first time enabling
-        if (!hasInteracted) {
-          setIsPlaying(true);
-          await speak(conversation[step].text, true, volume, setIsPlaying);
+          // Add a small delay to ensure voices are loaded
+          setTimeout(async () => {
+            // Speak current text if first time enabling
+            if (!hasInteracted) {
+              setIsPlaying(true);
+              await speak(conversation[step].text, true, volume, setIsPlaying);
+            }
+          }, 100);
         }
       } catch (error) {
         console.error("Speech activation error:", error);
@@ -169,7 +175,7 @@ function WelcomePage({ onComplete }) {
           const speakCongratulations = async () => {
             setIsPlaying(true);
             await speak(
-              "Excellent! You've mastered the ancient characters. Your wisdom grows with each step of the journey!",
+              "Napakaganda! Nabuksan mo ang sinaunang karunungan. Naghihintay na ang iyong paglalakbay...",
               isSoundOn,
               volume,
               setIsPlaying
