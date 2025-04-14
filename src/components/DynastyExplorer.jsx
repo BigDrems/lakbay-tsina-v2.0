@@ -292,7 +292,7 @@ const DynastyExplorer = () => {
                 />
               </div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-black">
               <div>
                 <h3 className="text-lg font-semibold text-[#6B3100] mb-2">
                   Overview
@@ -317,8 +317,8 @@ const DynastyExplorer = () => {
                 </div>
               </div>
 
-              <div>
-                <h3 className="text-lg font-semibold text-[#6B3100] mb-2">
+              <div className="text-black">
+                <h3 className="text-lg font-semibold text-[#6B3100] mb-2 ">
                   Details
                 </h3>
                 <div className="space-y-2 text-sm">
@@ -338,7 +338,7 @@ const DynastyExplorer = () => {
               </div>
             </div>
 
-            <div className="mt-6">
+            <div className="mt-6 text-black">
               <h3 className="text-lg font-semibold text-[#6B3100] mb-2">
                 Inventions & Achievements
               </h3>
@@ -353,14 +353,14 @@ const DynastyExplorer = () => {
           <div className="p-4 border-t border-gray-200 flex justify-between">
             <button
               onClick={handlePrev}
-              className="flex items-center gap-1 text-[#6B3100] hover:text-[#6B3100]/80"
+              className="flex bg-white items-center gap-1 text-[#6B3100] lg:hover:text-[#6B3100]/80"
             >
               <ChevronLeft size={20} />
               <span>Previous</span>
             </button>
             <button
               onClick={handleNext}
-              className="flex items-center gap-1 text-[#6B3100] hover:text-[#6B3100]/80"
+              className="flex items-center gap-1 text-[#6B3100] lg:hover:text-[#6B3100]/80"
             >
               <span>Next</span>
               <ChevronRight size={20} />
@@ -377,14 +377,14 @@ const DynastyExplorer = () => {
         <div className="flex flex-row justify-between items-center mb-4 gap-2">
           <button
             onClick={() => navigate("/")}
-            className="flex items-center gap-1 text-[#6B3100] lg:hover:text-[#6B3100]/80 text-sm sm:text-base"
+            className="flex items-center gap-1 lg:text-[#6B3100] text-black lg:hover:text-[#6B3100]/80 text-sm sm:text-base"
           >
             <ArrowLeft size={16} className="sm:w-5 sm:h-5" />
             <span>Back</span>
           </button>
           <button
             onClick={() => setShowInfo(!showInfo)}
-            className="flex items-center gap-1 text-[#6B3100] lg:hover:text-[#6B3100]/80 text-sm sm:text-base"
+            className="flex items-center gap-1 lg:text-[#6B3100] text-black lg:hover:text-[#6B3100]/80 text-sm sm:text-base"
           >
             <Info size={16} className="sm:w-5 sm:h-5" />
             <span>About</span>
