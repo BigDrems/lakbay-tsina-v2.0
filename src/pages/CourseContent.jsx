@@ -32,7 +32,7 @@ const CourseContent = () => {
             className="flex items-center gap-2 text-gray-700 hover:text-[#cd201c] transition-colors"
           >
             <ArrowLeft size={20} />
-            <span>Back to Lessons</span>
+            <span className="text-white lg:text-black">Back to Lessons</span>
           </button>
         </div>
 
@@ -41,14 +41,16 @@ const CourseContent = () => {
           {/* Lessons List */}
           <div className="lg:col-span-1">
             <div className="bg-white rounded-lg shadow-lg p-6">
-              <h2 className="text-2xl font-bold mb-6">Course Lessons</h2>
+              <h2 className="text-2xl font-bold mb-6 text-black">
+                Course Lessons
+              </h2>
               <div className="space-y-4">
                 {lessons.map((lesson, index) => (
                   <motion.div
                     key={lesson.id}
                     className={`p-4 rounded-lg cursor-pointer transition-colors ${
                       activeLesson?.id === lesson.id
-                        ? "bg-[#cd201c] text-white"
+                        ? "bg-[#cd201c] text-black lg:text-white"
                         : "bg-gray-50 lg:hover:bg-gray-100"
                     }`}
                     onClick={() => handleLessonClick(lesson)}
@@ -77,9 +79,13 @@ const CourseContent = () => {
                             }
                           />
                         )}
-                        <span className="font-medium">{lesson.title}</span>
+                        <span className="font-medium text-black ">
+                          {lesson.title}
+                        </span>
                       </div>
-                      <span className="text-sm">{lesson.duration}</span>
+                      <span className="text-sm text-black  ">
+                        {lesson.duration}
+                      </span>
                     </div>
                   </motion.div>
                 ))}
@@ -138,7 +144,7 @@ const CourseContent = () => {
                 </div>
 
                 <div className="prose max-w-none">
-                  <p>
+                  <p className="text-black">
                     This lesson covers {activeLesson.title.toLowerCase()}. Watch
                     the video above to learn more about this topic.
                   </p>
