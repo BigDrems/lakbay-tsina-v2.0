@@ -377,14 +377,14 @@ const DynastyExplorer = () => {
         <div className="flex flex-row justify-between items-center mb-4 gap-2">
           <button
             onClick={() => navigate("/")}
-            className="flex items-center gap-1 text-[#6B3100] hover:text-[#6B3100]/80 text-sm sm:text-base"
+            className="flex items-center gap-1 text-[#6B3100] lg:hover:text-[#6B3100]/80 text-sm sm:text-base"
           >
             <ArrowLeft size={16} className="sm:w-5 sm:h-5" />
             <span>Back</span>
           </button>
           <button
             onClick={() => setShowInfo(!showInfo)}
-            className="flex items-center gap-1 text-[#6B3100] hover:text-[#6B3100]/80 text-sm sm:text-base"
+            className="flex items-center gap-1 text-[#6B3100] lg:hover:text-[#6B3100]/80 text-sm sm:text-base"
           >
             <Info size={16} className="sm:w-5 sm:h-5" />
             <span>About</span>

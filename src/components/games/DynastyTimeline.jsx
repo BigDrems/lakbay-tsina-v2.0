@@ -179,13 +179,13 @@ const DynastyTimeline = () => {
       <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
         <button
           onClick={startGame}
-          className="bg-[#6B3100] text-black px-6 py-3 rounded-lg hover:bg-[#6B3100]/90 transition-colors text-sm sm:text-base"
+          className="bg-[#6B3100] text-black px-6 py-3 rounded-lg lg:hover:bg-[#6B3100]/90 transition-colors text-sm sm:text-base"
         >
           Start Game
         </button>
         <button
           onClick={() => setShowInfo(true)}
-          className="bg-white text-[#6B3100] border-2 border-[#6B3100] px-6 py-3 rounded-lg hover:bg-[#6B3100]/10 transition-colors text-sm sm:text-base flex items-center justify-center gap-2"
+          className="bg-white text-[#6B3100] border-2 border-[#6B3100] px-6 py-3 rounded-lg lg:hover:bg-[#6B3100]/10 transition-colors text-sm sm:text-base flex items-center justify-center gap-2"
         >
           <Info size={16} />
           <span>How to Play</span>
@@ -345,7 +345,7 @@ const DynastyTimeline = () => {
         <div className="flex flex-row justify-between items-center mb-4 gap-2">
           <button
             onClick={() => navigate("/entertainment")}
-            className="flex items-center gap-1 text-[#6B3100] hover:text-[#6B3100]/80 text-sm sm:text-base"
+            className="flex items-center gap-1 text-[#6B3100] lg:hover:text-[#6B3100]/80 text-sm sm:text-base"
           >
             <ArrowLeft size={16} className="sm:w-5 sm:h-5" />
             <span>Back</span>
@@ -353,7 +353,7 @@ const DynastyTimeline = () => {
           {gameState === "playing" && (
             <button
               onClick={resetGame}
-              className="flex items-center gap-1 text-[#6B3100] hover:text-[#6B3100]/80 text-sm sm:text-base"
+              className="flex items-center gap-1 text-[#6B3100] lg:hover:text-[#6B3100]/80 text-sm sm:text-base"
             >
               <RefreshCw size={16} className="sm:w-5 sm:h-5" />
               <span>Reset</span>

@@ -240,7 +240,7 @@ const MusicMemory = () => {
                           ? "bg-green-100 border-green-500"
                           : selectedInstrument?.id === instrument.id
                           ? "bg-[#6B3100]/10 border-[#6B3100]"
-                          : "bg-white border-gray-300 hover:border-[#6B3100]/50"
+                          : "bg-white border-gray-300 lg:hover:border-[#6B3100]/50"
                       }
                     `}
                     onClick={() => handleInstrumentClick(instrument)}

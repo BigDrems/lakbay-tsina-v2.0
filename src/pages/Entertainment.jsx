@@ -23,7 +23,7 @@ import DynastyExplorer from "../components/DynastyExplorer";
       </p>
       <Link
         to="/dynasty-explorer"
-        className="inline-block bg-[#6B3100] text-white px-4 py-2 rounded-lg hover:bg-[#6B3100]/90 transition-colors  "
+        className="inline-block bg-[#6B3100] text-white px-4 py-2 rounded-lg lg:hover:bg-[#6B3100]/90 transition-colors"
       >
         Explore Dynasties
       </Link>

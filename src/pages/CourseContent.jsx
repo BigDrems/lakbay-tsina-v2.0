@@ -49,7 +49,7 @@ const CourseContent = () => {
                     className={`p-4 rounded-lg cursor-pointer transition-colors ${
                       activeLesson?.id === lesson.id
                         ? "bg-[#cd201c] text-white"
-                        : "bg-gray-50 hover:bg-gray-100"
+                        : "bg-gray-50 lg:hover:bg-gray-100"
                     }`}
                     onClick={() => handleLessonClick(lesson)}
                     initial={{ opacity: 0, y: 20 }}

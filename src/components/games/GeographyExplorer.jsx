@@ -216,7 +216,7 @@ const GeographyExplorer = () => {
               </div>
               <button
                 onClick={resetGame}
-                className="bg-[#6B3100] text-white px-4 py-2 rounded-lg hover:bg-[#6B3100]/90 transition-colors text-sm sm:text-base"
+                className="bg-[#6B3100] text-white px-4 py-2 rounded-lg lg:hover:bg-[#6B3100]/90 transition-colors text-sm sm:text-base"
               >
                 Play Again
               </button>

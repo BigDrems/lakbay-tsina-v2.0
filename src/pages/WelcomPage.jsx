@@ -270,10 +270,10 @@ function WelcomePage({ onComplete }) {
           <button
             onClick={() => setShowLiMei(!showLiMei)}
             disabled={isPlaying}
-            className={`text-[#6B3100] transition-colors bg-white${
+            className={`bg-white text-[#6B3100] transition-colors ${
               isPlaying
                 ? "opacity-50 cursor-not-allowed"
-                : "hover:text-[#6B3100]/80 active:scale-95 active:opacity-80"
+                : "bg-white lg:hover:text-[#6B3100]/80 active:scale-95 active:opacity-80"
             }`}
             title={showLiMei ? "Hide Li Mei" : "Show Li Mei"}
             aria-label={showLiMei ? "Hide Li Mei" : "Show Li Mei"}
@@ -348,13 +348,13 @@ function WelcomePage({ onComplete }) {
                            w-full sm:w-auto relative group overflow-hidden
                            ${
                              index === 0
-                               ? "border-[#6B3100] bg-[#6B3100]/5 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 active:opacity-80"
-                               : "border-[#6B3100]/50 hover:border-[#6B3100] hover:scale-102 active:scale-95 active:opacity-80"
+                               ? "border-[#6B3100] bg-[#6B3100]/5 shadow-lg lg:hover:shadow-xl lg:hover:scale-105 active:scale-95 active:opacity-80"
+                               : "border-[#6B3100]/50 lg:hover:border-[#6B3100] lg:hover:scale-102 active:scale-95 active:opacity-80"
                            }
                            ${
                              isPlaying || !isLoaded
                                ? "opacity-50 cursor-not-allowed"
-                               : "hover:bg-[#6B3100] hover:text-white active:bg-[#6B3100]/80 active:text-white"
+                               : "lg:hover:bg-[#6B3100] lg:hover:text-white active:bg-[#6B3100]/80 active:text-white"
                            }`}
                 >
                   <span className="relative z-10 flex items-center justify-center gap-1 sm:gap-2">

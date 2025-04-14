@@ -102,7 +102,7 @@ const Lessons = () => {
               className={`px-4 py-2 rounded-full transition-all ${
                 selectedCategory === category
                   ? "bg-[#cd201c] text-black"
-                  : "bg-white text-gray-700 hover:bg-gray-200"
+                  : "bg-white text-gray-700 lg:hover:bg-gray-200"
               }`}
             >
               {category}
@@ -116,7 +116,7 @@ const Lessons = () => {
             <Link
               to={`/lessons/${lesson.id}`}
               key={lesson.id}
-              className="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
+              className="bg-white rounded-lg overflow-hidden shadow-lg lg:hover:shadow-xl transition-shadow duration-300"
             >
               <div className="relative">
                 <img
