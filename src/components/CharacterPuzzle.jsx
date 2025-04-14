@@ -127,7 +127,7 @@ const CharacterPuzzle = ({
                 data-droppable="true"
                 data-item-id={char.id}
                 data-item-type="meaning"
-                className={`p-3 sm:p-4 text-sm sm:text-base border-2 select-none
+                className={`p-3 sm:p-4 text-sm sm:text-base border-2 select-none text-black
                   ${
                     touchedItem?.id === char.id
                       ? "opacity-50 bg-[#6B3100]/10"
