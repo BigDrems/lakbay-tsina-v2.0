@@ -263,7 +263,7 @@ const DynastyExplorer = () => {
             </h2>
             <button
               onClick={handleClose}
-              className="text-black lg:hover:text-red-500 bg-transparent border border-white/50 hover:border-white/80 rounded-lg px-4 py-2 transition-colors duration-200"
+              className="text-white lg:text-black lg:hover:text-red-500 bg-transparent border rounded-lg px-4 py-2 transition-colors duration-200"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -353,14 +353,14 @@ const DynastyExplorer = () => {
           <div className="p-4 border-t border-gray-200 flex justify-between">
             <button
               onClick={handlePrev}
-              className="flex bg-white items-center gap-1 text-black"
+              className="flex  lg:bg-white items-center gap-1 text-white lg:text-black"
             >
               <ChevronLeft size={20} />
               <span>Previous</span>
             </button>
             <button
               onClick={handleNext}
-              className="flex items-center gap-1 text-black"
+              className="flex items-center gap-1 text-white lg:text-black lg:bg-white"
             >
               <span>Next</span>
               <ChevronRight size={20} />
