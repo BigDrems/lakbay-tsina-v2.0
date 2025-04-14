@@ -11,8 +11,8 @@ const games = [
       "Match Chinese characters with their Filipino meanings. Test your knowledge of basic Chinese characters!",
     icon: <Book className="w-8 h-8" />,
     difficulty: "Easy",
-    category: "Language",
-    image: "/images/character-match.jpg",
+    category: "Wika",
+    image: "/images/character-match.png",
     path: "/games/character-match",
   },
   {
@@ -22,8 +22,8 @@ const games = [
       "Arrange Chinese dynasties in chronological order. Learn about the rich history of China!",
     icon: <Brain className="w-8 h-8" />,
     difficulty: "Medium",
-    category: "History",
-    image: "/images/dynasty-timeline.jpg",
+    category: "Kasaysayan",
+    image: "/images/dynasty-timeline.png",
     path: "/games/dynasty-timeline",
   },
   {
@@ -33,8 +33,8 @@ const games = [
       "Test your knowledge about Chinese festivals, traditions, and customs.",
     icon: <Trophy className="w-8 h-8" />,
     difficulty: "Medium",
-    category: "Culture",
-    image: "/images/cultural-quiz.jpg",
+    category: "Kultura",
+    image: "/images/cultural-quiz.png",
     path: "/games/cultural-quiz",
   },
   {
@@ -44,7 +44,7 @@ const games = [
       "Listen to traditional Chinese music and match the instruments. Discover the sounds of China!",
     icon: <Music className="w-8 h-8" />,
     difficulty: "Easy",
-    category: "Music",
+    category: "Musika",
     image: "/images/music-memory.jpg",
     path: "/games/music-memory",
   },
@@ -55,26 +55,26 @@ const games = [
       "Explore China's geography through an interactive map game. Learn about provinces and landmarks!",
     icon: <Gamepad2 className="w-8 h-8" />,
     difficulty: "Medium",
-    category: "Geography",
-    image: "/images/geography-game.jpg",
+    category: "Heograpiya",
+    image: "/images/geography-game.png",
     path: "/games/geography-explorer",
   },
 ];
 
 const Libangan = () => {
   const navigate = useNavigate();
-  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [selectedCategory, setSelectedCategory] = useState("Lahat");
   const categories = [
-    "All",
-    "Language",
-    "History",
-    "Culture",
-    "Music",
-    "Geography",
+    "Lahat",
+    "Wika",
+    "Kasaysayan",
+    "Kultura",
+    "Musika",
+    "Heograpiya",
   ];
 
   const filteredGames =
-    selectedCategory === "All"
+    selectedCategory === "Lahat"
       ? games
       : games.filter((game) => game.category === selectedCategory);
 
@@ -107,7 +107,7 @@ const Libangan = () => {
               onClick={() => setSelectedCategory(category)}
               className={`px-4 py-2 rounded-full transition-all duration-300 ${
                 selectedCategory === category
-                  ? "bg-[#6B3100] text-white"
+                  ? "bg-[#6B3100] text-black"
                   : "bg-white text-[#6B3100] hover:bg-[#6B3100]/10"
               }`}
             >

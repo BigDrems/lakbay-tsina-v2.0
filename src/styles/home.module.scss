@@ -4,7 +4,7 @@
   width: 100%;
   height: auto;
   padding: 0 1rem;
-  max-width: 1390px;
+  max-width: 100%;
 
   @media (min-width: 640px) {
     margin-top: 6vh;
@@ -25,6 +25,9 @@
   }
 
   @media (min-width: 1280px) {
+    padding: 0;
+  }
+  @media (min-width: 1920px) {
     padding: 0;
   }
 }

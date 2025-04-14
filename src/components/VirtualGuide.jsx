@@ -92,27 +92,31 @@ const VirtualGuide = () => {
   };
 
   return (
-    <div className="fixed bottom-4 right-4 z-50 w-96 bg-white rounded-lg shadow-xl overflow-hidden">
+    <div className="fixed bottom-4 right-4 z-50 w-[90%] sm:w-96 bg-white rounded-lg shadow-xl overflow-hidden">
       {/* Header */}
-      <div className="bg-[#cd201c] p-4 flex items-center justify-between">
-        <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center">
-            <span className="text-[#cd201c] font-bold">A</span>
+      <div className="bg-[#cd201c] p-3 sm:p-4 flex items-center justify-between">
+        <div className="flex items-center space-x-2 sm:space-x-3">
+          <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white flex items-center justify-center">
+            <span className="text-[#cd201c] font-bold text-sm sm:text-base">
+              A
+            </span>
           </div>
           <div>
-            <h3 className="text-white font-semibold">Alex</h3>
-            <p className="text-white/80 text-sm">Virtual Guide</p>
+            <h3 className="text-white font-semibold text-sm sm:text-base">
+              Alex
+            </h3>
+            <p className="text-white/80 text-xs sm:text-sm">Virtual Guide</p>
           </div>
         </div>
         <div className="flex items-center space-x-2">
           <button
             onClick={toggleMute}
-            className="p-2 rounded-full hover:bg-white/10 transition-colors"
+            className="p-1.5 sm:p-2 rounded-full hover:bg-white/10 transition-colors"
           >
             {isMuted ? (
-              <VolumeX className="w-5 h-5 text-white" />
+              <VolumeX className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
             ) : (
-              <Volume2 className="w-5 h-5 text-white" />
+              <Volume2 className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
             )}
           </button>
           <input
@@ -122,13 +126,13 @@ const VirtualGuide = () => {
             step="0.1"
             value={volume}
             onChange={handleVolumeChange}
-            className="w-20"
+            className="w-16 sm:w-20"
           />
         </div>
       </div>
 
       {/* Chat Messages */}
-      <div className="h-96 overflow-y-auto p-4 space-y-4">
+      <div className="h-[60vh] sm:h-96 overflow-y-auto p-3 sm:p-4 space-y-3 sm:space-y-4">
         <AnimatePresence>
           {messages.map((message, index) => (
             <motion.div
@@ -141,7 +145,7 @@ const VirtualGuide = () => {
               }`}
             >
               <div
-                className={`max-w-[80%] rounded-lg p-3 ${
+                className={`max-w-[85%] sm:max-w-[80%] rounded-lg p-2 sm:p-3 text-sm sm:text-base ${
                   message.sender === "user"
                     ? "bg-[#cd201c] text-white"
                     : "bg-gray-100 text-gray-800"
@@ -158,11 +162,11 @@ const VirtualGuide = () => {
             animate={{ opacity: 1 }}
             className="flex justify-start"
           >
-            <div className="bg-gray-100 rounded-lg p-3">
-              <div className="flex space-x-2">
-                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" />
-                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce delay-100" />
-                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce delay-200" />
+            <div className="bg-gray-100 rounded-lg p-2 sm:p-3">
+              <div className="flex space-x-1.5 sm:space-x-2">
+                <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-gray-400 rounded-full animate-bounce" />
+                <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-gray-400 rounded-full animate-bounce delay-100" />
+                <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-gray-400 rounded-full animate-bounce delay-200" />
               </div>
             </div>
           </motion.div>
@@ -171,20 +175,20 @@ const VirtualGuide = () => {
       </div>
 
       {/* Input Area */}
-      <form onSubmit={handleUserInput} className="p-4 border-t">
+      <form onSubmit={handleUserInput} className="p-3 sm:p-4 border-t">
         <div className="flex space-x-2">
           <input
             type="text"
             value={userInput}
             onChange={(e) => setUserInput(e.target.value)}
             placeholder="Type your message..."
-            className="flex-1 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#cd201c]"
+            className="flex-1 p-2 text-sm sm:text-base border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#cd201c]"
           />
           <button
             type="submit"
             className="p-2 bg-[#cd201c] text-white rounded-lg hover:bg-[#b31b17] transition-colors"
           >
-            <Send className="w-5 h-5" />
+            <Send className="w-4 h-4 sm:w-5 sm:h-5" />
           </button>
         </div>
       </form>

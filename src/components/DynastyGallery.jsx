@@ -1,6 +1,7 @@
 import styles from "../styles/styles.module.scss";
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const anim = {
   initial: { width: 0 },
@@ -15,29 +16,48 @@ export default function DynastyGallery({ project }) {
   const [isActive, setIsActive] = useState(false);
 
   const { title1, title2, src } = project;
+
+  const handleDynastyClick = () => {
+    // Navigate to Dynasty Explorer with the specific dynasty pre-selected
+    const fullDynastyName = `${title1} ${title2}`;
+    return `/dynasty-explorer?dynasty=${encodeURIComponent(fullDynastyName)}`;
+  };
+
   return (
-    <div
-      onMouseEnter={() => {
-        setIsActive(true);
-      }}
-      onMouseLeave={() => {
-        setIsActive(false);
-      }}
-      className={styles.project}
-    >
-      <p>{title1}</p>
-      <motion.div
-        variants={anim}
-        animate={isActive ? "open" : "closed"}
-        className={styles.imgContainer}
+    <Link to={handleDynastyClick()}>
+      <div
+        onMouseEnter={() => {
+          setIsActive(true);
+        }}
+        onMouseLeave={() => {
+          setIsActive(false);
+        }}
+        className={`${styles.project} group cursor-pointer w-screen`}
       >
-        <img
-          src={`/images/${src}`}
-          className={styles.galleryImage}
-          alt={`${title1} ${title2}`}
-        />
-      </motion.div>
-      <p>{title2}</p>
-    </div>
+        <motion.p
+          className="text-white text-2xl sm:text-3xl font-semibold z-10 relative"
+          whileHover={{ scale: 1.05 }}
+        >
+          {title1}
+        </motion.p>
+        <motion.div
+          variants={anim}
+          animate={isActive ? "open" : "closed"}
+          className={`${styles.imgContainer} group-hover:opacity-90 transition-opacity`}
+        >
+          <img
+            src={`/images/${src}`}
+            className={`${styles.galleryImage} transition-transform duration-300 group-hover:scale-105`}
+            alt={`${title1} ${title2}`}
+          />
+        </motion.div>
+        <motion.p
+          className="text-white text-2xl sm:text-3xl font-semibold z-10 relative"
+          whileHover={{ scale: 1.05 }}
+        >
+          {title2}
+        </motion.p>
+      </div>
+    </Link>
   );
 }

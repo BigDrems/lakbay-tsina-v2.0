@@ -13,11 +13,12 @@ import DynastyTimeline from "./components/games/DynastyTimeline";
 import CulturalQuiz from "./components/games/CulturalQuiz";
 import MusicMemory from "./components/games/MusicMemory";
 import GeographyExplorer from "./components/games/GeographyExplorer";
+import DynastyExplorer from "./components/DynastyExplorer";
 
 function App() {
   const [isWelcomeComplete, setIsWelcomeComplete] = useState(() => {
     // Initialize from localStorage, default to false if not set
-    return localStorage.getItem("isWelcomeComplete") === "true";
+    return localStorage.getItem("isWelcomeComplete") === "false";
   });
 
   const handleWelcomeComplete = () => {
@@ -30,7 +31,7 @@ function App() {
     <>
       <main className="flex flex-col max-w-screen overflow-x-hidden relative">
         {isWelcomeComplete && <NavBar />}
-        <div className="max-w-[1350px] relative">
+        <div className="max-w-[1920px] relative">
           <Routes>
             <Route
               path="/"
@@ -44,7 +45,7 @@ function App() {
             />
           </Routes>
         </div>
-        <div className="mt-18">
+        <div className="mt-18 h-full">
           <Routes>
             <Route path="/about" element={<Tungkol />} />
             <Route path="/lessons/:id" element={<LessonDetail />} />
@@ -62,6 +63,7 @@ function App() {
               path="/games/geography-explorer"
               element={<GeographyExplorer />}
             />
+            <Route path="/dynasty-explorer" element={<DynastyExplorer />} />
           </Routes>
         </div>
       </main>

@@ -22,7 +22,7 @@ export default function ParallaxScroll() {
     <motion.div
       ref={containerRef}
       style={{ opacity }}
-      className="w-full min-h-screen overflow-hidden flex flex-col lg:flex-row lg:items-center lg:justify-center inset-0 bg-white px-6 md:px-12"
+      className="w-screen min-h-screen overflow-hidden flex flex-col lg:flex-row lg:items-center lg:justify-center inset-0 bg-white px-6 md:px-12"
     >
       {/* Image & Title Section */}
       <motion.div

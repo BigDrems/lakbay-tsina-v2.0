@@ -52,7 +52,7 @@ export default function SlidingImage() {
   const height = useTransform(scrollYProgress, [0, 0.9], [50, 0]);
 
   return (
-    <div ref={container} className={styles.slidingImages}>
+    <div ref={container} className={styles.slidingImages + " w-screen"}>
       <motion.div style={{ x: x1 }} className={styles.slider}>
         {slider1.map((project, index) => {
           return (

@@ -214,25 +214,25 @@ function WelcomePage({ onComplete }) {
 
   return (
     <div className="min-h-screen bg-[#F5E6D3] flex items-center justify-center p-2 sm:p-4 md:p-6 lg:p-8 bg-[url('/images/rice-paper.png')] bg-repeat">
-      <div className="w-full max-w-[90%] sm:max-w-[80%] md:max-w-[70%] lg:max-w-2xl bg-white rounded-none border-2 border-[#6B3100] p-8 sm:p-10 space-y-6 shadow-[8px_8px_0px_0px_rgba(107,49,0,0.2)]">
+      <div className="w-full max-w-[95%] sm:max-w-[90%] md:max-w-[85%] lg:max-w-[75%] xl:max-w-[65%] bg-white rounded-none border-2 border-[#6B3100] p-4 sm:p-6 md:p-8 lg:p-10 space-y-4 sm:space-y-6 shadow-[8px_8px_0px_0px_rgba(107,49,0,0.2)]">
         {/* Header */}
-        <div className="text-center mb-8">
-          <div className="flex items-center justify-center mb-4">
-            <div className="w-1 h-12 bg-[#6B3100] mx-2"></div>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-normal text-[#6B3100] tracking-wider">
+        <div className="text-center mb-4 sm:mb-6 md:mb-8">
+          <div className="flex items-center justify-center mb-2 sm:mb-4">
+            <div className="w-1 h-8 sm:h-10 md:h-12 bg-[#6B3100] mx-1 sm:mx-2"></div>
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-normal text-[#6B3100] tracking-wider">
               Lakbay Tsina
             </h1>
-            <div className="w-1 h-12 bg-[#6B3100] mx-2"></div>
+            <div className="w-1 h-8 sm:h-10 md:h-12 bg-[#6B3100] mx-1 sm:mx-2"></div>
           </div>
-          <div className="flex items-center justify-center space-x-4">
-            <div className="w-16 h-[2px] bg-[#6B3100]"></div>
-            <div className="text-[#6B3100] text-xl">游记</div>
-            <div className="w-16 h-[2px] bg-[#6B3100]"></div>
+          <div className="flex items-center justify-center space-x-2 sm:space-x-4">
+            <div className="w-12 sm:w-16 h-[2px] bg-[#6B3100]"></div>
+            <div className="text-[#6B3100] text-lg sm:text-xl">游记</div>
+            <div className="w-12 sm:w-16 h-[2px] bg-[#6B3100]"></div>
           </div>
         </div>
 
         {/* Sound Controls */}
-        <div className="flex justify-end items-center space-x-4 mb-6 border-b border-[#6B3100]/20 pb-4">
+        <div className="flex justify-end items-center space-x-2 sm:space-x-4 mb-4 sm:mb-6 border-b border-[#6B3100]/20 pb-2 sm:pb-4">
           <button
             onClick={handleSoundToggle}
             disabled={isPlaying}
@@ -243,9 +243,13 @@ function WelcomePage({ onComplete }) {
             }`}
             aria-label={isSoundOn ? "Mute sound" : "Unmute sound"}
           >
-            {isSoundOn ? <Volume2 size={24} /> : <VolumeX size={24} />}
+            {isSoundOn ? (
+              <Volume2 size={20} sm:size={24} />
+            ) : (
+              <VolumeX size={20} sm:size={24} />
+            )}
             {!hasInteracted && (
-              <div className="absolute -top-2 -right-2 w-4 h-4 bg-red-600 rounded-full animate-pulse"></div>
+              <div className="absolute -top-2 -right-2 w-3 h-3 sm:w-4 sm:h-4 bg-red-600 rounded-full animate-pulse"></div>
             )}
           </button>
           {isSoundOn && (
@@ -257,7 +261,7 @@ function WelcomePage({ onComplete }) {
               value={volume}
               onChange={(e) => setVolume(parseFloat(e.target.value))}
               disabled={isPlaying}
-              className={`w-24 accent-[#6B3100] ${
+              className={`w-20 sm:w-24 accent-[#6B3100] ${
                 isPlaying ? "opacity-50 cursor-not-allowed" : ""
               }`}
               aria-label="Volume control"
@@ -274,22 +278,26 @@ function WelcomePage({ onComplete }) {
             title={showLiMei ? "Hide Li Mei" : "Show Li Mei"}
             aria-label={showLiMei ? "Hide Li Mei" : "Show Li Mei"}
           >
-            {showLiMei ? <Eye size={24} /> : <EyeOff size={24} />}
+            {showLiMei ? (
+              <Eye size={20} sm:size={24} />
+            ) : (
+              <EyeOff size={20} sm:size={24} />
+            )}
           </button>
         </div>
 
         {!hasInteracted && !isSoundOn && (
-          <div className="bg-[#6B3100]/10 p-4 rounded-lg mb-4 text-center">
-            <p className="text-[#6B3100] font-medium text-sm">
+          <div className="bg-[#6B3100]/10 p-3 sm:p-4 rounded-lg mb-3 sm:mb-4 text-center">
+            <p className="text-[#6B3100] font-medium text-xs sm:text-sm">
               Click the sound icon to enable Li Mei's voice 🔊
             </p>
           </div>
         )}
 
-        <div className="space-y-6">
+        <div className="space-y-4 sm:space-y-6">
           {showLiMei && (
-            <div className="flex items-center justify-center mb-6">
-              <div className="w-28 h-28 rounded-full bg-[#F5E6D3] border-2 border-[#6B3100] flex items-center justify-center p-1 shadow-lg">
+            <div className="flex items-center justify-center mb-4 sm:mb-6">
+              <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full bg-[#F5E6D3] border-2 border-[#6B3100] flex items-center justify-center p-1 shadow-lg">
                 <div className="w-full h-full rounded-full bg-white flex items-center justify-center overflow-hidden border border-[#6B3100]/20">
                   <img
                     src="/avatar.jpg"
@@ -306,12 +314,12 @@ function WelcomePage({ onComplete }) {
             </div>
           )}
 
-          <div className="bg-[#F5E6D3] p-6 border-2 border-[#6B3100] relative">
-            <div className="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-[#6B3100] -translate-x-1 -translate-y-1"></div>
-            <div className="absolute top-0 right-0 w-3 h-3 border-t-2 border-r-2 border-[#6B3100] translate-x-1 -translate-y-1"></div>
-            <div className="absolute bottom-0 left-0 w-3 h-3 border-b-2 border-l-2 border-[#6B3100] -translate-x-1 translate-y-1"></div>
-            <div className="absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-[#6B3100] translate-x-1 translate-y-1"></div>
-            <p className="text-base sm:text-lg md:text-xl text-[#6B3100] font-medium leading-relaxed">
+          <div className="bg-[#F5E6D3] p-4 sm:p-6 border-2 border-[#6B3100] relative">
+            <div className="absolute top-0 left-0 w-2 h-2 sm:w-3 sm:h-3 border-t-2 border-l-2 border-[#6B3100] -translate-x-1 -translate-y-1"></div>
+            <div className="absolute top-0 right-0 w-2 h-2 sm:w-3 sm:h-3 border-t-2 border-r-2 border-[#6B3100] translate-x-1 -translate-y-1"></div>
+            <div className="absolute bottom-0 left-0 w-2 h-2 sm:w-3 sm:h-3 border-b-2 border-l-2 border-[#6B3100] -translate-x-1 translate-y-1"></div>
+            <div className="absolute bottom-0 right-0 w-2 h-2 sm:w-3 sm:h-3 border-b-2 border-r-2 border-[#6B3100] translate-x-1 translate-y-1"></div>
+            <p className="text-sm sm:text-base md:text-lg lg:text-xl text-[#6B3100] font-medium leading-relaxed">
               {conversation[step].text}
             </p>
           </div>
@@ -328,14 +336,14 @@ function WelcomePage({ onComplete }) {
               onDragLeave={handleDragLeave}
             />
           ) : (
-            <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center pt-3 sm:pt-4">
               {conversation[step].options.map((option, index) => (
                 <button
                   key={index}
                   onClick={() => handleOptionClick(option.nextStep)}
                   disabled={isPlaying || !isLoaded}
-                  className={`px-6 py-3 border-2 text-[#6B3100] 
-                           transition-all duration-300 ease-in-out text-sm sm:text-base font-medium
+                  className={`px-4 sm:px-6 py-2 sm:py-3 border-2 text-[#6B3100] 
+                           transition-all duration-300 ease-in-out text-xs sm:text-sm md:text-base font-medium
                            focus:outline-none focus:ring-2 focus:ring-[#6B3100] focus:ring-offset-2
                            w-full sm:w-auto relative group overflow-hidden
                            ${
@@ -349,12 +357,12 @@ function WelcomePage({ onComplete }) {
                                : "hover:bg-[#6B3100] hover:text-white"
                            }`}
                 >
-                  <span className="relative z-10 flex items-center justify-center gap-2">
+                  <span className="relative z-10 flex items-center justify-center gap-1 sm:gap-2">
                     {option.label}
                     {index === 0 && (
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5 transform group-hover:translate-x-1 transition-transform duration-300"
+                        className="h-4 w-4 sm:h-5 sm:w-5 transform group-hover:translate-x-1 transition-transform duration-300"
                         viewBox="0 0 20 20"
                         fill="currentColor"
                       >
@@ -381,11 +389,11 @@ function WelcomePage({ onComplete }) {
           )}
         </div>
 
-        <div className="flex justify-center space-x-3 mt-8">
+        <div className="flex justify-center space-x-2 sm:space-x-3 mt-4 sm:mt-6">
           {conversation.map((_, index) => (
             <div
               key={index}
-              className={`w-2 h-2 transform rotate-45 ${
+              className={`w-1.5 h-1.5 sm:w-2 sm:h-2 transform rotate-45 ${
                 index === step ? "bg-[#6B3100]" : "bg-[#6B3100]/30"
               }`}
             ></div>
