@@ -107,8 +107,8 @@ const Libangan = () => {
               onClick={() => setSelectedCategory(category)}
               className={`px-4 py-2 rounded-full transition-all duration-300 ${
                 selectedCategory === category
-                  ? "bg-[#6B3100] text-black"
-                  : "bg-white text-[#6B3100] hover:bg-[#6B3100]/10"
+                  ? "bg-[#6B3100] text-white lg:text-black"
+                  : "bg-white text-white lg:text-[#6B3100] hover:bg-[#6B3100]/10"
               }`}
             >
               {category}

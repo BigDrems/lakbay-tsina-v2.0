@@ -377,7 +377,7 @@ const DynastyExplorer = () => {
         <div className="flex flex-row justify-between items-center mb-4 gap-2">
           <button
             onClick={() => navigate("/")}
-            className="flex bg-white items-center gap-1 lg:text-[#6B3100] text-black lg:hover:text-[#6B3100]/80 text-sm sm:text-base"
+            className="flex bg-white items-center gap-1 lg:text-[#6B3100] text-white lg:hover:text-[#6B3100]/80 text-sm sm:text-base"
           >
             <ArrowLeft size={16} className="sm:w-5 sm:h-5" />
             <span>Back</span>

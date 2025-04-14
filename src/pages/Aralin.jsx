@@ -99,10 +99,10 @@ const Lessons = () => {
             <button
               key={category}
               onClick={() => setSelectedCategory(category)}
-              className={`px-4 py-2 rounded-full transition-all ${
+              className={`px-4 py-2 rounded-full transition-all sm:bg-white ${
                 selectedCategory === category
-                  ? "bg-[#cd201c] text-black"
-                  : "bg-white text-gray-700 lg:hover:bg-gray-200"
+                  ? "bg-[#cd201c] text-white lg:text-black"
+                  : "bg-white text-white lg:text-gray-700 lg:hover:bg-gray-200"
               }`}
             >
               {category}

@@ -4,9 +4,7 @@ import ZoomParallax from "../components/ZoomParallax";
 import page from "../styles/home.module.scss";
 import SlidingImage from "../components/SlidingImage";
 import DynastyGallery from "../components/DynastyGallery";
-import FlipText from "../components/FlipText";
 import ParallaxScroll from "../components/ParallaxScroll";
-import VirtualGuide from "../components/VirtualGuide";
 
 const Home = () => {
   const [isMobile, setIsMobile] = useState(false);
