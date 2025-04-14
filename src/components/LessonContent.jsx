@@ -61,7 +61,7 @@ const LessonContent = ({ lesson }) => {
             transition={{ delay: index * 0.1 }}
           >
             <PlayCircle size={24} className="text-[#cd201c]" />
-            <span>{topic}</span>
+            <span className="text-black">{topic}</span>
           </motion.div>
         ))}
       </div>
@@ -78,7 +78,7 @@ const LessonContent = ({ lesson }) => {
             transition={{ delay: index * 0.1 }}
           >
             <ChevronRight size={20} className="text-[#cd201c]" />
-            <span>{req}</span>
+            <span className="text-black">{req}</span>
           </motion.div>
         ))}
       </div>
@@ -95,7 +95,7 @@ const LessonContent = ({ lesson }) => {
             transition={{ delay: index * 0.1 }}
           >
             <BookOpen size={20} className="text-[#cd201c]" />
-            <span>{objective}</span>
+            <span className="text-black">{objective}</span>
           </motion.div>
         ))}
       </div>
