@@ -87,12 +87,18 @@ const CharacterPuzzle = ({
                 data-item-id={char.id}
                 data-item-type="character"
                 className={`p-4 sm:p-6 text-2xl sm:text-3xl border-2 select-none
-                  ${touchedItem?.id === char.id ? "opacity-50" : ""}
+                  ${
+                    touchedItem?.id === char.id
+                      ? "opacity-50 bg-[#6B3100]/10"
+                      : ""
+                  }
                   ${
                     solvedPairs.some((pair) => pair.id === char.id)
                       ? "bg-[#6B3100]/20 border-[#6B3100]/20 cursor-default"
                       : dragOverItem?.id === char.id
                       ? "bg-[#6B3100] text-[#F5E6D3] border-[#6B3100]"
+                      : touchedItem
+                      ? "border-[#6B3100] bg-white"
                       : "border-[#6B3100] hover:bg-[#6B3100]/10 active:bg-[#6B3100]/20"
                   } transition-colors duration-200 touch-manipulation`}
               >
@@ -122,12 +128,18 @@ const CharacterPuzzle = ({
                 data-item-id={char.id}
                 data-item-type="meaning"
                 className={`p-3 sm:p-4 text-sm sm:text-base border-2 select-none
-                  ${touchedItem?.id === char.id ? "opacity-50" : ""}
+                  ${
+                    touchedItem?.id === char.id
+                      ? "opacity-50 bg-[#6B3100]/10"
+                      : ""
+                  }
                   ${
                     solvedPairs.some((pair) => pair.id === char.id)
                       ? "bg-[#6B3100]/20 border-[#6B3100]/20 cursor-default"
                       : dragOverItem?.id === char.id
                       ? "bg-[#6B3100] text-[#F5E6D3] border-[#6B3100]"
+                      : touchedItem
+                      ? "border-[#6B3100] bg-white"
                       : "border-[#6B3100] hover:bg-[#6B3100]/10 active:bg-[#6B3100]/20"
                   } transition-colors duration-200 touch-manipulation`}
               >
