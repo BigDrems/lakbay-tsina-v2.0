@@ -239,7 +239,7 @@ function WelcomePage({ onComplete }) {
             className={`text-[#6B3100] transition-colors relative ${
               isPlaying
                 ? "opacity-50 cursor-not-allowed"
-                : "hover:text-[#8B4513]"
+                : "hover:text-[#6B3100]/80"
             }`}
             aria-label={isSoundOn ? "Mute sound" : "Unmute sound"}
           >
@@ -249,7 +249,7 @@ function WelcomePage({ onComplete }) {
               <VolumeX size={20} sm:size={24} />
             )}
             {!hasInteracted && (
-              <div className="absolute -top-2 -right-2 w-3 h-3 sm:w-4 sm:h-4 bg-red-600 rounded-full animate-pulse"></div>
+              <div className="absolute -top-2 -right-2 w-3 h-3 sm:w-4 sm:h-4 bg-[#6B3100] rounded-full animate-pulse"></div>
             )}
           </button>
           {isSoundOn && (
@@ -273,7 +273,7 @@ function WelcomePage({ onComplete }) {
             className={`text-[#6B3100] transition-colors ${
               isPlaying
                 ? "opacity-50 cursor-not-allowed"
-                : "hover:text-[#8B4513]"
+                : "hover:text-[#6B3100]/80"
             }`}
             title={showLiMei ? "Hide Li Mei" : "Show Li Mei"}
             aria-label={showLiMei ? "Hide Li Mei" : "Show Li Mei"}
