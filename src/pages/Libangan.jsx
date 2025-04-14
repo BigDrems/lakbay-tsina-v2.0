@@ -146,7 +146,7 @@ const Libangan = () => {
                 <p className="text-gray-600 mb-4">{game.description}</p>
                 <button
                   onClick={() => handleGameClick(game.path)}
-                  className="w-full bg-[#6B3100] text-black py-2 rounded-lg flex items-center justify-center gap-2 hover:bg-[#6B3100]/90 transition-colors duration-300"
+                  className="w-full bg-[#6B3100] text-white  lg:text-black py-2 rounded-lg flex items-center justify-center gap-2 hover:bg-[#6B3100]/90 transition-colors duration-300"
                 >
                   Simulan ang Laro
                   <ArrowRight className="w-4 h-4" />

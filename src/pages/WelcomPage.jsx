@@ -319,7 +319,7 @@ function WelcomePage({ onComplete }) {
             <div className="absolute top-0 right-0 w-2 h-2 sm:w-3 sm:h-3 border-t-2 border-r-2 border-[#6B3100] translate-x-1 -translate-y-1"></div>
             <div className="absolute bottom-0 left-0 w-2 h-2 sm:w-3 sm:h-3 border-b-2 border-l-2 border-[#6B3100] -translate-x-1 translate-y-1"></div>
             <div className="absolute bottom-0 right-0 w-2 h-2 sm:w-3 sm:h-3 border-b-2 border-r-2 border-[#6B3100] translate-x-1 translate-y-1"></div>
-            <p className="text-black text-sm sm:text-base md:text-lg lg:text-xl lg:text-[#6B3100] font-medium leading-relaxed">
+            <p className="text-white text-sm sm:text-base md:text-lg lg:text-xl lg:text-[#6B3100] font-medium leading-relaxed">
               {conversation[step].text}
             </p>
           </div>

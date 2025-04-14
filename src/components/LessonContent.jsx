@@ -30,7 +30,7 @@ const LessonContent = ({ lesson }) => {
       variants={fadeIn}
     >
       {/* Overview Section */}
-      <div className="space-y-6">
+      <div className="space-y-6 text-black">
         <div>
           <h2 className="text-2xl font-bold mb-4">Course Description</h2>
           <p className="text-gray-700 leading-relaxed">{lesson.description}</p>
@@ -104,7 +104,7 @@ const LessonContent = ({ lesson }) => {
       <div className="mt-10 flex justify-center">
         <motion.button
           onClick={handleContinue}
-          className="flex items-center gap-2 bg-[#cd201c] text-black px-8 py-4 rounded-lg font-medium text-lg hover:bg-[#b01c19] transition-colors shadow-md"
+          className="flex items-center gap-2 bg-[#cd201c] lg:text-black text-white px-8 py-4 rounded-lg font-medium text-lg hover:bg-[#b01c19] transition-colors shadow-md"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
