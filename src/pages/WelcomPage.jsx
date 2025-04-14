@@ -239,7 +239,7 @@ function WelcomePage({ onComplete }) {
             className={`bg-white transition-colors relative lg:bg-white ${
               isPlaying
                 ? "opacity-50 cursor-not-allowed"
-                : "hover:text-[#6B3100]/80 active:scale-95 active:opacity-80"
+                : "lg:hover:text-[#6B3100]/80 active:scale-95 active:opacity-80"
             }`}
             aria-label={isSoundOn ? "Mute sound" : "Unmute sound"}
           >
@@ -270,7 +270,7 @@ function WelcomePage({ onComplete }) {
           <button
             onClick={() => setShowLiMei(!showLiMei)}
             disabled={isPlaying}
-            className={`bg-white text-[#6B3100] transition-colors ${
+            className={`bg-white lg:text-[#6B3100] transition-colors ${
               isPlaying
                 ? "opacity-50 cursor-not-allowed"
                 : "bg-white lg:hover:text-[#6B3100]/80 active:scale-95 active:opacity-80"
@@ -319,7 +319,7 @@ function WelcomePage({ onComplete }) {
             <div className="absolute top-0 right-0 w-2 h-2 sm:w-3 sm:h-3 border-t-2 border-r-2 border-[#6B3100] translate-x-1 -translate-y-1"></div>
             <div className="absolute bottom-0 left-0 w-2 h-2 sm:w-3 sm:h-3 border-b-2 border-l-2 border-[#6B3100] -translate-x-1 translate-y-1"></div>
             <div className="absolute bottom-0 right-0 w-2 h-2 sm:w-3 sm:h-3 border-b-2 border-r-2 border-[#6B3100] translate-x-1 translate-y-1"></div>
-            <p className="text-sm sm:text-base md:text-lg lg:text-xl text-[#6B3100] font-medium leading-relaxed">
+            <p className="text-white text-sm sm:text-base md:text-lg lg:text-xl lg:text-[#6B3100] font-medium leading-relaxed">
               {conversation[step].text}
             </p>
           </div>
@@ -342,7 +342,7 @@ function WelcomePage({ onComplete }) {
                   key={index}
                   onClick={() => handleOptionClick(option.nextStep)}
                   disabled={isPlaying || !isLoaded}
-                  className={`px-4 sm:px-6 py-2 sm:py-3 border-2 text-[#6B3100] 
+                  className={`px-4 sm:px-6 py-2 sm:py-3 border-2 text-white lg:text-[#6B3100] 
                            transition-all duration-300 ease-in-out text-xs sm:text-sm md:text-base font-medium
                            focus:outline-none focus:ring-2 focus:ring-[#6B3100] focus:ring-offset-2
                            w-full sm:w-auto relative group overflow-hidden
