@@ -236,10 +236,10 @@ function WelcomePage({ onComplete }) {
           <button
             onClick={handleSoundToggle}
             disabled={isPlaying}
-            className={`bg-white transition-colors relative  ${
+            className={`bg-white transition-colors relative lg:bg-white ${
               isPlaying
                 ? "opacity-50 cursor-not-allowed"
-                : "hover:text-[#6B3100]/80"
+                : "hover:text-[#6B3100]/80 active:scale-95 active:opacity-80"
             }`}
             aria-label={isSoundOn ? "Mute sound" : "Unmute sound"}
           >
@@ -273,7 +273,7 @@ function WelcomePage({ onComplete }) {
             className={`text-[#6B3100] transition-colors bg-white${
               isPlaying
                 ? "opacity-50 cursor-not-allowed"
-                : "hover:text-[#6B3100]/80"
+                : "hover:text-[#6B3100]/80 active:scale-95 active:opacity-80"
             }`}
             title={showLiMei ? "Hide Li Mei" : "Show Li Mei"}
             aria-label={showLiMei ? "Hide Li Mei" : "Show Li Mei"}
@@ -348,13 +348,13 @@ function WelcomePage({ onComplete }) {
                            w-full sm:w-auto relative group overflow-hidden
                            ${
                              index === 0
-                               ? "border-[#6B3100] bg-[#6B3100]/5 shadow-lg hover:shadow-xl hover:scale-105"
-                               : "border-[#6B3100]/50 hover:border-[#6B3100] hover:scale-102"
+                               ? "border-[#6B3100] bg-[#6B3100]/5 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 active:opacity-80"
+                               : "border-[#6B3100]/50 hover:border-[#6B3100] hover:scale-102 active:scale-95 active:opacity-80"
                            }
                            ${
                              isPlaying || !isLoaded
                                ? "opacity-50 cursor-not-allowed"
-                               : "hover:bg-[#6B3100] hover:text-white"
+                               : "hover:bg-[#6B3100] hover:text-white active:bg-[#6B3100]/80 active:text-white"
                            }`}
                 >
                   <span className="relative z-10 flex items-center justify-center gap-1 sm:gap-2">
