@@ -56,8 +56,10 @@ export default function NavBar() {
               key={idx}
               style={{ color: "white" }}
               className={({ isActive }) =>
-                ` hover:text-white ${
-                  isActive ? "underline-custom text-white" : "text-gray-200"
+                `relative hover:text-white ${
+                  isActive
+                    ? "text-white after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-white"
+                    : "text-gray-200"
                 }`
               }
             >

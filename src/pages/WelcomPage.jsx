@@ -236,7 +236,7 @@ function WelcomePage({ onComplete }) {
           <button
             onClick={handleSoundToggle}
             disabled={isPlaying}
-            className={`text-[#6B3100] transition-colors relative ${
+            className={`bg-white transition-colors relative  ${
               isPlaying
                 ? "opacity-50 cursor-not-allowed"
                 : "hover:text-[#6B3100]/80"
@@ -270,7 +270,7 @@ function WelcomePage({ onComplete }) {
           <button
             onClick={() => setShowLiMei(!showLiMei)}
             disabled={isPlaying}
-            className={`text-[#6B3100] transition-colors ${
+            className={`text-[#6B3100] transition-colors bg-white${
               isPlaying
                 ? "opacity-50 cursor-not-allowed"
                 : "hover:text-[#6B3100]/80"
