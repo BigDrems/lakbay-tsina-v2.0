@@ -5,38 +5,38 @@ import styles from "../styles/styles.module.scss";
 const slider1 = [
   {
     color: "#e3e5e7",
-    src: "/images/qin.webp",
+    src: "a.png",
   },
   {
     color: "#d6d7dc",
-    src: "decimal.jpg",
+    src: "b.png",
   },
   {
     color: "#e3e3e3",
-    src: "funny.jpg",
+    src: "c.png",
   },
   {
     color: "#21242b",
-    src: "google.jpg",
+    src: "d.png",
   },
 ];
 
 const slider2 = [
   {
     color: "#d4e3ec",
-    src: "maven.jpg",
+    src: "e.png",
   },
   {
     color: "#e5e0e1",
-    src: "panda.jpg",
+    src: "f.png",
   },
   {
     color: "#d7d4cf",
-    src: "powell.jpg",
+    src: "g.png",
   },
   {
     color: "#e1dad6",
-    src: "wix.jpg",
+    src: "h.png",
   },
 ];
 
@@ -52,7 +52,7 @@ export default function SlidingImage() {
   const height = useTransform(scrollYProgress, [0, 0.9], [50, 0]);
 
   return (
-    <div ref={container} className={styles.slidingImages + " w-screen"}>
+    <div ref={container} className={styles.slidingImages + " w-full"}>
       <motion.div style={{ x: x1 }} className={styles.slider}>
         {slider1.map((project, index) => {
           return (

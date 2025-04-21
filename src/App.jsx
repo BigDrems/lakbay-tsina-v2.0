@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import NavBar from "./components/Navbar";
+import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import { useState, useEffect } from "react";
 import WelcomePage from "./pages/WelcomPage";
@@ -66,6 +67,7 @@ function App() {
             <Route path="/dynasty-explorer" element={<DynastyExplorer />} />
           </Routes>
         </div>
+        {isWelcomeComplete && <Footer />}
       </main>
     </>
   );
