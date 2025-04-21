@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 const slides = [
   {
@@ -83,56 +83,84 @@ const Carousel = () => {
   }, [nextSlide]);
 
   const slideVariants = {
-    hidden: { opacity: 0, x: -100 },
-    visible: { opacity: 1, x: 0 },
-    exit: { opacity: 0, x: 100 },
+    hidden: { opacity: 0, x: -50 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        type: "tween",
+        ease: "easeInOut",
+        duration: 0.7,
+      },
+    },
+    exit: {
+      opacity: 0,
+      x: 50,
+      transition: {
+        type: "tween",
+        ease: "easeInOut",
+        duration: 0.7,
+      },
+    },
   };
 
   const descriptionVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 },
+    hidden: { opacity: 0, y: 10 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "tween",
+        ease: "easeOut",
+        duration: 0.6,
+        delay: 0.2,
+      },
+    },
   };
 
   return (
-    <div className="fixed inset-0 w-screen h-screen overflow-hidden">
-      <div className="relative w-full h-full">
-        {slides.map((slide, index) => (
-          <motion.div
-            key={slide.id}
-            className="absolute inset-0 w-full h-full"
-            variants={slideVariants}
-            initial="hidden"
-            animate={currentIndex === index ? "visible" : "exit"}
-            exit="exit"
-          >
-            <div className="w-full h-full">
-              <img
-                src={slide.image}
-                alt={slide.title}
-                className="w-full h-full object-cover transition-transform duration-1000 ease-in-out transform hover:scale-110"
-                loading="lazy"
-                decoding="async"
-              />
-            </div>
-            <motion.div
-              className="absolute top-[15%] sm:top-[20%] md:top-[25%] left-1/2 transform -translate-x-1/2 p-4 sm:p-6 md:p-8 
+    <div className="relative w-full h-full overflow-hidden">
+      <AnimatePresence mode="wait">
+        {slides.map(
+          (slide, index) =>
+            currentIndex === index && (
+              <motion.div
+                key={slide.id}
+                className="absolute inset-0 w-full h-full"
+                variants={slideVariants}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+              >
+                <div className="w-full h-full">
+                  <img
+                    src={slide.image}
+                    alt={slide.title}
+                    className="w-full h-full object-cover transition-transform duration-1000 ease-in-out transform hover:scale-110"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+                <motion.div
+                  className="absolute top-[15%] sm:top-[20%] md:top-[25%] left-1/2 transform -translate-x-1/2 p-4 sm:p-6 md:p-8 
                          bg-black/40 w-[90%] sm:w-[80%] md:w-[60%] lg:w-[50%] xl:w-[43%] rounded-md max-h-[60vh] overflow-y-auto"
-              variants={descriptionVariants}
-              initial="hidden"
-              animate={currentIndex === index ? "visible" : "hidden"}
-            >
-              <div className="flex flex-col gap-3 sm:gap-4 md:gap-5 tracking-wide">
-                <h2 className="text-white text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-center sm:text-left">
-                  {slide.title}
-                </h2>
-                <p className="text-white/80 text-base sm:text-lg md:text-xl text-justify tracking-wide">
-                  {slide.description}
-                </p>
-              </div>
-            </motion.div>
-          </motion.div>
-        ))}
-      </div>
+                  variants={descriptionVariants}
+                  initial="hidden"
+                  animate="visible"
+                >
+                  <div className="flex flex-col gap-3 sm:gap-4 md:gap-5 tracking-wide">
+                    <h2 className="text-white text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-center sm:text-left">
+                      {slide.title}
+                    </h2>
+                    <p className="text-white/80 text-base sm:text-lg md:text-xl text-justify tracking-wide">
+                      {slide.description}
+                    </p>
+                  </div>
+                </motion.div>
+              </motion.div>
+            )
+        )}
+      </AnimatePresence>
       <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex justify-center items-center gap-1.5 sm:gap-2 w-full px-4">
         {slides.map((slide, index) => (
           <img

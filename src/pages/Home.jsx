@@ -5,6 +5,7 @@ import page from "../styles/home.module.scss";
 import SlidingImage from "../components/SlidingImage";
 import DynastyGallery from "../components/DynastyGallery";
 import ParallaxScroll from "../components/ParallaxScroll";
+import Testimonials from "../components/Testimonials";
 
 const Home = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -46,14 +47,16 @@ const Home = () => {
   ];
 
   return (
-    <main className={page.main}>
-      {!isMobile && <ZoomParallax />}
+    <>
+      <main className={page.main}>{!isMobile && <ZoomParallax />}</main>
       <ParallaxScroll />
       <SlidingImage />
+
       {projects.map((project, key) => (
         <DynastyGallery key={key} project={project} />
       ))}
-    </main>
+      <Testimonials />
+    </>
   );
 };
 
