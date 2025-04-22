@@ -19,7 +19,7 @@ import DynastyExplorer from "./components/DynastyExplorer";
 function App() {
   const [isWelcomeComplete, setIsWelcomeComplete] = useState(() => {
     // Initialize from localStorage, default to false if not set
-    return localStorage.getItem("isWelcomeComplete") === "true";
+    return localStorage.getItem("isWelcomeComplete") === "false";
   });
 
   const handleWelcomeComplete = () => {
