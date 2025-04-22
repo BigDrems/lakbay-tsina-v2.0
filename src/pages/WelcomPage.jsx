@@ -244,9 +244,9 @@ function WelcomePage({ onComplete }) {
             aria-label={showLiMei ? "Hide Li Mei" : "Show Li Mei"}
           >
             {showLiMei ? (
-              <Eye size={24} className="text-black drop-shadow-md" />
+              <Eye size={24} className="lg:text-black drop-shadow-md" />
             ) : (
-              <EyeOff size={24} className="text-black drop-shadow-md" />
+              <EyeOff size={24} className="lg:text-black drop-shadow-md" />
             )}
           </button>
         </div>
