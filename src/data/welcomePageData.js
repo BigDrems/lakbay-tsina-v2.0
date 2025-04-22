@@ -1,81 +1,81 @@
 export const websitePurpose =
-  "Maligayang pagdating sa Lakbay China! Ako si Li Mei, ang iyong masiglang gabay sa pagtuklas sa kultura at kasaysayan ng Tsina.";
+  "Welcome to Lakbay China! I am Li Mei, your enthusiastic guide to discovering the culture and history of China.";
 
 export const pages = [
   {
-    name: "Kultural na Paglalakbay",
-    purpose: "Pagtuklas ng kamangha-manghang tradisyon at kultura ng Tsina.",
+    name: "Cultural",
+    purpose: "Discover the amazing traditions and culture of China.",
     path: "/",
   },
   {
-    name: "Kagamitan na Paglalakbay",
-    purpose: "Pagtuklas ng mga kagamitan na may kagandahan at kagandahan.",
-    path: "/",
+    name: "About",
+    purpose: "Discover the creator and content of the website.",
+    path: "/about",
   },
   {
-    name: "Modern Marvels",
-    purpose: "Pagtuklas ng kagandahan at kagandahan ng Tsina.",
-    path: "/",
+    name: "Lessons",
+    purpose: "Discover the lessons and activities of the website.",
+    path: "/lessons",
   },
   {
-    name: "Paglalakbay na Pag-aaral",
-    purpose: "Pagtuklas ng kagandahan at kagandahan ng Tsina.",
-    path: "/",
+    name: "Entertainment",
+    purpose: "Discover the entertainment and fun of the website.",
+    path: "/entertainment",
   },
 ];
 
 export const characterPuzzle = [
   {
     character: "文",
-    meaning: "Kultura",
-    hint: "Nakakita ng kagandahan at kagandahan ng Tsina.",
+    meaning: "Culture",
+    hint: "Discover the beauty and elegance of China.",
     id: "char1",
   },
   {
     character: "化",
-    meaning: "Pagbabago",
-    hint: "Pagbabago at pag-unlad",
+    meaning: "Change",
+    hint: "Change and development",
     id: "char2",
   },
   {
     character: "旅",
-    meaning: "Paglalakbay",
-    hint: "Paglalakbay at pagtuklas",
+    meaning: "Journey",
+    hint: "Travel and discovery",
     id: "char3",
   },
   {
     character: "学",
-    meaning: "Pag-aaral",
-    hint: "Pag-aaral at impormasyon",
+    meaning: "Learning",
+    hint: "Learning and information",
     id: "char4",
   },
 ];
 
 export const conversation = [
   {
-    text: `${websitePurpose} Handa ka na bang simulan ang isang di malilimutang paglalakbay sa Tsina?`,
-    options: [{ label: "Tara at tuklasin na!", nextStep: 1 }],
+    text: `${websitePurpose} Are you ready to start an unforgettable journey in China?`,
+    options: [{ label: "Let's explore!", nextStep: 1 }],
   },
   {
-    text: "Nakahanap ako ng isang kapana-panabik sinaunang balumbon na may mga sikreto tungkol sa kulturang Tsino. Gusto mo ba akong tulungan na alamin kung ano ang ibig sabihin nito?",
+    text: "I found an exciting ancient scroll with secrets about Chinese culture. Would you like to help me figure out what it means?",
     options: [
-      { label: "Sige, tutulungan kita!", nextStep: 2 },
-      { label: "Sabihin mo muna sa akin ang mga detalye!", nextStep: 3 },
+      { label: "Yes, I'll help you!", nextStep: 2 },
+      { label: "Tell me the details first!", nextStep: 3 },
     ],
   },
   {
-    text: "Ipares ang mga gamit mula sa Tsina! Kapag tama ang pagpapareho, makakakuha ka ng isang piraso!",
+    text: "Match the items from China! When you match correctly, you'll get a piece!",
     type: "puzzle",
     options: [],
   },
   {
-    text: "Magaling! Ang balumbon ay nagpapakita ng apat na kahanga-hangang landas na maaari mong i-explore. Bawat landas ay nagpapakita ng isang cool at interesanteng impormasyon tungkol sa Tsina!",
-    options: [{ label: "Ipakita mo sa akin ang mga landas", nextStep: 4 }],
+    text: "Excellent! The scroll shows four amazing paths that you can explore. Each path reveals cool and interesting information about China!",
+    options: [{ label: "Show me the paths", nextStep: 4 }],
   },
   {
-    text: "Aling landas mo nais na malaman muna?",
+    text: "Which path would you like to learn about first?",
     options: pages.map((page) => ({
-      label: `Alamin ang ${page.name}`,
+      label: `Explore ${page.name}`,
       nextStep: page.path,
     })),
   },

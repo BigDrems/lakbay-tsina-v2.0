@@ -6,64 +6,71 @@ const slides = [
     id: 1,
     image: "/images/history.png",
     title: "Kasaysayan at Dinastiya",
-    author: "Ralph",
+    subtitle: "Tuklasin ang Mayamang Kasaysayan ng Tsina",
     topic: "Kasaysayan",
     description:
-      "Ang sibilisasyon ng Tsina ay sumasaklaw ng libu-libong taon, na minarkahan ng mga maimpluwensyang dinastiya tulad ng Qin, Han, Tang, at Ming. Ang bawat panahon ay naging ambag sa pampulitika, pangkultura, at siyentipikong pundasyon ng bansa.",
+      "Galugarin ang maraming siglo ng mga dinastiya ng Tsina na humubog sa pinakamatandang tuloy-tuloy na sibilisasyon sa mundo. Maglakbay sa panahon ng mga emperador, makabagong kaalaman, at mga pangkulturang tagumpay.",
+    buttonText: "TUKLASIN PA",
   },
   {
     id: 2,
     image: "/images/kultura (2).png",
     title: "Kultura at mga Tradisyon",
-    author: "LUNDEV",
+    subtitle: "Maranasan ang mga Kultural na Kayamanan",
     topic: "Kultura at Tradisyon",
     description:
-      "Ang kulturang Tsino ay mayaman at iba't iba, na nagtatampok ng mga natatanging kaugalian tulad ng Lunar New Year, sayaw ng dragon, tradisyonal na medisina, at mga pilosopiya tulad ng Confucianism at Taoism.",
+      "Isawsaw ang sarili sa matingkad na mga tradisyon ng Tsina, mula sa mga sinaunang pagdiriwang at seremonya hanggang sa mga pagpapahayag ng sining na nagbigay inspirasyon sa mundo sa loob ng maraming henerasyon.",
+    buttonText: "TUKLASIN ANG KULTURA",
   },
   {
     id: 3,
     image: "/images/china.png",
     title: "Pulitika at Pamahalaan",
-    author: "LUNDEV",
+    subtitle: "Unawain ang Makabagong Pamamahala",
     topic: "Pulitika",
     description:
-      "Ang Tsina ay pinamumunuan ng isang one-party system sa ilalim ng Partido Komunista. Ang sentralisadong pamahalaan nito ay may malaking papel sa paghubog ng mga patakaran, ekonomiya, at istrukturang panlipunan ng bansa.",
+      "Makakuha ng kaalaman sa kumplikadong sistemang pampulitika ng Tsina at ang pagbabago nito mula sa sinaunang pamamahala ng mga emperador hanggang sa kasalukuyang makabagong istraktura ng pamamahala.",
+    buttonText: "ARALIN ANG PULITIKA",
   },
   {
     id: 4,
     image: "/images/economy.jpg",
     title: "Pag-unlad sa Ekonomiya",
-    author: "LUNDEV",
+    subtitle: "Galugarin ang Pagbabago ng Ekonomiya",
     topic: "Ekonomiya",
     description:
-      "Bilang pangalawang pinakamalaking ekonomiya sa mundo, ang Tsina ay nakaranas ng mabilis na industriyalisasyon at teknolohikal na pag-unlad, na naging global na sentro ng manufacturing at kalakalan.",
+      "Saksihan ang kahanga-hangang paglalakbay ng pag-angat ng ekonomiya ng Tsina at ang pagbabago nito tungo sa isang pandaigdigang kapangyarihan ng inobasyon, kalakalan, at kaunlaran.",
+    buttonText: "PAG-ARALAN ANG EKONOMIYA",
   },
   {
     id: 5,
     image: "/images/geography.jpg",
     title: "Heograpiya at mga Tanawin",
-    author: "LUNDEV",
+    subtitle: "Maglakbay sa mga Tanawin ng Tsina",
     topic: "Heograpiya",
     description:
-      "Saklaw ng malawak na heograpiya ng Tsina ang mga disyerto, kabundukan, ilog, at matatabang kapatagan. Ang heograpikong diversidad na ito ay sumusuporta sa parehong rural na agrikultura at malawakang urban development.",
+      "Maglakbay sa iba't ibang lupain ng Tsina mula sa mga tuktok ng Himalaya hanggang sa mga lambak ng Ilog Yangtze, at tuklasin kung paano hinubog ng heograpiya ang sibilisasyon ng Tsina.",
+    buttonText: "GALUGARIN ANG HEOGRAPIYA",
   },
   {
     id: 6,
     image: "/images/technology.jpg",
     title: "Teknolohiya at Inobasyon",
-    author: "LUNDEV",
+    subtitle: "Saksihan ang mga Hakbang sa Teknolohiya",
     topic: "Teknolohiya",
     description:
-      "Ang Tsina ay global na lider sa teknolohiya, na may mga pangunahing pagsulong sa AI, 5G, e-commerce, at renewable energy, na pinangunahan ng mga kumpanyang tulad ng Huawei, Tencent, at Alibaba.",
+      "Makita kung paano pinamumunuan ng Tsina ang pandaigdigang inobasyon sa mga larangan tulad ng renewable energy, artificial intelligence, at digital platforms na humuhubog sa ating kinabukasan.",
+    buttonText: "TUKLASIN ANG TEKNOLOHIYA",
   },
   {
     id: 7,
     image: "/images/power.png",
     title: "Pandaigdigang Impluwensya",
-    author: "LUNDEV",
+    subtitle: "Unawain ang Pandaigdigang Epekto",
     topic: "Impluwensya at Diplomasya",
     description:
-      "May mahalagang papel ang Tsina sa pandaigdigang pulitika sa pamamagitan ng mga pamumuhunan sa ekonomiya, diplomatikong relasyon, at global na inisyatibo tulad ng Belt and Road Initiative.",
+      "Tuklasin ang lumalagong papel ng Tsina sa pandaigdigang entablado sa pamamagitan ng mga inisyatibang diplomatiko, mga internasyonal na pakikipagtulungan, at mga palitan ng kultura sa buong kontinente.",
+    buttonText: "GALUGARIN ANG IMPLUWENSYA",
   },
 ];
 
@@ -82,7 +89,7 @@ const Carousel = () => {
     };
   }, [nextSlide]);
 
-  const slideVariants = {
+  const contentVariants = {
     hidden: { opacity: 0, x: -50 },
     visible: {
       opacity: 1,
@@ -95,7 +102,7 @@ const Carousel = () => {
     },
     exit: {
       opacity: 0,
-      x: 50,
+      x: -50,
       transition: {
         type: "tween",
         ease: "easeInOut",
@@ -104,76 +111,135 @@ const Carousel = () => {
     },
   };
 
-  const descriptionVariants = {
-    hidden: { opacity: 0, y: 10 },
+  const imageVariants = {
+    hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      y: 0,
       transition: {
         type: "tween",
-        ease: "easeOut",
-        duration: 0.6,
-        delay: 0.2,
+        ease: "easeInOut",
+        duration: 0.7,
+      },
+    },
+    exit: {
+      opacity: 0,
+      transition: {
+        type: "tween",
+        ease: "easeInOut",
+        duration: 0.7,
       },
     },
   };
 
   return (
-    <div className="relative w-full h-full overflow-hidden">
+    <div className="w-full h-[92vh] overflow-hidden bg-gray-50">
       <AnimatePresence mode="wait">
         {slides.map(
           (slide, index) =>
             currentIndex === index && (
-              <motion.div
+              <div
                 key={slide.id}
-                className="absolute inset-0 w-full h-full"
-                variants={slideVariants}
-                initial="hidden"
-                animate="visible"
-                exit="exit"
+                className="flex flex-col lg:flex-row h-full w-full"
               >
-                <div className="w-full h-full">
+                {/* Left content side - Made responsive */}
+                <motion.div
+                  className="w-full lg:w-1/2 h-full sm:h-auto lg:h-full flex flex-col justify-center px-4 sm:px-8 md:px-12 lg:px-16 xl:px-24 pt-16 pb-20 lg:py-0 relative overflow-hidden"
+                  variants={contentVariants}
+                  initial="hidden"
+                  animate="visible"
+                  exit="exit"
+                >
+                  {/* Decorative elements - Adjusted for responsiveness */}
+                  <div className="absolute top-12 left-8 md:left-12 w-12 md:w-20 h-12 md:h-20 rounded-full bg-[#daff0d]/20 blur-xl"></div>
+                  <div className="absolute bottom-12 right-8 md:right-12 w-20 md:w-32 h-20 md:h-32 rounded-full bg-[#daff0d]/30 blur-xl hidden sm:block"></div>
+                  <div className="absolute -left-8 top-1/2 w-8 md:w-16 h-40 md:h-64 bg-[#daff0d]/10 rounded-r-full hidden sm:block"></div>
+
+                  {/* Topic badge */}
+                  <div className="mb-3 md:mb-4">
+                    <span className="bg-[#daff0d]/20 text-black px-3 sm:px-4 py-1 rounded-full text-xs sm:text-sm font-medium tracking-wide">
+                      {slide.topic}
+                    </span>
+                  </div>
+
+                  <div className="flex flex-col gap-4 sm:gap-6 md:gap-8 max-w-xl relative z-10">
+                    {/* Subtitle with decorative element */}
+                    <div className="relative">
+                      <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-neutral-900 leading-tight">
+                        {slide.subtitle}
+                      </h1>
+                      <div className="absolute -left-2 sm:-left-4 top-1/2 w-1 sm:w-2 h-8 sm:h-12 bg-[#daff0d] rounded-r-md"></div>
+                    </div>
+
+                    {/* Title with highlight - Responsive font sizes */}
+                    <h2 className="text-lg sm:text-xl md:text-2xl font-medium text-neutral-700 italic">
+                      {slide.title.split(" ").map((word, i) =>
+                        i === 1 ? (
+                          <span key={i} className="relative inline-block mx-1">
+                            {word}
+                            <span className="absolute bottom-1 left-0 w-full h-1.5 sm:h-2 bg-[#daff0d]/40 -z-10"></span>
+                          </span>
+                        ) : (
+                          <span key={i}>{word} </span>
+                        )
+                      )}
+                    </h2>
+
+                    {/* Description with improved typography - Adjusted for mobile */}
+                    <p className="text-gray-600 text-sm sm:text-base md:text-lg leading-relaxed border-l-2 sm:border-l-4 border-[#daff0d]/50 pl-3 sm:pl-4 line-clamp-4 sm:line-clamp-none">
+                      {slide.description}
+                    </p>
+
+                    {/* Button with animated arrow */}
+                    <div className="mt-1 sm:mt-2">
+                      <button className="group bg-[#daff0d] text-black px-6 sm:px-8 py-2.5 sm:py-3 rounded-full text-sm sm:text-base font-semibold hover:bg-opacity-90 transition-all duration-300 flex items-center gap-2">
+                        {slide.buttonText}
+                        <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">
+                          →
+                        </span>
+                      </button>
+                    </div>
+
+                    {/* Navigation hint - Hidden on smallest screens */}
+                    <div className="hidden sm:flex items-center gap-2 text-xs sm:text-sm text-gray-500 mt-4 sm:mt-8">
+                      <span className="w-6 sm:w-8 h-[1px] bg-gray-300"></span>
+                      <span>
+                        Slide {currentIndex + 1} of {slides.length}
+                      </span>
+                    </div>
+                  </div>
+                </motion.div>
+
+                {/* Right image side - Made responsive */}
+                <motion.div
+                  className="w-full lg:w-1/2 h-[50vh] lg:h-full order-first lg:order-last"
+                  variants={imageVariants}
+                  initial="hidden"
+                  animate="visible"
+                  exit="exit"
+                >
                   <img
                     src={slide.image}
                     alt={slide.title}
-                    className="w-full h-full object-cover transition-transform duration-1000 ease-in-out transform hover:scale-110"
+                    className="w-full h-full object-cover"
                     loading="lazy"
                     decoding="async"
                   />
-                </div>
-                <motion.div
-                  className="absolute top-[15%] sm:top-[20%] md:top-[25%] left-1/2 transform -translate-x-1/2 p-4 sm:p-6 md:p-8 
-                         bg-black/40 w-[90%] sm:w-[80%] md:w-[60%] lg:w-[50%] xl:w-[43%] rounded-md max-h-[60vh] overflow-y-auto"
-                  variants={descriptionVariants}
-                  initial="hidden"
-                  animate="visible"
-                >
-                  <div className="flex flex-col gap-3 sm:gap-4 md:gap-5 tracking-wide">
-                    <h2 className="text-white text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-center sm:text-left">
-                      {slide.title}
-                    </h2>
-                    <p className="text-white/80 text-base sm:text-lg md:text-xl text-justify tracking-wide">
-                      {slide.description}
-                    </p>
-                  </div>
                 </motion.div>
-              </motion.div>
+              </div>
             )
         )}
       </AnimatePresence>
-      <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex justify-center items-center gap-1.5 sm:gap-2 w-full px-4">
+
+      {/* Pagination dots - Made responsive */}
+      <div className="absolute bottom-4 sm:bottom-6 left-1/2 transform -translate-x-1/2 lg:-translate-x-3/4 flex justify-center items-center gap-1.5 sm:gap-2 w-full px-4 lg:w-auto z-20">
         {slides.map((slide, index) => (
-          <img
+          <button
             key={slide.id}
-            src={slide.image}
-            alt={slide.title}
-            className={`w-10 h-10 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 object-cover cursor-pointer 
-                       border-2 rounded-md transition-all duration-300 hover:scale-110 ${
-                         index === currentIndex
-                           ? "border-white opacity-100 scale-110"
-                           : "border-gray-400 opacity-50"
-                       }`}
+            className={`w-2.5 sm:w-3 h-2.5 sm:h-3 rounded-full transition-all duration-300 ${
+              index === currentIndex ? "bg-[#daff0d] w-6 sm:w-8" : "bg-gray-400"
+            }`}
             onClick={() => setCurrentIndex(index)}
+            aria-label={`Go to slide ${index + 1}`}
           />
         ))}
       </div>

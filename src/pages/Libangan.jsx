@@ -1,6 +1,14 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Trophy, Brain, Music, Book, Gamepad2 } from "lucide-react";
+import {
+  ArrowRight,
+  Trophy,
+  Brain,
+  Music,
+  Book,
+  Gamepad2,
+  ChefHat,
+} from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const games = [
@@ -39,12 +47,12 @@ const games = [
   },
   {
     id: 4,
-    title: "Music Memory",
+    title: "Chinese Cuisine Master",
     description:
-      "Listen to traditional Chinese music and match the instruments. Discover the sounds of China!",
-    icon: <Music className="w-8 h-8" />,
+      "Learn to cook famous Chinese dishes and discover culinary traditions. Drag ingredients and follow cooking steps!",
+    icon: <ChefHat className="w-8 h-8" />,
     difficulty: "Easy",
-    category: "Musika",
+    category: "Kultura",
     image: "/images/music-memory.jpg",
     path: "/games/music-memory",
   },

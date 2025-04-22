@@ -12,14 +12,14 @@ import CourseContent from "./pages/CourseContent";
 import CharacterMatch from "./components/games/CharacterMatch";
 import DynastyTimeline from "./components/games/DynastyTimeline";
 import CulturalQuiz from "./components/games/CulturalQuiz";
-import MusicMemory from "./components/games/MusicMemory";
+import ChineseCuisineGame from "./components/games/MusicMemory";
 import GeographyExplorer from "./components/games/GeographyExplorer";
 import DynastyExplorer from "./components/DynastyExplorer";
 
 function App() {
   const [isWelcomeComplete, setIsWelcomeComplete] = useState(() => {
     // Initialize from localStorage, default to false if not set
-    return localStorage.getItem("isWelcomeComplete") === "false";
+    return localStorage.getItem("isWelcomeComplete") === "true";
   });
 
   const handleWelcomeComplete = () => {
@@ -59,7 +59,10 @@ function App() {
               element={<DynastyTimeline />}
             />
             <Route path="/games/cultural-quiz" element={<CulturalQuiz />} />
-            <Route path="/games/music-memory" element={<MusicMemory />} />
+            <Route
+              path="/games/music-memory"
+              element={<ChineseCuisineGame />}
+            />
             <Route
               path="/games/geography-explorer"
               element={<GeographyExplorer />}
