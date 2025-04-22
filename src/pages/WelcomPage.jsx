@@ -1,144 +1,114 @@
-// src/WelcomePage.jsx
-import React, { useState, useEffect } from "react";
+// src/pages/WelcomePage.jsx
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Eye, EyeOff, Volume2, VolumeX } from "lucide-react";
 import { conversation, characterPuzzle } from "../data/welcomePageData";
-import { speak, initializeSpeech } from "../utils/speech";
 import CharacterPuzzle from "../components/CharacterPuzzle";
+import { useSpeechSynthesis } from "../hooks/useSpeechSynthesis";
+import IntroAnimation from "../components/welcome/IntroAnimation";
 
 function WelcomePage({ onComplete }) {
+  const navigate = useNavigate();
+
+  // State management
   const [step, setStep] = useState(0);
   const [showLiMei, setShowLiMei] = useState(true);
-  const [isSoundOn, setIsSoundOn] = useState(false);
-  const [volume, setVolume] = useState(0.7);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [isLoaded, setIsLoaded] = useState(false);
   const [solvedPairs, setSolvedPairs] = useState([]);
   const [puzzleComplete, setPuzzleComplete] = useState(false);
   const [draggedItem, setDraggedItem] = useState(null);
   const [dragOverItem, setDragOverItem] = useState(null);
-  const [hasInteracted, setHasInteracted] = useState(false);
-  const [synth, setSynth] = useState(null);
-  const navigate = useNavigate();
+  const [bgAnimation, setBgAnimation] = useState(false);
+  const [showIntroAnim, setShowIntroAnim] = useState(true);
+  const [typingText, setTypingText] = useState("");
+  const [isTyping, setIsTyping] = useState(false);
+  const textRef = useRef("");
 
-  // Pre-initialize speech synthesis
+  // Speech synthesis hook
+  const {
+    isSoundOn,
+    volume,
+    setVolume,
+    isPlaying,
+    isLoaded,
+    hasInteracted,
+    speakText,
+    toggleSound,
+  } = useSpeechSynthesis();
+
+  // Effects ------------------------------------------
+
+  // Handle intro animation timing
   useEffect(() => {
-    let cleanupFunction = null;
+    const timer = setTimeout(() => {
+      setShowIntroAnim(false);
+    }, 8000); // Extended time to allow for interaction with the new animation
 
-    const initSynth = async () => {
-      if (typeof window !== "undefined" && window.speechSynthesis) {
-        try {
-          // Force Chrome to load voices
-          window.speechSynthesis.getVoices();
-
-          // Add a small delay to ensure voices are loaded
-          setTimeout(() => {
-            // Store the synth reference without calling speak
-            setSynth(window.speechSynthesis);
-            setIsLoaded(true);
-            cleanupFunction = initializeSpeech(setIsLoaded);
-          }, 100);
-        } catch (error) {
-          console.error("Speech synthesis initialization error:", error);
-          setIsLoaded(false);
-        }
-      }
-    };
-
-    initSynth();
-
-    return () => {
-      if (cleanupFunction) cleanupFunction();
-      if (synth) {
-        synth.cancel();
-      }
-      if (window.speechSynthesis) {
-        window.speechSynthesis.cancel();
-      }
-    };
+    return () => clearTimeout(timer);
   }, []);
 
-  // Handle sound toggle with first-time interaction - this is user-activated
-  const handleSoundToggle = async () => {
-    const newSoundState = !isSoundOn;
-    setIsSoundOn(newSoundState);
-    setHasInteracted(true);
-
-    // If turning sound off, cancel any ongoing speech
-    if (!newSoundState && synth) {
-      synth.cancel();
-      setIsPlaying(false);
+  // Typing effect for conversation text
+  useEffect(() => {
+    if (!conversation[step] || !conversation[step].text) {
       return;
     }
 
-    // This is a user interaction, so it's safe to initialize speech here
-    if (newSoundState) {
-      try {
-        // Pre-warm voices on user interaction
-        if (window.speechSynthesis) {
-          // Force Chrome to load voices after user interaction
-          window.speechSynthesis.getVoices();
-          setSynth(window.speechSynthesis);
+    const currentText = conversation[step].text;
+    textRef.current = currentText;
 
-          // Add a small delay to ensure voices are loaded
-          setTimeout(async () => {
-            // Speak current text if first time enabling
-            if (!hasInteracted) {
-              setIsPlaying(true);
-              await speak(conversation[step].text, true, volume, setIsPlaying);
-            }
-          }, 100);
+    setIsTyping(false);
+    setTypingText("");
+
+    const startTyping = () => {
+      setIsTyping(true);
+      let index = 0;
+      setTypingText(currentText.charAt(0));
+      index = 1;
+
+      const typingInterval = setInterval(() => {
+        if (index < currentText.length) {
+          setTypingText(currentText.substring(0, index + 1));
+          index++;
+        } else {
+          clearInterval(typingInterval);
+          setIsTyping(false);
         }
-      } catch (error) {
-        console.error("Speech activation error:", error);
-        setIsPlaying(false);
-      }
+      }, 60);
+
+      return () => clearInterval(typingInterval);
+    };
+
+    const typingTimer = setTimeout(startTyping, 200);
+    return () => clearTimeout(typingTimer);
+  }, [step]);
+
+  // Speak current step text when step changes or sound is toggled on
+  useEffect(() => {
+    if (conversation[step] && hasInteracted) {
+      speakText(conversation[step].text);
+    }
+  }, [step, hasInteracted, speakText]);
+
+  // Background animation toggle when step changes
+  useEffect(() => {
+    setBgAnimation(true);
+    const timer = setTimeout(() => setBgAnimation(false), 1000);
+    return () => clearTimeout(timer);
+  }, [step]);
+
+  // Event handlers ------------------------------------------
+
+  const handleSoundToggle = () => {
+    toggleSound(conversation[step]?.text);
+  };
+
+  const skipTyping = () => {
+    if (isTyping && textRef.current) {
+      setTypingText(textRef.current);
+      setIsTyping(false);
     }
   };
 
-  // Effect for speaking when page is loaded or step changes
-  useEffect(() => {
-    const speakText = async () => {
-      // If sound is off, don't speak
-      if (!isSoundOn) {
-        return;
-      }
-
-      if (
-        isLoaded &&
-        isSoundOn &&
-        hasInteracted &&
-        conversation[step] &&
-        !isPlaying &&
-        synth
-      ) {
-        setIsPlaying(true);
-        try {
-          await speak(conversation[step].text, isSoundOn, volume, setIsPlaying);
-        } catch (error) {
-          console.error("Speech synthesis error:", error);
-          setIsPlaying(false);
-        }
-      }
-    };
-    speakText();
-  }, [isLoaded, step, isSoundOn, hasInteracted, volume, synth]);
-
-  // Handle speech synthesis visibility change
-  useEffect(() => {
-    const handleVisibilityChange = () => {
-      if (document.hidden && synth) {
-        synth.cancel();
-        setIsPlaying(false);
-      }
-    };
-
-    document.addEventListener("visibilitychange", handleVisibilityChange);
-    return () => {
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
-    };
-  }, [synth]);
-
+  // Puzzle drag-and-drop handlers
   const handleDragStart = (e, item, type) => {
     setDraggedItem({ ...item, type });
     e.dataTransfer.setData("text/plain", "");
@@ -154,6 +124,10 @@ function WelcomePage({ onComplete }) {
     e.preventDefault();
     if (!draggedItem || draggedItem.type === type) return;
     setDragOverItem({ ...item, type });
+  };
+
+  const handleDragLeave = () => {
+    setDragOverItem(null);
   };
 
   const handleDrop = (e, item, type) => {
@@ -172,18 +146,11 @@ function WelcomePage({ onComplete }) {
         setSolvedPairs(newSolvedPairs);
 
         if (newSolvedPairs.length === characterPuzzle.length) {
-          const speakCongratulations = async () => {
-            setIsPlaying(true);
-            await speak(
-              "Napakaganda! Nabuksan mo ang sinaunang karunungan. Naghihintay na ang iyong paglalakbay...",
-              isSoundOn,
-              volume,
-              setIsPlaying
-            );
-            setPuzzleComplete(true);
-            setStep(4);
-          };
-          speakCongratulations();
+          speakText(
+            "Napakaganda! Nabuksan mo ang sinaunang karunungan. Naghihintay na ang iyong paglalakbay..."
+          );
+          setPuzzleComplete(true);
+          setStep(4);
         }
       }
     }
@@ -192,18 +159,10 @@ function WelcomePage({ onComplete }) {
     setDragOverItem(null);
   };
 
-  const handleDragLeave = () => {
-    setDragOverItem(null);
-  };
-
   const handleOptionClick = async (nextStep) => {
     if (typeof nextStep === "string") {
-      setIsPlaying(true);
-      await speak(
-        "Congratulations! You've proven yourself worthy to explore the wonders of China. Your journey begins now, and I'll be here to guide you along the way. Let's discover the treasures that await!",
-        isSoundOn,
-        volume,
-        setIsPlaying
+      speakText(
+        "Congratulations! You've proven yourself worthy to explore the wonders of China. Your journey begins now, and I'll be here to guide you along the way. Let's discover the treasures that await!"
       );
       onComplete();
       navigate(nextStep);
@@ -212,192 +171,312 @@ function WelcomePage({ onComplete }) {
     }
   };
 
-  return (
-    <div className="min-h-screen bg-[#F5E6D3] flex items-center justify-center p-2 sm:p-4 md:p-6 lg:p-8 bg-[url('/images/rice-paper.png')] bg-repeat">
-      <div className="w-full max-w-[95%] sm:max-w-[90%] md:max-w-[85%] lg:max-w-[75%] xl:max-w-[65%] bg-white rounded-none border-2 border-[#6B3100] p-4 sm:p-6 md:p-8 lg:p-10 space-y-4 sm:space-y-6 shadow-[8px_8px_0px_0px_rgba(107,49,0,0.2)]">
-        {/* Header */}
-        <div className="text-center mb-4 sm:mb-6 md:mb-8">
-          <div className="flex items-center justify-center mb-2 sm:mb-4">
-            <div className="w-1 h-8 sm:h-10 md:h-12 bg-[#6B3100] mx-1 sm:mx-2"></div>
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-normal text-[#6B3100] tracking-wider">
-              Lakbay Tsina
-            </h1>
-            <div className="w-1 h-8 sm:h-10 md:h-12 bg-[#6B3100] mx-1 sm:mx-2"></div>
-          </div>
-          <div className="flex items-center justify-center space-x-2 sm:space-x-4">
-            <div className="w-12 sm:w-16 h-[2px] bg-[#6B3100]"></div>
-            <div className="text-[#6B3100] text-lg sm:text-xl">游记</div>
-            <div className="w-12 sm:w-16 h-[2px] bg-[#6B3100]"></div>
+  const renderIntroAnimation = () => {
+    return <IntroAnimation showIntroAnim={showIntroAnim} />;
+  };
+
+  const renderHeader = () => (
+    <header className="bg-gradient-to-r from-amber-800 to-orange-700 py-6 px-6 md:px-8 relative overflow-hidden">
+      {/* Decorative elements */}
+      <div className="absolute top-0 right-0 w-40 h-40 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+      <div className="absolute bottom-0 left-10 w-10 h-10 bg-white/10 rounded-full translate-y-1/2"></div>
+
+      <div className="flex items-center justify-between relative z-10">
+        <div className="flex flex-col">
+          <h1 className="text-2xl md:text-4xl font-semibold text-white tracking-wide">
+            Lakbay Tsina
+          </h1>
+          <div className="flex items-center mt-1">
+            <span className="text-amber-200 text-lg">游记</span>
+            <div className="w-24 h-[1px] bg-amber-200/50 ml-3"></div>
           </div>
         </div>
 
-        {/* Sound Controls */}
-        <div className="flex justify-end items-center space-x-2 sm:space-x-4 mb-4 sm:mb-6 border-b border-[#6B3100]/20 pb-2 sm:pb-4">
+        {/* Controls */}
+        <div className="flex items-center space-x-3">
           <button
             onClick={handleSoundToggle}
             disabled={isPlaying}
-            className={`bg-white transition-colors relative lg:bg-white ${
+            className={`relative p-2.5 rounded-full bg-white/20 transition-all hover:bg-white/30 ${
               isPlaying
                 ? "opacity-50 cursor-not-allowed"
-                : "lg:hover:text-[#6B3100]/80 active:scale-95 active:opacity-80"
+                : "hover:bg-white/30 hover:scale-105 active:scale-95"
             }`}
             aria-label={isSoundOn ? "Mute sound" : "Unmute sound"}
           >
             {isSoundOn ? (
-              <Volume2 size={20} sm:size={24} />
+              <Volume2 size={24} className="text-white drop-shadow-md" />
             ) : (
-              <VolumeX size={20} sm:size={24} />
+              <VolumeX size={24} className="text-white drop-shadow-md" />
             )}
             {!hasInteracted && (
-              <div className="absolute -top-2 -right-2 w-3 h-3 sm:w-4 sm:h-4 bg-[#6B3100] rounded-full animate-pulse"></div>
+              <div className="absolute -top-1 -right-1 w-4 h-4 bg-amber-300 ring-2 ring-white rounded-full animate-pulse"></div>
             )}
           </button>
+
           {isSoundOn && (
-            <input
-              type="range"
-              min="0"
-              max="1"
-              step="0.1"
-              value={volume}
-              onChange={(e) => setVolume(parseFloat(e.target.value))}
-              disabled={isPlaying}
-              className={`w-20 sm:w-24 accent-[#6B3100] ${
-                isPlaying ? "opacity-50 cursor-not-allowed" : ""
-              }`}
-              aria-label="Volume control"
-            />
+            <div className="px-3 py-1.5 bg-white/20 rounded-lg flex items-center shadow-sm">
+              <input
+                type="range"
+                min="0"
+                max="1"
+                step="0.1"
+                value={volume}
+                onChange={(e) => setVolume(parseFloat(e.target.value))}
+                disabled={isPlaying}
+                className={`w-24 accent-amber-300 ${
+                  isPlaying ? "opacity-50 cursor-not-allowed" : ""
+                }`}
+                aria-label="Volume control"
+              />
+            </div>
           )}
+
           <button
             onClick={() => setShowLiMei(!showLiMei)}
             disabled={isPlaying}
-            className={`bg-white lg:text-[#6B3100] transition-colors ${
+            className={`p-2.5 rounded-full bg-white/20 transition-all ${
               isPlaying
                 ? "opacity-50 cursor-not-allowed"
-                : "bg-white lg:hover:text-[#6B3100]/80 active:scale-95 active:opacity-80"
+                : "hover:bg-white/30 hover:scale-105 active:scale-95"
             }`}
             title={showLiMei ? "Hide Li Mei" : "Show Li Mei"}
             aria-label={showLiMei ? "Hide Li Mei" : "Show Li Mei"}
           >
             {showLiMei ? (
-              <Eye size={20} sm:size={24} />
+              <Eye size={24} className="text-white drop-shadow-md" />
             ) : (
-              <EyeOff size={20} sm:size={24} />
+              <EyeOff size={24} className="text-white drop-shadow-md" />
             )}
           </button>
         </div>
+      </div>
+    </header>
+  );
 
-        {!hasInteracted && !isSoundOn && (
-          <div className="bg-[#6B3100]/10 p-3 sm:p-4 rounded-lg mb-3 sm:mb-4 text-center">
-            <p className="text-[#6B3100] font-medium text-xs sm:text-sm">
-              Click the sound icon to enable Li Mei's voice 🔊
-            </p>
-          </div>
-        )}
+  const renderGuideAvatar = () => {
+    if (!showLiMei) return null;
 
-        <div className="space-y-4 sm:space-y-6">
-          {showLiMei && (
-            <div className="flex items-center justify-center mb-4 sm:mb-6">
-              <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full bg-[#F5E6D3] border-2 border-[#6B3100] flex items-center justify-center p-1 shadow-lg">
-                <div className="w-full h-full rounded-full bg-white flex items-center justify-center overflow-hidden border border-[#6B3100]/20">
-                  <img
-                    src="/avatar.jpg"
-                    alt="Li Mei"
-                    className="w-full h-full object-cover rounded-full"
-                    style={{
-                      imageRendering: "high-quality",
-                      backfaceVisibility: "hidden",
-                      WebkitBackfaceVisibility: "hidden",
-                    }}
-                  />
-                </div>
-              </div>
-            </div>
-          )}
-
-          <div className="bg-[#F5E6D3] p-4 sm:p-6 border-2 border-[#6B3100] relative">
-            <div className="absolute top-0 left-0 w-2 h-2 sm:w-3 sm:h-3 border-t-2 border-l-2 border-[#6B3100] -translate-x-1 -translate-y-1"></div>
-            <div className="absolute top-0 right-0 w-2 h-2 sm:w-3 sm:h-3 border-t-2 border-r-2 border-[#6B3100] translate-x-1 -translate-y-1"></div>
-            <div className="absolute bottom-0 left-0 w-2 h-2 sm:w-3 sm:h-3 border-b-2 border-l-2 border-[#6B3100] -translate-x-1 translate-y-1"></div>
-            <div className="absolute bottom-0 right-0 w-2 h-2 sm:w-3 sm:h-3 border-b-2 border-r-2 border-[#6B3100] translate-x-1 translate-y-1"></div>
-            <p className="text-black text-sm sm:text-base md:text-lg lg:text-xl lg:text-[#6B3100] font-medium leading-relaxed">
-              {conversation[step].text}
-            </p>
-          </div>
-
-          {conversation[step].type === "puzzle" ? (
-            <CharacterPuzzle
-              solvedPairs={solvedPairs}
-              draggedItem={draggedItem}
-              dragOverItem={dragOverItem}
-              onDragStart={handleDragStart}
-              onDragEnd={handleDragEnd}
-              onDragOver={handleDragOver}
-              onDrop={handleDrop}
-              onDragLeave={handleDragLeave}
+    return (
+      <div className="flex items-center mb-6 transition-all duration-500 hover:transform hover:scale-105">
+        <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-gradient-to-r from-amber-100 to-orange-100 p-1 shadow-lg relative group">
+          <div className="w-full h-full rounded-full overflow-hidden border border-amber-200 transition-transform duration-300 group-hover:scale-110">
+            <img
+              src="/avatar.jpg"
+              alt="Li Mei"
+              className="w-full h-full object-cover"
             />
-          ) : (
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center pt-3 sm:pt-4">
-              {conversation[step].options.map((option, index) => (
-                <button
-                  key={index}
-                  onClick={() => handleOptionClick(option.nextStep)}
-                  disabled={isPlaying || !isLoaded}
-                  className={`px-4 sm:px-6 py-2 sm:py-3 border-2 text-white lg:text-[#6B3100] 
-                           transition-all duration-300 ease-in-out text-xs sm:text-sm md:text-base font-medium
-                           focus:outline-none focus:ring-2 focus:ring-[#6B3100] focus:ring-offset-2
-                           w-full sm:w-auto relative group overflow-hidden
-                           ${
-                             index === 0
-                               ? "border-[#6B3100] bg-[#6B3100]/5 shadow-lg lg:hover:shadow-xl lg:hover:scale-105 active:scale-95 active:opacity-80"
-                               : "border-[#6B3100]/50 lg:hover:border-[#6B3100] lg:hover:scale-102 active:scale-95 active:opacity-80"
-                           }
-                           ${
-                             isPlaying || !isLoaded
-                               ? "opacity-50 cursor-not-allowed"
-                               : "lg:hover:bg-[#6B3100] lg:hover:text-white active:bg-[#6B3100]/80 active:text-white"
-                           }`}
-                >
-                  <span className="relative z-10 flex items-center justify-center gap-1 sm:gap-2">
-                    {option.label}
-                    {index === 0 && (
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-4 w-4 sm:h-5 sm:w-5 transform group-hover:translate-x-1 transition-transform duration-300"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    )}
-                  </span>
-                  <div
-                    className={`absolute inset-0 bg-[#6B3100] transform -translate-x-full 
-                                ${
-                                  !isPlaying && isLoaded
-                                    ? "group-hover:translate-x-0"
-                                    : ""
-                                } 
-                                transition-transform duration-300 ease-in-out`}
-                  ></div>
-                </button>
-              ))}
-            </div>
-          )}
+          </div>
+          <div className="absolute -right-1 -bottom-1 w-8 h-8 bg-amber-500 rounded-full flex items-center justify-center shadow-md">
+            <span className="text-white text-xs font-bold">李梅</span>
+          </div>
         </div>
+        <div className="ml-4 flex-1">
+          <h2 className="text-lg font-medium text-amber-900">Li Mei</h2>
+          <p className="text-amber-700 text-sm">
+            Your guide to Chinese culture
+          </p>
+          <div className="mt-1 flex space-x-1">
+            <span className="inline-block px-2 py-0.5 text-[10px] bg-amber-100 text-amber-800 rounded-full">
+              Language Expert
+            </span>
+            <span className="inline-block px-2 py-0.5 text-[10px] bg-orange-100 text-orange-800 rounded-full">
+              Cultural Guide
+            </span>
+          </div>
+        </div>
+      </div>
+    );
+  };
 
-        <div className="flex justify-center space-x-2 sm:space-x-3 mt-4 sm:mt-6">
-          {conversation.map((_, index) => (
-            <div
-              key={index}
-              className={`w-1.5 h-1.5 sm:w-2 sm:h-2 transform rotate-45 ${
-                index === step ? "bg-[#6B3100]" : "bg-[#6B3100]/30"
-              }`}
-            ></div>
-          ))}
+  const renderConversationBubble = () => (
+    <div
+      onClick={skipTyping}
+      className={`bg-gradient-to-r from-amber-50 to-orange-50 p-5 rounded-xl relative shadow-sm border border-amber-100 
+        transition-all duration-300 ${
+          isTyping ? "cursor-pointer hover:shadow-md" : ""
+        }`}
+    >
+      {isPlaying && (
+        <div className="absolute right-3 top-3 flex space-x-1">
+          <span className="w-2 h-2 bg-amber-500 rounded-full animate-bounce [animation-delay:-0.3s]"></span>
+          <span className="w-2 h-2 bg-amber-500 rounded-full animate-bounce [animation-delay:-0.15s]"></span>
+          <span className="w-2 h-2 bg-amber-500 rounded-full animate-bounce"></span>
+        </div>
+      )}
+      <p className="text-amber-900 text-lg leading-relaxed">
+        {conversation && conversation[step] && typingText
+          ? typingText
+          : conversation[step]?.text || "Loading..."}
+        {isTyping && (
+          <span className="inline-block w-1.5 h-5 bg-amber-700 ml-0.5 animate-blink"></span>
+        )}
+      </p>
+      {isTyping && (
+        <div className="absolute bottom-2 right-2 text-xs text-amber-500">
+          Click to skip
+        </div>
+      )}
+    </div>
+  );
+
+  const renderPuzzle = () => (
+    <div className="bg-white p-6 rounded-xl border border-amber-200 shadow-sm transition-all duration-300 hover:shadow-md">
+      <h3 className="text-center text-lg font-medium text-amber-900 mb-4">
+        Character Matching Puzzle
+      </h3>
+      <div className="bg-amber-50/50 p-3 mb-4 rounded-lg text-sm text-amber-800 flex items-center">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-5 w-5 mr-2 text-amber-600"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+          />
+        </svg>
+        Drag the characters to match them with their meanings
+      </div>
+      <CharacterPuzzle
+        solvedPairs={solvedPairs}
+        draggedItem={draggedItem}
+        dragOverItem={dragOverItem}
+        onDragStart={handleDragStart}
+        onDragEnd={handleDragEnd}
+        onDragOver={handleDragOver}
+        onDrop={handleDrop}
+        onDragLeave={handleDragLeave}
+      />
+    </div>
+  );
+
+  const renderOptions = () => {
+    if (!conversation[step]?.options?.length) return null;
+
+    return (
+      <div className="flex flex-col sm:flex-row gap-3 justify-center mt-6">
+        {conversation[step]?.options?.map((option, index) => (
+          <button
+            key={index}
+            onClick={() => handleOptionClick(option.nextStep)}
+            disabled={isPlaying || !isLoaded || isTyping}
+            className={`group px-6 py-3 rounded-lg transition-all duration-300 text-base font-medium
+                     focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500
+                     flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed
+                     ${
+                       index === 0
+                         ? "bg-gradient-to-r from-amber-600 to-amber-700 text-white shadow-md hover:shadow-lg hover:from-amber-700 hover:to-amber-800 active:shadow-sm"
+                         : "border-2 border-amber-300 text-amber-700 hover:bg-amber-50 hover:border-amber-400 active:bg-amber-100"
+                     }`}
+          >
+            {option.label}
+            {index === 0 && (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5 transition-transform group-hover:translate-x-1"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            )}
+          </button>
+        ))}
+      </div>
+    );
+  };
+
+  const renderStepIndicators = () => (
+    <div className="flex justify-center space-x-3 mt-8">
+      {conversation.map((_, index) => (
+        <button
+          key={index}
+          onClick={() => !isTyping && setStep(index)}
+          disabled={isPlaying || isTyping}
+          className={`w-2.5 h-2.5 rounded-full transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 disabled:opacity-50 disabled:cursor-not-allowed
+          ${
+            index === step
+              ? "bg-amber-600 scale-110"
+              : "bg-amber-200 hover:bg-amber-300"
+          }`}
+          aria-label={`Go to step ${index + 1}`}
+        >
+          <span className="sr-only">Step {index + 1}</span>
+        </button>
+      ))}
+    </div>
+  );
+
+  const renderSoundNotification = () => {
+    if (hasInteracted || isSoundOn) return null;
+
+    return (
+      <div className="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-lg mb-6 animate-pulse">
+        <p className="text-amber-800 font-medium flex items-center">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5 mr-2"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fillRule="evenodd"
+              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+              clipRule="evenodd"
+            />
+          </svg>
+          Enable Li Mei's voice guide by clicking the sound icon
+        </p>
+      </div>
+    );
+  };
+
+  return (
+    <div
+      className={`min-h-screen relative overflow-hidden flex items-center justify-center p-4 md:p-8 transition-colors duration-1000 
+      ${
+        bgAnimation
+          ? "bg-gradient-to-b from-amber-100 to-orange-100"
+          : "bg-gradient-to-b from-amber-50 to-orange-50"
+      }`}
+    >
+      {/* Animated background elements */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute -top-10 -left-10 w-40 h-40 bg-amber-300 opacity-20 rounded-full filter blur-3xl animate-float"></div>
+        <div className="absolute top-20 -right-20 w-60 h-60 bg-orange-300 opacity-20 rounded-full filter blur-3xl animate-float-delayed"></div>
+        <div className="absolute bottom-10 left-20 w-40 h-40 bg-amber-400 opacity-10 rounded-full filter blur-3xl animate-float-slow"></div>
+      </div>
+
+      {renderIntroAnimation()}
+
+      <div
+        className={`w-full max-w-3xl bg-white rounded-xl shadow-xl overflow-hidden transition-all duration-700 
+        ${showIntroAnim ? "opacity-0 scale-95" : "opacity-100 scale-100"}`}
+      >
+        {renderHeader()}
+
+        <div className="p-6 md:p-8">
+          {renderSoundNotification()}
+
+          <div className="space-y-6">
+            {renderGuideAvatar()}
+            {renderConversationBubble()}
+
+            {conversation[step]?.type === "puzzle"
+              ? renderPuzzle()
+              : renderOptions()}
+          </div>
+
+          {renderStepIndicators()}
         </div>
       </div>
     </div>

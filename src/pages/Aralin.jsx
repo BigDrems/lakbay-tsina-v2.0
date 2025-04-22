@@ -1,176 +1,121 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { Users, Star } from "lucide-react";
+import { memo } from "react";
+import { motion } from "framer-motion";
+import { Search } from "lucide-react";
 
-const lessons = [
-  {
-    id: 1,
-    title: "Kasaysayan at Dinastiya",
-    instructor: "Ralph Santos",
-    description:
-      "Pag-aralan ang mayamang kasaysayan ng Tsina, mula sa mga sinaunang dinastiya hanggang sa modernong panahon.",
-    students: 38,
-    ratings: 4.5,
-    price: "Free",
-    image: "/images/history.png",
-    category: "History",
-    status: "Popular",
-  },
-  {
-    id: 2,
-    title: "Kultura at Tradisyon",
-    instructor: "Maria Chen",
-    description:
-      "Tuklasin ang mga natatanging kaugalian at tradisyon ng Tsina, kabilang ang mga pista, ritwal, at pamumuhay.",
-    students: 45,
-    ratings: 4.8,
-    price: "Free",
-    image: "/images/kultura (2).png",
-    category: "Culture",
-    status: "Certificate",
-  },
-  {
-    id: 3,
-    title: "Pulitika at Pamahalaan",
-    instructor: "Dr. Li Wei",
-    description:
-      "Pag-unawa sa sistemang pampulitika ng Tsina at ang papel nito sa pandaigdigang larangan.",
-    students: 32,
-    ratings: 4.3,
-    price: "Free",
-    image: "/images/china.png",
-    category: "Politics",
-    status: "Learning",
-  },
-  {
-    id: 4,
-    title: "Ekonomiya ng Tsina",
-    instructor: "Prof. Zhang Wei",
-    description:
-      "Pag-aaral sa ekonomikong pag-unlad ng Tsina at ang impluwensya nito sa global na ekonomiya.",
-    students: 50,
-    ratings: 4.7,
-    price: "Free",
-    image: "/images/economy.jpg",
-    category: "Economics",
-    status: "Popular",
-  },
-  {
-    id: 5,
-    title: "Heograpiya ng Tsina",
-    instructor: "Juan Dela Cruz",
-    description:
-      "Galugarin ang malawak na lupain ng Tsina, mula sa mga bundok hanggang sa mga modernong lungsod.",
-    students: 28,
-    ratings: 4.4,
-    price: "Free",
-    image: "/images/geography.jpg",
-    category: "Geography",
-    status: "Learning",
-  },
-];
+// Custom hooks
+import useFilteredLessons from "../hooks/useFilteredLessons";
 
-const Lessons = () => {
-  const [selectedCategory, setSelectedCategory] = useState("All");
-  const categories = [
-    "All",
-    "History",
-    "Culture",
-    "Politics",
-    "Economics",
-    "Geography",
-  ];
+// Components
+import LessonCard from "../components/LessonCard";
+import EmptyState from "../components/EmptyState";
 
-  const filteredLessons =
-    selectedCategory === "All"
-      ? lessons
-      : lessons.filter((lesson) => lesson.category === selectedCategory);
+// Data and constants
+import { SORT_OPTIONS } from "../utils/constants";
+
+// Memoized section components for better performance
+const HeroSection = memo(({ searchQuery, setSearchQuery }) => (
+  <div className="mb-12 text-center">
+    <motion.div
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <h1 className="text-4xl font-extrabold text-gray-900 mb-4">
+        Mga Aralin Tungkol sa Tsina
+      </h1>
+      <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+        Simulan ang iyong paglalakbay sa pag-aaral tungkol sa mayamang kultura
+        at kasaysayan ng Tsina.
+      </p>
+    </motion.div>
+
+    {/* Search */}
+    <div className="mt-8 max-w-2xl mx-auto">
+      <div className="relative">
+        <input
+          type="text"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Maghanap ng aralin..."
+          className="w-full pl-12 pr-4 py-3.5 rounded-full border border-gray-200 focus:border-[#cd201c] focus:ring focus:ring-red-100 focus:outline-none shadow-sm"
+        />
+        <Search
+          className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"
+          size={20}
+        />
+      </div>
+    </div>
+  </div>
+));
+
+const ResultsHeader = memo(
+  ({ filteredLessons, selectedCategory, sortOption, setSortOption }) => (
+    <div className="mb-6 flex justify-between items-center">
+      <h2 className="text-xl font-bold text-gray-800">
+        {filteredLessons.length}{" "}
+        {filteredLessons.length === 1 ? "Aralin" : "Mga Aralin"}{" "}
+        {selectedCategory !== "All" ? `sa ${selectedCategory}` : ""}
+      </h2>
+      <div className="text-sm text-gray-500">
+        <select
+          className="bg-white border border-gray-200 rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-red-100"
+          value={sortOption}
+          onChange={(e) => setSortOption(e.target.value)}
+        >
+          {SORT_OPTIONS.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+      </div>
+    </div>
+  )
+);
+
+const LessonsGrid = memo(({ filteredLessons }) => (
+  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {filteredLessons.map((lesson, index) => (
+      <LessonCard key={lesson.id} lesson={lesson} index={index} />
+    ))}
+  </div>
+));
+
+// Main component
+const Aralin = () => {
+  const {
+    filteredLessons,
+    selectedCategory,
+    searchQuery,
+    setSearchQuery,
+    sortOption,
+    setSortOption,
+    resetFilters,
+  } = useFilteredLessons();
 
   return (
-    <div className="min-h-screen bg-gray-100 pt-20 pb-10">
-      <div className="container mx-auto px-4">
-        <h1 className="text-3xl font-bold text-gray-800 mb-8 text-center">
-          Mga Aralin
-        </h1>
+    <div className="min-h-screen bg-gray-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16">
+        <HeroSection
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+        />
 
-        {/* Categories */}
-        <div className="flex flex-wrap justify-center gap-3 mb-8">
-          {categories.map((category) => (
-            <button
-              key={category}
-              onClick={() => setSelectedCategory(category)}
-              className={`px-4 py-2 rounded-full transition-all sm:bg-white ${
-                selectedCategory === category
-                  ? "bg-[#cd201c] text-white lg:text-black"
-                  : "bg-white text-white lg:text-gray-700 lg:hover:bg-gray-200"
-              }`}
-            >
-              {category}
-            </button>
-          ))}
-        </div>
+        <ResultsHeader
+          filteredLessons={filteredLessons}
+          selectedCategory={selectedCategory}
+          sortOption={sortOption}
+          setSortOption={setSortOption}
+        />
 
-        {/* Lessons Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredLessons.map((lesson) => (
-            <Link
-              to={`/lessons/${lesson.id}`}
-              key={lesson.id}
-              className="bg-white rounded-lg overflow-hidden shadow-lg lg:hover:shadow-xl transition-shadow duration-300"
-            >
-              <div className="relative">
-                <img
-                  src={lesson.image}
-                  alt={lesson.title}
-                  className="w-full h-48 object-cover"
-                />
-                <span className="absolute top-4 right-4 bg-[#cd201c] text-white px-3 py-1 rounded-full text-sm">
-                  {lesson.status}
-                </span>
-              </div>
-
-              <div className="p-6">
-                <h3 className="text-xl font-semibold text-gray-800 mb-2">
-                  {lesson.title}
-                </h3>
-                <p className="text-gray-600 text-sm mb-4">
-                  {lesson.instructor}
-                </p>
-                <p className="text-gray-700 mb-4 line-clamp-2">
-                  {lesson.description}
-                </p>
-
-                <div className="flex items-center justify-between text-sm text-gray-600">
-                  <div className="flex items-center gap-4">
-                    <div className="flex items-center gap-1">
-                      <Users size={16} />
-                      <span>{lesson.students} Students</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <Star
-                        size={16}
-                        className="text-yellow-400 fill-current"
-                      />
-                      <span>{lesson.ratings}</span>
-                    </div>
-                  </div>
-                  <span
-                    className={`font-semibold ${
-                      lesson.price === "Free"
-                        ? "text-green-600"
-                        : "text-[#cd201c]"
-                    }`}
-                  >
-                    {lesson.price}
-                  </span>
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
+        {filteredLessons.length > 0 ? (
+          <LessonsGrid filteredLessons={filteredLessons} />
+        ) : (
+          <EmptyState resetFilters={resetFilters} />
+        )}
       </div>
     </div>
   );
 };
 
-export default Lessons;
+export default Aralin;
