@@ -205,9 +205,9 @@ function WelcomePage({ onComplete }) {
             aria-label={isSoundOn ? "Mute sound" : "Unmute sound"}
           >
             {isSoundOn ? (
-              <Volume2 size={24} className="text-white drop-shadow-md" />
+              <Volume2 size={24} className="text-black drop-shadow-md" />
             ) : (
-              <VolumeX size={24} className="text-white drop-shadow-md" />
+              <VolumeX size={24} className="text-black drop-shadow-md" />
             )}
             {!hasInteracted && (
               <div className="absolute -top-1 -right-1 w-4 h-4 bg-amber-300 ring-2 ring-white rounded-full animate-pulse"></div>
@@ -244,9 +244,9 @@ function WelcomePage({ onComplete }) {
             aria-label={showLiMei ? "Hide Li Mei" : "Show Li Mei"}
           >
             {showLiMei ? (
-              <Eye size={24} className="text-white drop-shadow-md" />
+              <Eye size={24} className="text-black drop-shadow-md" />
             ) : (
-              <EyeOff size={24} className="text-white drop-shadow-md" />
+              <EyeOff size={24} className="text-black drop-shadow-md" />
             )}
           </button>
         </div>
