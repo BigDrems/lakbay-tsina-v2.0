@@ -1,11 +1,18 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, lazy, Suspense } from "react";
 import Lenis from "@studio-freight/lenis";
-import ZoomParallax from "../components/ZoomParallax";
 import page from "../styles/home.module.scss";
-import SlidingImage from "../components/SlidingImage";
-import DynastyGallery from "../components/DynastyGallery";
-import ParallaxScroll from "../components/ParallaxScroll";
-import Testimonials from "../components/Testimonials";
+
+// Lazy load components
+const ZoomParallax = lazy(() => import("../components/ZoomParallax"));
+const SlidingImage = lazy(() => import("../components/SlidingImage"));
+const DynastyGallery = lazy(() => import("../components/DynastyGallery"));
+const ParallaxScroll = lazy(() => import("../components/ParallaxScroll"));
+const Testimonials = lazy(() => import("../components/Testimonials"));
+
+// Loading placeholders
+const LoadingFallback = () => (
+  <div className="w-full h-[50vh] bg-gray-100 animate-pulse"></div>
+);
 
 const Home = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -46,16 +53,44 @@ const Home = () => {
     { title1: "Zhou", title2: "Dynasty", src: "zhou.jpg" },
   ];
 
+  // Preload dynasty images
+  useEffect(() => {
+    import("../utils/imageUtils").then(({ preloadImages }) => {
+      // Only preload the first few images initially
+      const imagesToPreload = projects
+        .slice(0, 3)
+        .map((project) => `/images/${project.src}`);
+      preloadImages(imagesToPreload);
+    });
+  }, []);
+
   return (
     <>
-      <main className={page.main}>{!isMobile && <ZoomParallax />}</main>
-      <ParallaxScroll />
-      <SlidingImage />
+      <main className={page.main}>
+        {!isMobile && (
+          <Suspense fallback={<LoadingFallback />}>
+            <ZoomParallax />
+          </Suspense>
+        )}
+      </main>
+
+      <Suspense fallback={<LoadingFallback />}>
+        <ParallaxScroll />
+      </Suspense>
+
+      <Suspense fallback={<LoadingFallback />}>
+        <SlidingImage />
+      </Suspense>
 
       {projects.map((project, key) => (
-        <DynastyGallery key={key} project={project} />
+        <Suspense key={key} fallback={<LoadingFallback />}>
+          <DynastyGallery project={project} />
+        </Suspense>
       ))}
-      <Testimonials />
+
+      <Suspense fallback={<LoadingFallback />}>
+        <Testimonials />
+      </Suspense>
     </>
   );
 };

@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 import { useScroll, useTransform, motion } from "framer-motion";
 import styles from "../styles/styles.module.scss";
 
@@ -42,6 +42,9 @@ const slider2 = [
 
 export default function SlidingImage() {
   const container = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const [loadedImages, setLoadedImages] = useState({});
+
   const { scrollYProgress } = useScroll({
     target: container,
     offset: ["start end", "end start"],
@@ -51,10 +54,76 @@ export default function SlidingImage() {
   const x2 = useTransform(scrollYProgress, [0, 1], [0, -150]);
   const height = useTransform(scrollYProgress, [0, 0.9], [50, 0]);
 
+  // Preload first two images from each slider
+  useEffect(() => {
+    import("../utils/imageUtils").then(({ preloadImage }) => {
+      // Preload first two images from each slider
+      preloadImage(`/images/${slider1[0].src}`).then(() =>
+        setLoadedImages((prev) => ({ ...prev, [slider1[0].src]: true }))
+      );
+      preloadImage(`/images/${slider1[1].src}`).then(() =>
+        setLoadedImages((prev) => ({ ...prev, [slider1[1].src]: true }))
+      );
+      preloadImage(`/images/${slider2[0].src}`).then(() =>
+        setLoadedImages((prev) => ({ ...prev, [slider2[0].src]: true }))
+      );
+      preloadImage(`/images/${slider2[1].src}`).then(() =>
+        setLoadedImages((prev) => ({ ...prev, [slider2[1].src]: true }))
+      );
+    });
+  }, []);
+
+  // Use Intersection Observer to detect when the component is visible
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setIsVisible(true);
+
+          // Load remaining images when component becomes visible
+          import("../utils/imageUtils").then(({ preloadImages }) => {
+            const remainingImages1 = slider1
+              .slice(2)
+              .map((item) => `/images/${item.src}`);
+            const remainingImages2 = slider2
+              .slice(2)
+              .map((item) => `/images/${item.src}`);
+
+            preloadImages([...remainingImages1, ...remainingImages2]).then(
+              (images) => {
+                const newLoadedState = {};
+                [...slider1.slice(2), ...slider2.slice(2)].forEach((item) => {
+                  newLoadedState[item.src] = true;
+                });
+                setLoadedImages((prev) => ({ ...prev, ...newLoadedState }));
+              }
+            );
+          });
+
+          // Disconnect the observer after detection
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (container.current) {
+      observer.observe(container.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  const handleImageLoad = (src) => {
+    setLoadedImages((prev) => ({ ...prev, [src]: true }));
+  };
+
   return (
     <div ref={container} className={styles.slidingImages + " w-full"}>
       <motion.div style={{ x: x1 }} className={styles.slider}>
         {slider1.map((project, index) => {
+          const isPreloaded =
+            index < 2 || loadedImages[project.src] || isVisible;
           return (
             <div
               key={index}
@@ -62,11 +131,18 @@ export default function SlidingImage() {
               style={{ backgroundColor: project.color }}
             >
               <div className={styles.imageContainer}>
-                <img
-                  className="object-cover"
-                  alt={"image"}
-                  src={`/images/${project.src}`}
-                />
+                {isPreloaded ? (
+                  <img
+                    className="object-cover"
+                    alt={"image"}
+                    src={`/images/${project.src}`}
+                    loading={index < 2 ? "eager" : "lazy"}
+                    decoding={index < 2 ? "sync" : "async"}
+                    onLoad={() => handleImageLoad(project.src)}
+                  />
+                ) : (
+                  <div className="w-full h-full bg-gray-200 animate-pulse"></div>
+                )}
               </div>
             </div>
           );
@@ -74,6 +150,8 @@ export default function SlidingImage() {
       </motion.div>
       <motion.div style={{ x: x2 }} className={styles.slider}>
         {slider2.map((project, index) => {
+          const isPreloaded =
+            index < 2 || loadedImages[project.src] || isVisible;
           return (
             <div
               key={index}
@@ -81,7 +159,17 @@ export default function SlidingImage() {
               style={{ backgroundColor: project.color }}
             >
               <div key={index} className={styles.imageContainer}>
-                <img alt={"image"} src={`/images/${project.src}`} />
+                {isPreloaded ? (
+                  <img
+                    alt={"image"}
+                    src={`/images/${project.src}`}
+                    loading={index < 2 ? "eager" : "lazy"}
+                    decoding={index < 2 ? "sync" : "async"}
+                    onLoad={() => handleImageLoad(project.src)}
+                  />
+                ) : (
+                  <div className="w-full h-full bg-gray-200 animate-pulse"></div>
+                )}
               </div>
             </div>
           );

@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Search } from "lucide-react";
 
@@ -8,9 +8,12 @@ import useFilteredLessons from "../hooks/useFilteredLessons";
 // Components
 import LessonCard from "../components/LessonCard";
 import EmptyState from "../components/EmptyState";
+import LessonCardSkeleton from "../components/LessonCardSkeleton";
 
 // Data and constants
 import { SORT_OPTIONS } from "../utils/constants";
+import { lessons } from "../data/lessons";
+import { preloadImages } from "../utils/imageUtils";
 
 // Memoized section components for better performance
 const HeroSection = memo(({ searchQuery, setSearchQuery }) => (
@@ -73,13 +76,26 @@ const ResultsHeader = memo(
   )
 );
 
-const LessonsGrid = memo(({ filteredLessons }) => (
-  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    {filteredLessons.map((lesson, index) => (
-      <LessonCard key={lesson.id} lesson={lesson} index={index} />
-    ))}
-  </div>
-));
+// Updated component to handle loading state
+const LessonsGrid = memo(({ filteredLessons, isLoading }) => {
+  if (isLoading) {
+    return (
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {[...Array(6)].map((_, index) => (
+          <LessonCardSkeleton key={index} index={index} />
+        ))}
+      </div>
+    );
+  }
+
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {filteredLessons.map((lesson, index) => (
+        <LessonCard key={lesson.id} lesson={lesson} index={index} />
+      ))}
+    </div>
+  );
+});
 
 // Main component
 const Aralin = () => {
@@ -92,6 +108,37 @@ const Aralin = () => {
     setSortOption,
     resetFilters,
   } = useFilteredLessons();
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Preload lesson images when component mounts
+  useEffect(() => {
+    setIsLoading(true);
+
+    const lessonImages = lessons.map((lesson) => lesson.image);
+    const avatarImages = lessons.map(
+      (lesson) =>
+        `https://api.dicebear.com/7.x/avataaars/svg?seed=${lesson.instructor}`
+    );
+
+    // Preload all lesson images first
+    preloadImages(lessonImages)
+      .then(() => {
+        console.log("Lesson images preloaded successfully");
+        // Then preload instructor avatars
+        return preloadImages(avatarImages);
+      })
+      .then(() => {
+        console.log("Instructor avatars preloaded successfully");
+        // Set loading to false when all images are preloaded
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.warn("Some images failed to preload", error);
+        // Even if preloading fails, stop showing loading state after 3 seconds
+        setTimeout(() => setIsLoading(false), 3000);
+      });
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -108,8 +155,11 @@ const Aralin = () => {
           setSortOption={setSortOption}
         />
 
-        {filteredLessons.length > 0 ? (
-          <LessonsGrid filteredLessons={filteredLessons} />
+        {filteredLessons.length > 0 || isLoading ? (
+          <LessonsGrid
+            filteredLessons={filteredLessons}
+            isLoading={isLoading}
+          />
         ) : (
           <EmptyState resetFilters={resetFilters} />
         )}

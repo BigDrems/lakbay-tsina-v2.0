@@ -15,6 +15,7 @@ import CulturalQuiz from "./components/games/CulturalQuiz";
 import MusicMemory from "./components/games/MusicMemory";
 import GeographyExplorer from "./components/games/GeographyExplorer";
 import DynastyExplorer from "./components/DynastyExplorer";
+import ImagePreloader from "./components/ImagePreloader";
 
 function App() {
   const location = useLocation();
@@ -74,6 +75,7 @@ function App() {
 
   return (
     <>
+      <ImagePreloader />
       <main className="flex flex-col max-w-screen overflow-x-hidden relative bg-white">
         {showNavbar && <NavBar />}
         <div className="max-w-[1920px] relative">

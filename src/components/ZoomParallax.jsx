@@ -1,18 +1,22 @@
 import styles from "../styles/styles.module.scss";
-import Picture1 from "/assets/10.jpg";
-import Picture2 from "/assets/2.jpg";
-import Picture3 from "/assets/8.jpg";
-import Picture4 from "/assets/9.jpg";
-import Picture5 from "/assets/1.jpg";
-import Picture6 from "/assets/6.jpg";
-import Picture7 from "/assets/11.jpg";
-
 import { useScroll, useTransform, motion } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
 
 export default function Index() {
   const container = useRef(null);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [imagesLoaded, setImagesLoaded] = useState({});
+
+  // Define image paths
+  const imagePaths = [
+    "/assets/10.jpg",
+    "/assets/2.jpg",
+    "/assets/8.jpg",
+    "/assets/9.jpg",
+    "/assets/1.jpg",
+    "/assets/6.jpg",
+    "/assets/11.jpg",
+  ];
 
   const { scrollYProgress } = useScroll({
     target: container,
@@ -26,6 +30,19 @@ export default function Index() {
 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Preload only the first two images initially
+  useEffect(() => {
+    import("../utils/imageUtils").then(({ preloadImage }) => {
+      // Only preload the first two images immediately
+      preloadImage(imagePaths[0]).then(() => {
+        setImagesLoaded((prev) => ({ ...prev, [imagePaths[0]]: true }));
+      });
+      preloadImage(imagePaths[1]).then(() => {
+        setImagesLoaded((prev) => ({ ...prev, [imagePaths[1]]: true }));
+      });
+    });
   }, []);
 
   // Adjust scale values based on screen size
@@ -46,50 +63,64 @@ export default function Index() {
   const scale8 = useTransform(scrollYProgress, [0, 1], getScaleValues(10));
   const scale9 = useTransform(scrollYProgress, [0, 1], getScaleValues(10.5));
 
-  const pictures = [
-    {
-      src: Picture1,
-      scale: scale4,
-    },
-    {
-      src: Picture2,
-      scale: scale5,
-    },
-    {
-      src: Picture3,
-      scale: scale6,
-    },
-    {
-      src: Picture4,
-      scale: scale5,
-    },
-    {
-      src: Picture5,
-      scale: scale6,
-    },
-    {
-      src: Picture6,
-      scale: scale8,
-    },
-    {
-      src: Picture7,
-      scale: scale9,
-    },
-  ];
+  const scales = [scale4, scale5, scale6, scale5, scale6, scale8, scale9];
+
+  // Handle image loading
+  const handleImageLoad = (index) => {
+    setImagesLoaded((prev) => ({ ...prev, [imagePaths[index]]: true }));
+  };
+
+  // Use Intersection Observer to load images as they approach viewport
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const index = parseInt(entry.target.dataset.index);
+            if (!isNaN(index) && index < imagePaths.length) {
+              import("../utils/imageUtils").then(({ preloadImage }) => {
+                preloadImage(imagePaths[index]).then(() => {
+                  handleImageLoad(index);
+                });
+              });
+            }
+          }
+        });
+      },
+      { rootMargin: "200px" }
+    );
+
+    const elements = document.querySelectorAll(`.${styles.el}`);
+    elements.forEach((el) => observer.observe(el));
+
+    return () => elements.forEach((el) => observer.unobserve(el));
+  }, [imagePaths.length]);
 
   return (
     <div ref={container} className={styles.container}>
       <div className={styles.sticky}>
-        {pictures.map(({ src, scale }, index) => {
+        {imagePaths.map((src, index) => {
           return (
-            <motion.div key={index} style={{ scale }} className={styles.el}>
+            <motion.div
+              key={index}
+              style={{ scale: scales[index] }}
+              className={styles.el}
+              data-index={index}
+            >
               <div className={styles.imageContainer}>
-                <img
-                  src={src}
-                  alt={`image ${index + 1}`}
-                  placeholder="blur"
-                  className="w-full h-full object-cover"
-                />
+                {(imagesLoaded[src] || index < 2) && (
+                  <img
+                    src={src}
+                    alt={`image ${index + 1}`}
+                    loading={index < 2 ? "eager" : "lazy"}
+                    decoding={index < 2 ? "sync" : "async"}
+                    onLoad={() => handleImageLoad(index)}
+                    className="w-full h-full object-cover"
+                  />
+                )}
+                {!imagesLoaded[src] && index >= 2 && (
+                  <div className="w-full h-full bg-gray-200 animate-pulse"></div>
+                )}
               </div>
             </motion.div>
           );

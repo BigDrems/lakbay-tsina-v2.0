@@ -1,8 +1,11 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Users, Star, ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
 
 const LessonCard = ({ lesson, index }) => {
+  const [imageLoaded, setImageLoaded] = useState(false);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -16,11 +19,17 @@ const LessonCard = ({ lesson, index }) => {
       >
         <div className="relative overflow-hidden">
           <div className="aspect-w-16 aspect-h-9">
+            {!imageLoaded && (
+              <div className="w-full h-52 bg-gray-200 animate-pulse"></div>
+            )}
             <img
               src={lesson.image}
               alt={lesson.title}
-              className="w-full h-52 object-cover transform group-hover:scale-105 transition-transform duration-500"
-              loading="lazy"
+              className={`w-full h-52 object-cover transform group-hover:scale-105 transition-transform duration-500 ${
+                !imageLoaded ? "opacity-0" : "opacity-100"
+              }`}
+              onLoad={() => setImageLoaded(true)}
+              style={{ transition: "opacity 0.3s ease-in-out" }}
             />
           </div>
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -43,11 +52,14 @@ const LessonCard = ({ lesson, index }) => {
               {lesson.title}
             </h3>
             <div className="flex items-center gap-2 mb-3">
-              <img
-                src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${lesson.instructor}`}
-                alt={lesson.instructor}
-                className="w-6 h-6 rounded-full"
-              />
+              <div className="w-6 h-6 rounded-full overflow-hidden">
+                <img
+                  src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${lesson.instructor}`}
+                  alt={lesson.instructor}
+                  className="w-full h-full"
+                  loading="lazy"
+                />
+              </div>
               <p className="text-gray-600 text-sm">{lesson.instructor}</p>
             </div>
             <p className="text-gray-600 mb-4 line-clamp-2">

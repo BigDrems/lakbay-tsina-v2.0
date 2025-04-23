@@ -1,7 +1,8 @@
 import styles from "../styles/styles.module.scss";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { preloadImage } from "../utils/imageUtils";
 
 const anim = {
   initial: { width: 0 },
@@ -14,8 +15,24 @@ const anim = {
 
 export default function DynastyGallery({ project }) {
   const [isActive, setIsActive] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   const { title1, title2, src } = project;
+
+  useEffect(() => {
+    // Preload the image immediately when component mounts
+    const imagePath = `/images/${src}`;
+
+    preloadImage(imagePath)
+      .then(() => {
+        setImageLoaded(true);
+      })
+      .catch((error) => {
+        console.warn(`Failed to preload image: ${src}`, error);
+        // Still set as loaded to prevent UI blocking
+        setImageLoaded(true);
+      });
+  }, [src]);
 
   const handleDynastyClick = () => {
     // Navigate to Dynasty Explorer with the specific dynasty pre-selected
@@ -49,6 +66,7 @@ export default function DynastyGallery({ project }) {
             src={`/images/${src}`}
             className={`${styles.galleryImage} transition-transform duration-300 group-hover:scale-105`}
             alt={`${title1} ${title2}`}
+            style={{ visibility: imageLoaded ? "visible" : "hidden" }}
           />
         </motion.div>
         <motion.p
