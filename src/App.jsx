@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import NavBar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
@@ -17,27 +17,71 @@ import GeographyExplorer from "./components/games/GeographyExplorer";
 import DynastyExplorer from "./components/DynastyExplorer";
 
 function App() {
-  const [isWelcomeComplete, setIsWelcomeComplete] = useState(() => {
-    // Initialize from localStorage, default to false if not set
-    return localStorage.getItem("isWelcomeComplete") === "true";
+  const location = useLocation();
+  const SESSION_DURATION = 3 * 60 * 60 * 1000; // 3 hours in milliseconds
+
+  const [welcomeDismissed, setWelcomeDismissed] = useState(() => {
+    try {
+      // Check if session exists and hasn't expired
+      const sessionData = JSON.parse(sessionStorage.getItem("welcomeSession"));
+      if (sessionData && sessionData.expiry > Date.now()) {
+        return true;
+      }
+      return false;
+    } catch (error) {
+      return false;
+    }
   });
 
+  // Show navbar if welcome is dismissed OR if we're not on the home page
+  const showNavbar = welcomeDismissed || location.pathname !== "/";
+
   const handleWelcomeComplete = () => {
-    setIsWelcomeComplete(true);
-    // Save to localStorage
-    localStorage.setItem("isWelcomeComplete", "false");
+    // Create session with expiration time
+    const sessionData = {
+      dismissed: true,
+      expiry: Date.now() + SESSION_DURATION,
+    };
+    sessionStorage.setItem("welcomeSession", JSON.stringify(sessionData));
+    setWelcomeDismissed(true);
   };
+
+  // Refresh session timer when user is active
+  useEffect(() => {
+    if (welcomeDismissed) {
+      const refreshSession = () => {
+        const sessionData = {
+          dismissed: true,
+          expiry: Date.now() + SESSION_DURATION,
+        };
+        sessionStorage.setItem("welcomeSession", JSON.stringify(sessionData));
+      };
+
+      // Refresh session on user activity
+      window.addEventListener("click", refreshSession);
+      window.addEventListener("keypress", refreshSession);
+      window.addEventListener("scroll", refreshSession);
+      window.addEventListener("mousemove", refreshSession);
+
+      return () => {
+        window.removeEventListener("click", refreshSession);
+        window.removeEventListener("keypress", refreshSession);
+        window.removeEventListener("scroll", refreshSession);
+        window.removeEventListener("mousemove", refreshSession);
+      };
+    }
+  }, [welcomeDismissed, SESSION_DURATION]);
 
   return (
     <>
-      <main className="flex flex-col max-w-screen overflow-x-hidden relative">
-        {isWelcomeComplete && <NavBar />}
+      <main className="flex flex-col max-w-screen overflow-x-hidden relative bg-white">
+        {showNavbar && <NavBar />}
         <div className="max-w-[1920px] relative">
           <Routes>
             <Route
               path="/"
               element={
-                isWelcomeComplete ? (
+                welcomeDismissed ? (
                   <Home />
                 ) : (
                   <WelcomePage onComplete={handleWelcomeComplete} />
@@ -71,7 +115,7 @@ function App() {
             />
           </Routes>
         </div>
-        {isWelcomeComplete && <Footer />}
+        {showNavbar && <Footer />}
       </main>
     </>
   );

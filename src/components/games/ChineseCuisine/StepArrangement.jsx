@@ -243,7 +243,7 @@ const StepArrangement = ({
             className={`w-full py-2 rounded-lg flex items-center justify-center gap-2 ${
               arrangedSteps.length < currentRecipe.steps.length
                 ? "bg-gray-200 text-gray-500"
-                : "bg-[#6B3100] text-white hover:bg-[#6B3100]/90"
+                : "bg-[#6B3100] text-black hover:bg-[#6B3100]/90"
             }`}
           >
             <Check size={18} />

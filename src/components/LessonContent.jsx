@@ -126,7 +126,7 @@ const LessonContent = ({ lesson }) => {
           {/* Button */}
           <motion.button
             onClick={handleContinue}
-            className="w-full flex items-center justify-center gap-2 bg-[#cd201c] text-black px-6 py-4 rounded-xl font-bold text-lg hover:bg-[#b01c19] transition-colors shadow-md"
+            className="w-full flex items-center justify-center gap-2 bg-[#cd201c] text-white px-6 py-4 rounded-xl font-bold text-lg hover:bg-[#b01c19] transition-colors shadow-md"
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.98 }}
           >

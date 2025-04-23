@@ -10,7 +10,7 @@ const dynasties = [
     period: "2070-1600 BCE",
     description: "First dynasty in Chinese history, known for bronze work",
     achievements: "Development of bronze casting, calendar system",
-    image: "/images/xia-dynasty.jpg",
+    image: "/images/qin.webp",
   },
   {
     id: 2,
@@ -18,7 +18,7 @@ const dynasties = [
     period: "1600-1046 BCE",
     description: "Known for oracle bone inscriptions and bronze work",
     achievements: "First Chinese writing system, advanced bronze technology",
-    image: "/images/shang-dynasty.jpg",
+    image: "/images/Liu-bang.jpg",
   },
   {
     id: 3,
@@ -26,7 +26,7 @@ const dynasties = [
     period: "1046-256 BCE",
     description: "Longest ruling dynasty, introduced Mandate of Heaven",
     achievements: "Confucianism and Taoism emerged, iron technology",
-    image: "/images/zhou-dynasty.jpg",
+    image: "/images/zhou.jpg",
   },
   {
     id: 4,
@@ -34,7 +34,7 @@ const dynasties = [
     period: "221-206 BCE",
     description: "First unified Chinese empire, built Great Wall",
     achievements: "Standardized writing, currency, and measurements",
-    image: "/images/qin-dynasty.jpg",
+    image: "/images/qin.webp",
   },
   {
     id: 5,
@@ -43,7 +43,7 @@ const dynasties = [
     description: "Golden age of Chinese civilization",
     achievements:
       "Silk Road established, paper invented, Confucianism official",
-    image: "/images/han-dynasty.jpg",
+    image: "/images/Liu-bang.jpg",
   },
   {
     id: 6,
@@ -51,7 +51,7 @@ const dynasties = [
     period: "618-907 CE",
     description: "Cultural and artistic flourishing period",
     achievements: "Poetry and art flourished, Buddhism spread",
-    image: "/images/tang-dynasty.jpg",
+    image: "/images/Li_Xian.jpg",
   },
   {
     id: 7,
@@ -59,7 +59,7 @@ const dynasties = [
     period: "960-1279 CE",
     description: "Period of economic growth and cultural achievement",
     achievements: "Gunpowder, compass, printing technology",
-    image: "/images/song-dynasty.jpg",
+    image: "/images/song.webp",
   },
   {
     id: 8,
@@ -67,7 +67,7 @@ const dynasties = [
     period: "1271-1368 CE",
     description: "Mongol-led dynasty, expanded trade routes",
     achievements: "Marco Polo's travels, paper money widely used",
-    image: "/images/yuan-dynasty.jpg",
+    image: "/images/yuan.jpg",
   },
   {
     id: 9,
@@ -75,7 +75,7 @@ const dynasties = [
     period: "1368-1644 CE",
     description: "Known for maritime expeditions and porcelain",
     achievements: "Great Wall completed, Forbidden City built",
-    image: "/images/ming-dynasty.jpg",
+    image: "/images/ming.jpg",
   },
   {
     id: 10,
@@ -83,7 +83,7 @@ const dynasties = [
     period: "1644-1912 CE",
     description: "Last imperial dynasty of China",
     achievements: "Territorial expansion, cultural preservation",
-    image: "/images/qing-dynasty.jpg",
+    image: "/images/sui.jpg",
   },
 ];
 

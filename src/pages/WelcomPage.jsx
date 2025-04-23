@@ -55,30 +55,46 @@ function WelcomePage({ onComplete }) {
     const currentText = conversation[step].text;
     textRef.current = currentText;
 
+    // Reset typing state
     setIsTyping(false);
     setTypingText("");
 
+    // Create refs to track interval and typing state within the effect
+    let typingIntervalRef = null;
+    let isCanceledRef = false;
+
     const startTyping = () => {
+      if (isCanceledRef) return;
+
       setIsTyping(true);
       let index = 0;
       setTypingText(currentText.charAt(0));
       index = 1;
 
-      const typingInterval = setInterval(() => {
+      typingIntervalRef = setInterval(() => {
+        if (isCanceledRef) {
+          clearInterval(typingIntervalRef);
+          return;
+        }
+
         if (index < currentText.length) {
           setTypingText(currentText.substring(0, index + 1));
           index++;
         } else {
-          clearInterval(typingInterval);
+          clearInterval(typingIntervalRef);
           setIsTyping(false);
         }
       }, 60);
-
-      return () => clearInterval(typingInterval);
     };
 
     const typingTimer = setTimeout(startTyping, 200);
-    return () => clearTimeout(typingTimer);
+
+    // Cleanup function
+    return () => {
+      isCanceledRef = true;
+      clearTimeout(typingTimer);
+      if (typingIntervalRef) clearInterval(typingIntervalRef);
+    };
   }, [step]);
 
   // Speak current step text when step changes or sound is toggled on
@@ -103,8 +119,18 @@ function WelcomePage({ onComplete }) {
 
   const skipTyping = () => {
     if (isTyping && textRef.current) {
-      setTypingText(textRef.current);
+      // Stop any ongoing typing
       setIsTyping(false);
+
+      // Immediately set the full text from the ref
+      requestAnimationFrame(() => {
+        setTypingText(textRef.current);
+
+        // Trigger speech if appropriate
+        if (hasInteracted && isSoundOn && !isPlaying) {
+          speakText(textRef.current);
+        }
+      });
     }
   };
 
@@ -298,10 +324,16 @@ function WelcomePage({ onComplete }) {
   const renderConversationBubble = () => (
     <div
       onClick={skipTyping}
-      className={`bg-gradient-to-r from-amber-50 to-orange-50 p-5 rounded-xl relative shadow-sm border border-amber-100 
+      className={`bg-gradient-to-r from-amber-50 to-orange-50 p-5 rounded-xl relative shadow-sm 
         transition-all duration-300 ${
-          isTyping ? "cursor-pointer hover:shadow-md" : ""
+          isTyping
+            ? "cursor-pointer hover:shadow-lg border-2 border-amber-300 hover:border-amber-500 hover:-translate-y-0.5"
+            : "border border-amber-100"
         }`}
+      role={isTyping ? "button" : "none"}
+      aria-label={isTyping ? "Click to skip typing animation" : ""}
+      tabIndex={isTyping ? 0 : -1}
+      onKeyDown={(e) => isTyping && e.key === "Enter" && skipTyping()}
     >
       {isPlaying && (
         <div className="absolute right-3 top-3 flex space-x-1">
@@ -310,6 +342,27 @@ function WelcomePage({ onComplete }) {
           <span className="w-2 h-2 bg-amber-500 rounded-full animate-bounce"></span>
         </div>
       )}
+
+      {/* Indicate clickable state visually */}
+      {isTyping && (
+        <div className="absolute -top-2 -right-2 w-7 h-7 bg-amber-500 rounded-full flex items-center justify-center shadow-md animate-pulse z-10">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-4 w-4 text-white"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M5 15l7-7 7 7"
+            />
+          </svg>
+        </div>
+      )}
+
       <p className="text-amber-900 text-lg leading-relaxed">
         {conversation && conversation[step] && typingText
           ? typingText
@@ -318,9 +371,22 @@ function WelcomePage({ onComplete }) {
           <span className="inline-block w-1.5 h-5 bg-amber-700 ml-0.5 animate-blink"></span>
         )}
       </p>
+
       {isTyping && (
-        <div className="absolute bottom-2 right-2 text-xs text-amber-500">
-          Click to skip
+        <div className="absolute bottom-2 right-2 text-xs font-medium text-amber-600 bg-amber-100 px-2 py-1 rounded-md flex items-center space-x-1">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-3 w-3"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fillRule="evenodd"
+              d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z"
+              clipRule="evenodd"
+            />
+          </svg>
+          <span>Click to skip typing</span>
         </div>
       )}
     </div>

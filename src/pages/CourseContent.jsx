@@ -354,7 +354,7 @@ const CourseContent = () => {
                             onClick={() =>
                               handleOpenYouTube(activeLesson.videoUrl)
                             }
-                            className="bg-[#cd201c] hover:bg-[#b81c18] text-black rounded-full p-2 transition-colors"
+                            className="bg-[#cd201c] hover:bg-[#b81c18] text-white rounded-full p-2 transition-colors"
                           >
                             <ExternalLink size={18} />
                           </button>

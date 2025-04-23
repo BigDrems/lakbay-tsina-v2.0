@@ -8,8 +8,40 @@ import {
   Marker,
   Popup,
   useMapEvents,
+  GeoJSON,
+  Rectangle,
 } from "react-leaflet";
 import L from "leaflet";
+import "leaflet/dist/leaflet.css";
+
+// China GeoJSON data
+const chinaGeoJSON = {
+  type: "Feature",
+  properties: { name: "China" },
+  geometry: {
+    type: "Polygon",
+    coordinates: [
+      [
+        [134.7, 48.5], // Northeast corner
+        [87.3, 49.2], // Northwest corner
+        [73.6, 39.5], // Western point
+        [79.8, 30.3], // Southwest Himalayas
+        [97.5, 18.2], // Southern border with Myanmar
+        [108.0, 17.0], // Southern border with Vietnam
+        [121.9, 23.5], // Taiwan region
+        [122.1, 31.2], // Eastern coast
+        [126.0, 41.8], // Northeast near North Korea
+        [134.7, 48.5], // Back to Northeast
+      ],
+    ],
+  },
+};
+
+// Rectangle bounds to restrict the map view and interaction
+const bounds = [
+  [18, 73], // Southwest corner
+  [54, 135], // Northeast corner
+];
 
 const locations = [
   {
@@ -66,6 +98,40 @@ const createMarkerIcon = (color) => {
     popupAnchor: [1, -34],
     shadowSize: [41, 41],
   });
+};
+
+// Component to mask areas outside China
+const ChinaMask = () => {
+  // Create world rectangle
+  const outerBounds = [
+    [-90, -180],
+    [90, 180],
+  ];
+
+  return (
+    <>
+      {/* Mask the entire world first */}
+      <Rectangle
+        bounds={outerBounds}
+        pathOptions={{
+          color: "transparent",
+          fillColor: "rgba(0, 0, 0, 0.5)",
+          fillOpacity: 0.7,
+        }}
+      />
+
+      {/* Show China with no mask */}
+      <GeoJSON
+        data={chinaGeoJSON}
+        style={() => ({
+          color: "#6B3100",
+          weight: 2,
+          fillColor: "#F5E6D3",
+          fillOpacity: 0.2,
+        })}
+      />
+    </>
+  );
 };
 
 const defaultIcon = createMarkerIcon("red");
@@ -240,16 +306,23 @@ const GeographyExplorer = () => {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="md:col-span-2 h-[400px] rounded-lg overflow-hidden">
+                <div className="md:col-span-2 h-[500px] rounded-lg overflow-hidden">
                   <MapContainer
                     center={[35.8617, 104.1954]}
                     zoom={4}
                     className="h-full w-full"
+                    maxBounds={bounds}
+                    minZoom={4}
+                    maxBoundsViscosity={1.0}
                   >
                     <TileLayer
                       url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                       attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     />
+
+                    {/* Add China mask component */}
+                    <ChinaMask />
+
                     <MapClickHandler onMapClick={handleMapClick} />
 
                     {discoveredLocations.map((id) => {
