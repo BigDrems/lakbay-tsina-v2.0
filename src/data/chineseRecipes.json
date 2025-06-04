@@ -1,0 +1,267 @@
+{
+  "recipes": [
+    {
+      "name": "Kung Pao Chicken",
+      "description": "A classic Sichuan dish featuring tender chicken, peanuts, and dried chili peppers.",
+      "cookingTime": "30 mins",
+      "servings": 4,
+      "difficulty": "Medium",
+      "ingredients": [
+        { "amount": 500, "unit": "g", "name": "chicken breast, diced" },
+        { "amount": 2, "unit": "tbsp", "name": "soy sauce" },
+        { "amount": 1, "unit": "tbsp", "name": "rice wine" },
+        { "amount": 2, "unit": "tbsp", "name": "cornstarch" },
+        { "amount": 3, "unit": "tbsp", "name": "vegetable oil" },
+        { "amount": 6, "unit": "whole", "name": "dried red chili peppers" },
+        { "amount": 0.5, "unit": "cup", "name": "roasted peanuts" },
+        { "amount": 2, "unit": "tbsp", "name": "hoisin sauce" }
+      ],
+      "methods": [
+        {
+          "name": "Marinate the Chicken",
+          "description": "Combine diced chicken with soy sauce, rice wine, and cornstarch. Let marinate for 15 minutes.",
+          "tips": "For best results, use chicken at room temperature"
+        },
+        {
+          "name": "Stir-Fry Preparation",
+          "description": "Heat oil in a wok until smoking hot. Add dried chili peppers and stir-fry until fragrant.",
+          "tips": "Be careful not to burn the chili peppers"
+        },
+        {
+          "name": "Cook the Chicken",
+          "description": "Add marinated chicken and stir-fry until golden brown and cooked through.",
+          "tips": "Don't overcrowd the wok to ensure proper browning"
+        },
+        {
+          "name": "Final Assembly",
+          "description": "Add peanuts and hoisin sauce. Toss everything together until well combined.",
+          "tips": "Add the peanuts last to keep them crispy"
+        }
+      ],
+      "notes": "This dish can be made spicier by adding more chili peppers or Sichuan peppercorns. Serve hot with steamed rice."
+    },
+    {
+      "name": "Mapo Tofu",
+      "description": "A spicy Sichuan dish featuring soft tofu in a savory, spicy sauce with minced meat.",
+      "cookingTime": "25 mins",
+      "servings": 4,
+      "difficulty": "Medium",
+      "ingredients": [
+        { "amount": 400, "unit": "g", "name": "soft tofu, cubed" },
+        { "amount": 200, "unit": "g", "name": "ground pork" },
+        {
+          "amount": 2,
+          "unit": "tbsp",
+          "name": "doubanjiang (fermented bean paste)"
+        },
+        { "amount": 1, "unit": "tbsp", "name": "Sichuan peppercorns" },
+        { "amount": 2, "unit": "tbsp", "name": "garlic, minced" },
+        { "amount": 1, "unit": "tbsp", "name": "ginger, minced" },
+        { "amount": 2, "unit": "tbsp", "name": "cornstarch slurry" }
+      ],
+      "methods": [
+        {
+          "name": "Prepare the Tofu",
+          "description": "Cut tofu into cubes and blanch in hot water for 2 minutes to firm up.",
+          "tips": "Handle the tofu gently to prevent breaking"
+        },
+        {
+          "name": "Cook the Sauce Base",
+          "description": "Stir-fry garlic, ginger, and doubanjiang until fragrant. Add ground pork and cook until browned.",
+          "tips": "The doubanjiang should be cooked until the oil turns red"
+        },
+        {
+          "name": "Combine Ingredients",
+          "description": "Add tofu cubes and gently stir to combine. Simmer for 5 minutes.",
+          "tips": "Use a wooden spoon to prevent breaking the tofu"
+        },
+        {
+          "name": "Thicken and Finish",
+          "description": "Add cornstarch slurry to thicken the sauce. Garnish with Sichuan peppercorns.",
+          "tips": "Add the slurry gradually while stirring"
+        }
+      ],
+      "notes": "This dish is traditionally very spicy. Adjust the amount of doubanjiang and Sichuan peppercorns to your taste."
+    },
+    {
+      "name": "Sweet and Sour Pork",
+      "description": "A Cantonese favorite featuring crispy pork in a tangy, sweet sauce with colorful vegetables.",
+      "cookingTime": "40 mins",
+      "servings": 4,
+      "difficulty": "Medium",
+      "ingredients": [
+        { "amount": 500, "unit": "g", "name": "pork shoulder, cubed" },
+        { "amount": 1, "unit": "cup", "name": "cornstarch" },
+        { "amount": 2, "unit": "tbsp", "name": "soy sauce" },
+        { "amount": 1, "unit": "tbsp", "name": "rice wine" },
+        { "amount": 1, "unit": "bell pepper, diced" },
+        { "amount": 1, "unit": "onion, diced" },
+        { "amount": 1, "unit": "cup", "name": "pineapple chunks" },
+        { "amount": 3, "unit": "tbsp", "name": "ketchup" },
+        { "amount": 2, "unit": "tbsp", "name": "vinegar" },
+        { "amount": 2, "unit": "tbsp", "name": "sugar" }
+      ],
+      "methods": [
+        {
+          "name": "Prepare the Pork",
+          "description": "Marinate pork with soy sauce and rice wine. Coat with cornstarch and deep fry until crispy.",
+          "tips": "Double-fry the pork for extra crispiness"
+        },
+        {
+          "name": "Make the Sauce",
+          "description": "Combine ketchup, vinegar, and sugar in a bowl. Mix well until sugar dissolves.",
+          "tips": "Adjust the sweet-sour balance to your taste"
+        },
+        {
+          "name": "Stir-Fry Vegetables",
+          "description": "Stir-fry bell pepper and onion until slightly softened but still crisp.",
+          "tips": "Keep the vegetables crunchy for better texture"
+        },
+        {
+          "name": "Combine and Serve",
+          "description": "Add sauce to the pan, then toss in fried pork and pineapple. Cook until sauce thickens.",
+          "tips": "Add the pineapple last to maintain its freshness"
+        }
+      ],
+      "notes": "Serve immediately to maintain the crispiness of the pork. Best enjoyed with steamed rice."
+    },
+    {
+      "name": "Peking Duck",
+      "description": "A famous Beijing dish featuring crispy-skinned duck served with pancakes, hoisin sauce, and vegetables.",
+      "cookingTime": "3 hours",
+      "servings": 6,
+      "difficulty": "Hard",
+      "ingredients": [
+        { "amount": 1, "unit": "whole", "name": "duck (about 2kg)" },
+        { "amount": 2, "unit": "tbsp", "name": "honey" },
+        { "amount": 2, "unit": "tbsp", "name": "rice wine" },
+        { "amount": 1, "unit": "tbsp", "name": "five spice powder" },
+        { "amount": 1, "unit": "tbsp", "name": "salt" },
+        { "amount": 20, "unit": "pieces", "name": "pancakes" },
+        { "amount": 1, "unit": "bunch", "name": "spring onions" },
+        { "amount": 1, "unit": "cucumber" },
+        { "amount": 1, "unit": "jar", "name": "hoisin sauce" }
+      ],
+      "methods": [
+        {
+          "name": "Prepare the Duck",
+          "description": "Clean and dry the duck thoroughly. Mix honey, rice wine, five spice powder, and salt to make a glaze.",
+          "tips": "Ensure the duck is completely dry for crispy skin"
+        },
+        {
+          "name": "Air-Dry the Duck",
+          "description": "Brush the duck with the glaze and hang to air-dry for at least 4 hours, preferably overnight.",
+          "tips": "Use a fan to speed up the drying process"
+        },
+        {
+          "name": "Roast the Duck",
+          "description": "Roast at high temperature (220°C) for 30 minutes, then reduce to 180°C for 1.5 hours.",
+          "tips": "Baste occasionally with the remaining glaze"
+        },
+        {
+          "name": "Serve",
+          "description": "Carve the duck and serve with warm pancakes, hoisin sauce, and julienned vegetables.",
+          "tips": "Serve the skin separately for maximum crispiness"
+        }
+      ],
+      "notes": "Traditionally served in three courses: crispy skin, meat, and a soup made from the bones."
+    },
+    {
+      "name": "Dim Sum - Shumai",
+      "description": "Classic Cantonese dumplings filled with pork and shrimp, wrapped in thin wheat flour wrappers.",
+      "cookingTime": "45 mins",
+      "servings": 4,
+      "difficulty": "Medium",
+      "ingredients": [
+        { "amount": 200, "unit": "g", "name": "ground pork" },
+        { "amount": 200, "unit": "g", "name": "shrimp, minced" },
+        { "amount": 1, "unit": "tbsp", "name": "ginger, minced" },
+        { "amount": 2, "unit": "tbsp", "name": "spring onions, chopped" },
+        { "amount": 1, "unit": "tbsp", "name": "soy sauce" },
+        { "amount": 1, "unit": "tbsp", "name": "sesame oil" },
+        { "amount": 1, "unit": "tbsp", "name": "cornstarch" },
+        { "amount": 20, "unit": "pieces", "name": "wonton wrappers" },
+        { "amount": 1, "unit": "carrot, grated", "name": "for garnish" }
+      ],
+      "methods": [
+        {
+          "name": "Prepare the Filling",
+          "description": "Mix pork, shrimp, ginger, spring onions, and seasonings in a bowl until well combined.",
+          "tips": "Mix in one direction to create a sticky, cohesive filling"
+        },
+        {
+          "name": "Form the Dumplings",
+          "description": "Place a spoonful of filling in the center of each wrapper. Gather the edges and form a cup shape.",
+          "tips": "Keep the filling moist to prevent the wrapper from drying out"
+        },
+        {
+          "name": "Steam",
+          "description": "Place dumplings in a steamer lined with parchment paper. Steam for 8-10 minutes.",
+          "tips": "Don't overcrowd the steamer to ensure even cooking"
+        },
+        {
+          "name": "Garnish and Serve",
+          "description": "Top each dumpling with a small amount of grated carrot. Serve hot with soy sauce or chili oil.",
+          "tips": "Serve immediately to maintain the texture"
+        }
+      ],
+      "notes": "Shumai can be frozen before steaming. Add 2-3 minutes to steaming time when cooking from frozen."
+    },
+    {
+      "name": "Wonton Noodle Soup",
+      "description": "A comforting Hong Kong classic featuring delicate wontons and springy egg noodles in a clear broth.",
+      "cookingTime": "1 hour",
+      "servings": 4,
+      "difficulty": "Medium",
+      "ingredients": [
+        { "amount": 300, "unit": "g", "name": "ground pork" },
+        { "amount": 200, "unit": "g", "name": "shrimp, minced" },
+        { "amount": 1, "unit": "tbsp", "name": "ginger, minced" },
+        { "amount": 2, "unit": "tbsp", "name": "spring onions, chopped" },
+        { "amount": 1, "unit": "tbsp", "name": "soy sauce" },
+        { "amount": 1, "unit": "tbsp", "name": "sesame oil" },
+        { "amount": 30, "unit": "pieces", "name": "wonton wrappers" },
+        { "amount": 400, "unit": "g", "name": "egg noodles" },
+        { "amount": 2, "unit": "liters", "name": "chicken stock" },
+        { "amount": 1, "unit": "tbsp", "name": "white pepper" }
+      ],
+      "methods": [
+        {
+          "name": "Make the Wontons",
+          "description": "Mix pork, shrimp, and seasonings. Wrap in wonton wrappers, forming small pouches.",
+          "tips": "Seal the wontons well to prevent filling from leaking"
+        },
+        {
+          "name": "Prepare the Broth",
+          "description": "Simmer chicken stock with ginger and white pepper for 30 minutes. Strain and keep hot.",
+          "tips": "Skim any impurities from the broth for clarity"
+        },
+        {
+          "name": "Cook the Noodles",
+          "description": "Boil egg noodles until al dente. Rinse under cold water to remove excess starch.",
+          "tips": "Don't overcook the noodles as they will cook further in the hot broth"
+        },
+        {
+          "name": "Assemble and Serve",
+          "description": "Place noodles in bowls, add wontons, and pour hot broth over. Garnish with spring onions.",
+          "tips": "Serve immediately to maintain the texture of the noodles"
+        }
+      ],
+      "notes": "The wontons can be made ahead and frozen. Add 1-2 minutes to cooking time when using frozen wontons."
+    }
+  ],
+  "pages": [
+    {
+      "title": "Classic Chinese Recipes",
+      "subtitle": "Master these essential dishes"
+    },
+    {
+      "title": "Dim Sum Delights",
+      "subtitle": "Discover the art of Chinese dumplings and small plates"
+    },
+    {
+      "title": "Signature Dishes",
+      "subtitle": "Explore famous Chinese restaurant favorites"
+    }
+  ]
+}

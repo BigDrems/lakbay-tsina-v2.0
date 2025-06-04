@@ -1,4 +1,5 @@
 import { Routes, Route, useLocation } from "react-router-dom";
+import { Suspense, lazy } from "react";
 import NavBar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
@@ -9,13 +10,29 @@ import Aralin from "./pages/Aralin";
 import Libangan from "./pages/Libangan";
 import LessonDetail from "./pages/LessonDetail";
 import CourseContent from "./pages/CourseContent";
-import CharacterMatch from "./components/games/CharacterMatch";
-import DynastyTimeline from "./components/games/DynastyTimeline";
-import CulturalQuiz from "./components/games/CulturalQuiz";
-import MusicMemory from "./components/games/MusicMemory";
-import GeographyExplorer from "./components/games/GeographyExplorer";
 import DynastyExplorer from "./components/DynastyExplorer";
 import ImagePreloader from "./components/ImagePreloader";
+
+// Lazy load game components
+const CharacterMatch = lazy(() => import("./components/games/CharacterMatch"));
+const DynastyTimeline = lazy(() =>
+  import("./components/games/DynastyTimeline")
+);
+const CulturalQuiz = lazy(() => import("./components/games/CulturalQuiz"));
+const MusicMemory = lazy(() => import("./components/games/MusicMemory"));
+const GeographyExplorer = lazy(() =>
+  import("./components/games/GeographyExplorer")
+);
+
+// Loading component for game routes
+const GameLoading = () => (
+  <div className="min-h-screen bg-[#F5E6D3] flex items-center justify-center">
+    <div className="text-center">
+      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#6B3100] mx-auto mb-4"></div>
+      <p className="text-[#6B3100]">Loading game...</p>
+    </div>
+  </div>
+);
 
 function App() {
   const location = useLocation();
@@ -99,16 +116,45 @@ function App() {
             <Route path="/course-content/:id" element={<CourseContent />} />
             <Route path="/lessons" element={<Aralin />} />
             <Route path="/entertainment" element={<Libangan />} />
-            <Route path="/games/character-match" element={<CharacterMatch />} />
+            <Route
+              path="/games/character-match"
+              element={
+                <Suspense fallback={<GameLoading />}>
+                  <CharacterMatch />
+                </Suspense>
+              }
+            />
             <Route
               path="/games/dynasty-timeline"
-              element={<DynastyTimeline />}
+              element={
+                <Suspense fallback={<GameLoading />}>
+                  <DynastyTimeline />
+                </Suspense>
+              }
             />
-            <Route path="/games/cultural-quiz" element={<CulturalQuiz />} />
-            <Route path="/games/music-memory" element={<MusicMemory />} />
+            <Route
+              path="/games/cultural-quiz"
+              element={
+                <Suspense fallback={<GameLoading />}>
+                  <CulturalQuiz />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/games/music-memory"
+              element={
+                <Suspense fallback={<GameLoading />}>
+                  <MusicMemory />
+                </Suspense>
+              }
+            />
             <Route
               path="/games/geography-explorer"
-              element={<GeographyExplorer />}
+              element={
+                <Suspense fallback={<GameLoading />}>
+                  <GeographyExplorer />
+                </Suspense>
+              }
             />
             <Route path="/dynasty-explorer" element={<DynastyExplorer />} />
             <Route

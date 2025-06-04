@@ -2,7 +2,6 @@ import styles from "../styles/styles.module.scss";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { preloadImage } from "../utils/imageUtils";
 
 const anim = {
   initial: { width: 0 },
@@ -23,15 +22,17 @@ export default function DynastyGallery({ project }) {
     // Preload the image immediately when component mounts
     const imagePath = `/images/${src}`;
 
-    preloadImage(imagePath)
-      .then(() => {
-        setImageLoaded(true);
-      })
-      .catch((error) => {
-        console.warn(`Failed to preload image: ${src}`, error);
-        // Still set as loaded to prevent UI blocking
-        setImageLoaded(true);
-      });
+    import("../utils/imageUtils").then(({ preloadImage }) => {
+      preloadImage(imagePath)
+        .then(() => {
+          setImageLoaded(true);
+        })
+        .catch((error) => {
+          console.warn(`Failed to preload image: ${src}`, error);
+          // Still set as loaded to prevent UI blocking
+          setImageLoaded(true);
+        });
+    });
   }, [src]);
 
   const handleDynastyClick = () => {

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { dynastyImageMap } from "../data/dynastyData";
-import { preloadImages } from "../utils/imageUtils";
 
 const ImagePreloader = () => {
   const [imagesLoaded, setImagesLoaded] = useState(false);
@@ -12,17 +11,19 @@ const ImagePreloader = () => {
     // Convert to full paths
     const fullPaths = imageSources.map((src) => `/images/${src}`);
 
-    // Preload all images
-    preloadImages(fullPaths)
-      .then(() => {
-        console.log("All dynasty images preloaded successfully");
-        setImagesLoaded(true);
-      })
-      .catch((error) => {
-        console.warn("Some dynasty images failed to preload", error);
-        // Still set as loaded to prevent blocking the app
-        setImagesLoaded(true);
-      });
+    // Preload all images using dynamic import
+    import("../utils/imageUtils").then(({ preloadImages }) => {
+      preloadImages(fullPaths)
+        .then(() => {
+          console.log("All dynasty images preloaded successfully");
+          setImagesLoaded(true);
+        })
+        .catch((error) => {
+          console.warn("Some dynasty images failed to preload", error);
+          // Still set as loaded to prevent blocking the app
+          setImagesLoaded(true);
+        });
+    });
   }, []);
 
   // This component doesn't render anything visible

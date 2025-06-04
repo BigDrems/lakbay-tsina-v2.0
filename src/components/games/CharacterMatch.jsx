@@ -2,6 +2,11 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ArrowLeft, RefreshCw, Check } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import {
+  playSound,
+  playBackgroundMusic,
+  stopBackgroundMusic,
+} from "../../utils/soundManager";
 
 const characters = [
   {
@@ -60,6 +65,13 @@ const CharacterMatch = () => {
 
   useEffect(() => {
     resetGame();
+    // Start background music when component mounts
+    playBackgroundMusic();
+
+    // Cleanup: stop background music when component unmounts
+    return () => {
+      stopBackgroundMusic();
+    };
   }, []);
 
   const handleCardClick = (card) => {
@@ -74,6 +86,7 @@ const CharacterMatch = () => {
 
     const newFlippedCards = [...flippedCards, card];
     setFlippedCards(newFlippedCards);
+    playSound("flip"); // Play flip sound when card is clicked
 
     if (newFlippedCards.length === 2) {
       setIsChecking(true);
@@ -87,10 +100,17 @@ const CharacterMatch = () => {
       ) {
         setMatchedPairs((prev) => [...prev, firstCard.id]);
         setScore((prev) => prev + 10);
+        playSound("correct"); // Play correct sound for successful matches
 
         if (matchedPairs.length + 1 === characters.length) {
           setGameComplete(true);
+          playSound("complete"); // Play complete sound for game completion
         }
+      } else {
+        // Add a small delay before playing the wrong sound
+        setTimeout(() => {
+          playSound("wrong"); // Play wrong sound for failed matches with delay
+        }, 300); // 300ms delay
       }
 
       setTimeout(() => {
@@ -128,9 +148,9 @@ const CharacterMatch = () => {
           <button
             onClick={() => navigate("/entertainment")}
             className="flex items-center gap-1 text-[#6B3100] hover:text-[#6B3100]/80 text-sm sm:text-base"
+            aria-label="Back"
           >
             <ArrowLeft size={16} className="sm:w-5 sm:h-5" />
-            <span>Back</span>
           </button>
           <div className="flex items-center gap-2">
             <div className="text-[#6B3100] font-medium text-sm sm:text-base">
@@ -177,103 +197,144 @@ const CharacterMatch = () => {
               </button>
             </motion.div>
           ) : (
-            <>
-              <div className="mb-4">
-                <div className="h-2 bg-gray-200 rounded-full mb-2">
-                  <div
-                    className="h-2 bg-[#6B3100] rounded-full transition-all duration-300"
-                    style={{
-                      width: `${
-                        (matchedPairs.length / characters.length) * 100
-                      }%`,
-                    }}
-                  ></div>
+            <div className="flex flex-col lg:flex-row gap-4">
+              <div className="flex-1">
+                <div className="mb-4">
+                  <div className="h-2 bg-gray-200 rounded-full mb-2">
+                    <div
+                      className="h-2 bg-[#6B3100] rounded-full transition-all duration-300"
+                      style={{
+                        width: `${
+                          (matchedPairs.length / characters.length) * 100
+                        }%`,
+                      }}
+                    ></div>
+                  </div>
+                  <p className="text-center text-[#6B3100] font-medium text-xs sm:text-sm">
+                    {matchedPairs.length} / {characters.length} Matched
+                  </p>
                 </div>
-                <p className="text-center text-[#6B3100] font-medium text-xs sm:text-sm">
-                  {matchedPairs.length} / {characters.length} Matched
-                </p>
+
+                <div className="grid grid-cols-4 lg:grid-cols-4 md:grid-cols-4 gap-2 lg:gap-2">
+                  {shuffledCharacters.map((card) => (
+                    <motion.div
+                      key={`${card.id}-${card.type}`}
+                      className="relative aspect-square"
+                    >
+                      <motion.button
+                        initial={false}
+                        animate={{
+                          rotateY: isCardFlipped(card) ? 180 : 0,
+                        }}
+                        transition={{ duration: 0.4 }}
+                        className={`
+                          absolute inset-0 lg:w-full lg:h-full backface-hidden w-22 h-22
+                          rounded-lg border-4 flex flex-col items-center justify-center text-center
+                          bg-[#6B3100] border-[#6B3100]/80 shadow-md
+                          ${
+                            matchedPairs.includes(card.id)
+                              ? "cursor-default"
+                              : "cursor-pointer hover:border-[#6B3100] hover:shadow-lg transition-all duration-200"
+                          }
+                        `}
+                        onClick={() => handleCardClick(card)}
+                        disabled={matchedPairs.includes(card.id) || isChecking}
+                      >
+                        <span className="text-lg sm:text-xl text-white">?</span>
+                      </motion.button>
+                      <motion.div
+                        initial={false}
+                        animate={{
+                          rotateY: isCardFlipped(card) ? 0 : -180,
+                        }}
+                        transition={{ duration: 0.4 }}
+                        className={`
+                          absolute w-22 h-22 inset-0 lg:w-full lg:h-full backface-hidden
+                          rounded-lg border-4 flex flex-col items-center justify-center text-center
+                          ${
+                            matchedPairs.includes(card.id)
+                              ? "bg-green-100 border-green-500 shadow-md"
+                              : "bg-white border-[#6B3100]/80 shadow-md"
+                          }
+                        `}
+                      >
+                        {card.type === "character" ? (
+                          <>
+                            <span className="text-2xl sm:text-3xl font-bold text-[#6B3100] mb-1">
+                              {card.character}
+                            </span>
+                            <span className="text-xs text-gray-600">
+                              {card.pinyin}
+                            </span>
+                          </>
+                        ) : (
+                          <div className="text-xs sm:text-sm text-[#6B3100] px-2">
+                            {card.meaning}
+                          </div>
+                        )}
+                        {matchedPairs.includes(card.id) && (
+                          <Check className="absolute top-1 right-1 text-green-500 w-3 h-3 sm:w-4 sm:h-4" />
+                        )}
+                      </motion.div>
+                    </motion.div>
+                  ))}
+                </div>
+
+                <style jsx>{`
+                  .backface-hidden {
+                    backface-visibility: hidden;
+                    -webkit-backface-visibility: hidden;
+                    transform-style: preserve-3d;
+                    -webkit-transform-style: preserve-3d;
+                  }
+                `}</style>
+
+                <div className="mt-4 sm:mt-6 text-center">
+                  <p className="text-xs sm:text-sm text-gray-600">
+                    Click on a card to reveal it, then find its matching pair
+                  </p>
+                </div>
               </div>
 
-              <div className="grid grid-cols-4 lg:grid-cols-4 md:grid-cols-4 gap-2 lg:gap-2">
-                {shuffledCharacters.map((card) => (
-                  <motion.div
-                    key={`${card.id}-${card.type}`}
-                    className="relative aspect-square"
-                  >
-                    <motion.button
-                      initial={false}
-                      animate={{
-                        rotateY: isCardFlipped(card) ? 180 : 0,
-                      }}
-                      transition={{ duration: 0.4 }}
-                      className={`
-                        absolute inset-0 lg:w-full lg:h-full backface-hidden w-22 h-22
-                        rounded-lg border-2 flex flex-col items-center justify-center text-center
-                        bg-[#6B3100] border-[#6B3100]/50
-                        ${
-                          matchedPairs.includes(card.id)
-                            ? "cursor-default"
-                            : "cursor-pointer lg:hover:bg-[#6B3100]/90"
-                        }
-                      `}
-                      onClick={() => handleCardClick(card)}
-                      disabled={matchedPairs.includes(card.id) || isChecking}
+              {/* Reference Guide */}
+              <div className="w-full lg:w-64 bg-[#F5E6D3] rounded-lg p-4 shadow-md mt-4 lg:mt-0">
+                <h3 className="text-[#6B3100] font-semibold mb-3 text-sm sm:text-base flex items-center gap-2">
+                  <span>Character Guide</span>
+                  <span className="text-xs text-[#6B3100]/60">
+                    ({matchedPairs.length}/{characters.length} matched)
+                  </span>
+                </h3>
+                <div className="space-y-2 max-h-[400px] overflow-y-auto pr-2">
+                  {characters.map((char) => (
+                    <div
+                      key={char.id}
+                      className={`p-2 rounded border transition-colors duration-200 ${
+                        matchedPairs.includes(char.id)
+                          ? "bg-green-100 border-green-500"
+                          : "bg-white border-[#6B3100]/20 hover:border-[#6B3100]/40"
+                      }`}
                     >
-                      <span className="text-lg sm:text-xl text-white">?</span>
-                    </motion.button>
-                    <motion.div
-                      initial={false}
-                      animate={{
-                        rotateY: isCardFlipped(card) ? 0 : -180,
-                      }}
-                      transition={{ duration: 0.4 }}
-                      className={`
-                        absolute w-22 h-22 inset-0 lg:w-full lg:h-full backface-hidden
-                        rounded-lg border-2 flex flex-col items-center justify-center text-center
-                        ${
-                          matchedPairs.includes(card.id)
-                            ? "bg-green-100 border-green-500"
-                            : "bg-white border-[#6B3100]"
-                        }
-                      `}
-                    >
-                      {card.type === "character" ? (
-                        <>
-                          <span className="text-2xl sm:text-3xl font-bold text-[#6B3100] mb-1">
-                            {card.character}
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <span className="text-lg font-bold text-[#6B3100]">
+                            {char.character}
                           </span>
                           <span className="text-xs text-gray-600">
-                            {card.pinyin}
+                            {char.pinyin}
                           </span>
-                        </>
-                      ) : (
-                        <div className="text-xs sm:text-sm text-[#6B3100] px-2">
-                          {card.meaning}
                         </div>
-                      )}
-                      {matchedPairs.includes(card.id) && (
-                        <Check className="absolute top-1 right-1 text-green-500 w-3 h-3 sm:w-4 sm:h-4" />
-                      )}
-                    </motion.div>
-                  </motion.div>
-                ))}
+                        {matchedPairs.includes(char.id) && (
+                          <Check className="text-green-500 w-4 h-4 flex-shrink-0" />
+                        )}
+                      </div>
+                      <div className="text-xs text-[#6B3100] mt-1">
+                        {char.meaning}
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
-
-              <style jsx>{`
-                .backface-hidden {
-                  backface-visibility: hidden;
-                  -webkit-backface-visibility: hidden;
-                  transform-style: preserve-3d;
-                  -webkit-transform-style: preserve-3d;
-                }
-              `}</style>
-
-              <div className="mt-4 sm:mt-6 text-center">
-                <p className="text-xs sm:text-sm text-gray-600">
-                  Click on a card to reveal it, then find its matching pair
-                </p>
-              </div>
-            </>
+            </div>
           )}
         </div>
       </div>

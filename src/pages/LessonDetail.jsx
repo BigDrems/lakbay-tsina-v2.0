@@ -22,9 +22,9 @@ const LessonDetail = () => {
           <button
             onClick={() => navigate("/lessons")}
             className="flex items-center gap-1 text-gray-700 hover:text-[#cd201c] transition-colors font-medium"
+            aria-label="Bumalik"
           >
             <ArrowLeft size={18} />
-            <span>Bumalik</span>
           </button>
         </div>
 

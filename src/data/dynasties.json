@@ -1,0 +1,84 @@
+{
+  "dynasties": [
+    {
+      "id": 1,
+      "name": "Xia Dynasty",
+      "period": "2070-1600 BCE",
+      "description": "Unang dinastiya sa kasaysayan ng China, kilala sa paggawa ng tanso",
+      "achievements": "Pag-unlad ng paghuhulma ng tanso, sistema ng kalendaryo",
+      "image": "/images/qin.webp"
+    },
+    {
+      "id": 2,
+      "name": "Shang Dynasty",
+      "period": "1600-1046 BCE",
+      "description": "Kilala sa mga inskripsiyon sa buto ng orakulo at paggawa ng tanso",
+      "achievements": "Unang sistema ng pagsusulat ng China, advanced na teknolohiya ng tanso",
+      "image": "/images/Liu-bang.jpg"
+    },
+    {
+      "id": 3,
+      "name": "Zhou Dynasty",
+      "period": "1046-256 BCE",
+      "description": "Pinakamahabang namahala na dinastiya, nagpakilala ng Mandate of Heaven",
+      "achievements": "Paglitaw ng Confucianismo at Taoismo, teknolohiya ng bakal",
+      "image": "/images/zhou.jpg"
+    },
+    {
+      "id": 4,
+      "name": "Qin Dynasty",
+      "period": "221-206 BCE",
+      "description": "Unang nagkaisang imperyo ng China, nagtayo ng Great Wall",
+      "achievements": "Standardisasyon ng pagsusulat, pera, at mga sukat",
+      "image": "/images/qin.webp"
+    },
+    {
+      "id": 5,
+      "name": "Han Dynasty",
+      "period": "206 BCE-220 CE",
+      "description": "Ginintuang panahon ng sibilisasyon ng China",
+      "achievements": "Pagtatag ng Silk Road, imbensyon ng papel, opisyal na Confucianismo",
+      "image": "/images/Liu-bang.jpg"
+    },
+    {
+      "id": 6,
+      "name": "Tang Dynasty",
+      "period": "618-907 CE",
+      "description": "Panahon ng pagsulong sa kultura at sining",
+      "achievements": "Pag-unlad ng tula at sining, pagkalat ng Budismo",
+      "image": "/images/Li_Xian.jpg"
+    },
+    {
+      "id": 7,
+      "name": "Song Dynasty",
+      "period": "960-1279 CE",
+      "description": "Panahon ng pag-unlad sa ekonomiya at kultura",
+      "achievements": "Pulbura, kompas, teknolohiya ng pag-imprenta",
+      "image": "/images/song.webp"
+    },
+    {
+      "id": 8,
+      "name": "Yuan Dynasty",
+      "period": "1271-1368 CE",
+      "description": "Dinastiyang pinamunuan ng mga Mongol, pinalawak ang mga ruta ng kalakalan",
+      "achievements": "Mga paglalakbay ni Marco Polo, malawakang paggamit ng papel na pera",
+      "image": "/images/yuan.jpg"
+    },
+    {
+      "id": 9,
+      "name": "Ming Dynasty",
+      "period": "1368-1644 CE",
+      "description": "Kilala sa mga ekspedisyong pandagat at porselana",
+      "achievements": "Pagkumpleto ng Great Wall, pagtatayo ng Forbidden City",
+      "image": "/images/ming.jpg"
+    },
+    {
+      "id": 10,
+      "name": "Qing Dynasty",
+      "period": "1644-1912 CE",
+      "description": "Huling imperyal na dinastiya ng China",
+      "achievements": "Pagpapalawak ng teritoryo, pangangalaga ng kultura",
+      "image": "/images/sui.jpg"
+    }
+  ]
+}

@@ -2,90 +2,14 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ArrowLeft, RefreshCw, Check, X, Info } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import {
+  playSound,
+  playBackgroundMusic,
+  stopBackgroundMusic,
+} from "../../utils/soundManager";
+import dynastyData from "../../data/dynasties.json";
 
-const dynasties = [
-  {
-    id: 1,
-    name: "Xia Dynasty",
-    period: "2070-1600 BCE",
-    description: "First dynasty in Chinese history, known for bronze work",
-    achievements: "Development of bronze casting, calendar system",
-    image: "/images/qin.webp",
-  },
-  {
-    id: 2,
-    name: "Shang Dynasty",
-    period: "1600-1046 BCE",
-    description: "Known for oracle bone inscriptions and bronze work",
-    achievements: "First Chinese writing system, advanced bronze technology",
-    image: "/images/Liu-bang.jpg",
-  },
-  {
-    id: 3,
-    name: "Zhou Dynasty",
-    period: "1046-256 BCE",
-    description: "Longest ruling dynasty, introduced Mandate of Heaven",
-    achievements: "Confucianism and Taoism emerged, iron technology",
-    image: "/images/zhou.jpg",
-  },
-  {
-    id: 4,
-    name: "Qin Dynasty",
-    period: "221-206 BCE",
-    description: "First unified Chinese empire, built Great Wall",
-    achievements: "Standardized writing, currency, and measurements",
-    image: "/images/qin.webp",
-  },
-  {
-    id: 5,
-    name: "Han Dynasty",
-    period: "206 BCE-220 CE",
-    description: "Golden age of Chinese civilization",
-    achievements:
-      "Silk Road established, paper invented, Confucianism official",
-    image: "/images/Liu-bang.jpg",
-  },
-  {
-    id: 6,
-    name: "Tang Dynasty",
-    period: "618-907 CE",
-    description: "Cultural and artistic flourishing period",
-    achievements: "Poetry and art flourished, Buddhism spread",
-    image: "/images/Li_Xian.jpg",
-  },
-  {
-    id: 7,
-    name: "Song Dynasty",
-    period: "960-1279 CE",
-    description: "Period of economic growth and cultural achievement",
-    achievements: "Gunpowder, compass, printing technology",
-    image: "/images/song.webp",
-  },
-  {
-    id: 8,
-    name: "Yuan Dynasty",
-    period: "1271-1368 CE",
-    description: "Mongol-led dynasty, expanded trade routes",
-    achievements: "Marco Polo's travels, paper money widely used",
-    image: "/images/yuan.jpg",
-  },
-  {
-    id: 9,
-    name: "Ming Dynasty",
-    period: "1368-1644 CE",
-    description: "Known for maritime expeditions and porcelain",
-    achievements: "Great Wall completed, Forbidden City built",
-    image: "/images/ming.jpg",
-  },
-  {
-    id: 10,
-    name: "Qing Dynasty",
-    period: "1644-1912 CE",
-    description: "Last imperial dynasty of China",
-    achievements: "Territorial expansion, cultural preservation",
-    image: "/images/sui.jpg",
-  },
-];
+const dynasties = dynastyData.dynasties;
 
 const DynastyTimeline = () => {
   const navigate = useNavigate();
@@ -100,6 +24,13 @@ const DynastyTimeline = () => {
   useEffect(() => {
     // Initialize the game
     resetGame();
+    // Start background music when component mounts
+    playBackgroundMusic();
+
+    // Cleanup: stop background music when component unmounts
+    return () => {
+      stopBackgroundMusic();
+    };
   }, []);
 
   const resetGame = () => {
@@ -114,6 +45,7 @@ const DynastyTimeline = () => {
 
   const startGame = () => {
     setGameState("playing");
+    playSound("correct"); // Play sound when starting the game
   };
 
   const handleDynastySelect = (dynasty) => {
@@ -126,15 +58,17 @@ const DynastyTimeline = () => {
     if (dynasty.id === currentLevel) {
       // Correct dynasty selected
       setScore((prev) => prev + 10);
+      playSound("correct");
       setFeedback({
         type: "success",
-        message: "Correct! You've identified the dynasty correctly.",
+        message: "Tama! Tamang pagkakakilanlan ng dinastiya.",
       });
 
       // Move to next level or complete the game
       if (currentLevel === dynasties.length) {
         setTimeout(() => {
           setGameState("complete");
+          playSound("complete");
         }, 1500);
       } else {
         setTimeout(() => {
@@ -145,10 +79,10 @@ const DynastyTimeline = () => {
       }
     } else {
       // Wrong dynasty selected
-      const correctDynasty = dynasties.find((d) => d.id === currentLevel);
+      playSound("wrong");
       setFeedback({
         type: "error",
-        message: `Incorrect. This is not the dynasty we're looking for.`,
+        message: "Mali. Hindi ito ang dinastiyang hinahanap natin.",
       });
 
       // Clear feedback after 2 seconds
@@ -170,25 +104,26 @@ const DynastyTimeline = () => {
       className="text-center py-8"
     >
       <h2 className="text-2xl sm:text-3xl font-bold text-[#6B3100] mb-4">
-        Dynasty Explorer
+        Tagpo ng mga Dinastiya
       </h2>
       <p className="text-sm sm:text-base text-gray-600 mb-6 max-w-md mx-auto">
-        Test your knowledge of Chinese dynasties! Identify each dynasty based on
-        clues about their achievements and historical significance.
+        Subukan ang iyong kaalaman sa mga dinastiya ng China! Kilalanin ang
+        bawat dinastiya batay sa mga pahiwatig tungkol sa kanilang mga nagawa at
+        kahalagahan sa kasaysayan.
       </p>
       <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
         <button
           onClick={startGame}
           className="bg-[#6B3100] lg:text-black text-white px-6 py-3 rounded-lg lg:hover:bg-[#6B3100]/90 transition-colors text-sm sm:text-base"
         >
-          Start Game
+          Simulan ang Laro
         </button>
         <button
           onClick={() => setShowInfo(true)}
           className="bg-white text-[#6B3100] border-2 border-[#6B3100] px-6 py-3 rounded-lg lg:hover:bg-[#6B3100]/10 transition-colors text-sm sm:text-base flex items-center justify-center gap-2"
         >
           <Info size={16} />
-          <span>How to Play</span>
+          <span>Paano Laruin</span>
         </button>
       </div>
 
@@ -198,18 +133,21 @@ const DynastyTimeline = () => {
           animate={{ opacity: 1, y: 0 }}
           className="bg-white p-4 rounded-lg shadow-md max-w-md mx-auto text-left"
         >
-          <h3 className="font-bold text-[#6B3100] mb-2">How to Play:</h3>
+          <h3 className="font-bold text-[#6B3100] mb-2">Paano Laruin:</h3>
           <ol className="list-decimal pl-5 space-y-2 text-sm">
-            <li>You'll be shown information about a Chinese dynasty</li>
-            <li>Select the correct dynasty from the options provided</li>
-            <li>Score points for each correct identification</li>
-            <li>Complete all levels to win the game</li>
+            <li>
+              Ipapakita sa iyo ang impormasyon tungkol sa isang dinastiya ng
+              China
+            </li>
+            <li>Piliin ang tamang dinastiya mula sa mga opsyon</li>
+            <li>Kumuha ng puntos sa bawat tamang pagkakakilanlan</li>
+            <li>Kumpletuhin ang lahat ng antas para manalo sa laro</li>
           </ol>
           <button
             onClick={() => setShowInfo(false)}
             className="mt-4 text-[#6B3100] text-sm font-medium"
           >
-            Got it, let's play!
+            Sige, maglaro na tayo!
           </button>
         </motion.div>
       )}
@@ -227,26 +165,26 @@ const DynastyTimeline = () => {
       >
         <div className="flex justify-between items-center">
           <div className="text-[#6B3100] font-medium">
-            Level: {currentLevel} / {dynasties.length}
+            Antas: {currentLevel} / {dynasties.length}
           </div>
-          <div className="text-[#6B3100] font-medium">Score: {score}</div>
+          <div className="text-[#6B3100] font-medium">Puntos: {score}</div>
         </div>
 
-        <div className="bg-[#6B3100]/5 p-4 rounded-lg border border-[#6B3100]/20">
-          <h3 className="font-semibold text-[#6B3100] mb-2">
-            Identify this dynasty:
+        <div className="bg-[#6B3100]/5 p-6 sm:p-8 rounded-lg border border-[#6B3100]/20">
+          <h3 className="font-semibold text-[#6B3100] mb-4 text-lg sm:text-xl">
+            Kilalanin ang dinastiyang ito:
           </h3>
-          <div className="space-y-2">
-            <p className="text-sm">
-              <span className="font-medium">Period:</span>{" "}
+          <div className="space-y-4">
+            <p className="text-base sm:text-lg">
+              <span className="font-medium">Panahon:</span>{" "}
               {currentDynasty.period}
             </p>
-            <p className="text-sm">
-              <span className="font-medium">Description:</span>{" "}
+            <p className="text-base sm:text-lg">
+              <span className="font-medium">Paglalarawan:</span>{" "}
               {currentDynasty.description}
             </p>
-            <p className="text-sm">
-              <span className="font-medium">Achievements:</span>{" "}
+            <p className="text-base sm:text-lg">
+              <span className="font-medium">Mga Nagawa:</span>{" "}
               {currentDynasty.achievements}
             </p>
           </div>
@@ -315,25 +253,26 @@ const DynastyTimeline = () => {
       className="text-center py-8"
     >
       <h2 className="text-2xl sm:text-3xl font-bold text-[#6B3100] mb-4">
-        Excellent!
+        Napakagaling!
       </h2>
       <p className="text-sm sm:text-base mb-4">
-        You've successfully identified all Chinese dynasties!
+        Matagumpay mong nakilala ang lahat ng dinastiya ng China!
       </p>
-      <div className="text-xl font-bold mb-6">Final Score: {score}</div>
-      <div className="text-sm text-gray-600 mb-6">Attempts: {attempts}</div>
+      <div className="text-xl font-bold mb-6">Huling Puntos: {score}</div>
+      <div className="text-sm text-gray-600 mb-6">Mga Pagsubok: {attempts}</div>
       <div className="flex flex-col sm:flex-row gap-4 justify-center">
         <button
           onClick={resetGame}
           className="bg-[#6B3100] text-white px-6 py-3 rounded-lg hover:bg-[#6B3100]/90 transition-colors text-sm sm:text-base"
         >
-          Play Again
+          Laruin Muli
         </button>
         <button
           onClick={() => navigate("/entertainment")}
           className="bg-white text-[#6B3100] border-2 border-[#6B3100] px-6 py-3 rounded-lg hover:bg-[#6B3100]/10 transition-colors text-sm sm:text-base"
+          aria-label="Bumalik sa Mga Laro"
         >
-          Back to Games
+          <ArrowLeft size={16} className="mr-2" />
         </button>
       </div>
     </motion.div>
@@ -346,9 +285,9 @@ const DynastyTimeline = () => {
           <button
             onClick={() => navigate("/entertainment")}
             className="flex items-center gap-1 text-[#6B3100] lg:hover:text-[#6B3100]/80 text-sm sm:text-base"
+            aria-label="Bumalik"
           >
             <ArrowLeft size={16} className="sm:w-5 sm:h-5" />
-            <span>Back</span>
           </button>
           {gameState === "playing" && (
             <button
@@ -356,17 +295,17 @@ const DynastyTimeline = () => {
               className="flex items-center gap-1 text-[#6B3100] lg:hover:text-[#6B3100]/80 text-sm sm:text-base"
             >
               <RefreshCw size={16} className="sm:w-5 sm:h-5" />
-              <span>Reset</span>
+              <span>I-reset</span>
             </button>
           )}
         </div>
 
         <div className="bg-white rounded-lg shadow-lg p-3 sm:p-6">
           <h1 className="text-xl sm:text-3xl font-bold text-[#6B3100] mb-2 text-center">
-            Dynasty Explorer
+            Tagpo ng mga Dinastiya
           </h1>
           <p className="text-center text-gray-600 mb-4 text-xs sm:text-base">
-            Test your knowledge of Chinese dynasties
+            Subukan ang iyong kaalaman sa mga dinastiya ng China
           </p>
 
           {gameState === "intro" && renderIntroScreen()}

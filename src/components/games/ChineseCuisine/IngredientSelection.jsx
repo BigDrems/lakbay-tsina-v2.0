@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Check, X } from "lucide-react";
+import { playSound } from "../../../utils/soundManager";
 
 const IngredientSelection = ({
   currentRecipe,
@@ -19,6 +20,7 @@ const IngredientSelection = ({
       usedIngredients.length >= currentRecipe.ingredients.length
     ) {
       // All ingredients selected, move to next step
+      playSound("correct");
       setTimeout(() => {
         onComplete(usedIngredients);
       }, 1000);

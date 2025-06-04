@@ -2,139 +2,14 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ArrowLeft, RefreshCw, Check, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import {
+  playSound,
+  playBackgroundMusic,
+  stopBackgroundMusic,
+} from "../../utils/soundManager";
+import quizData from "../../data/culturalQuizData.json";
 
-const quizQuestions = [
-  {
-    id: 1,
-    question: "What is the most important festival in China?",
-    options: [
-      { id: "a", text: "Chinese New Year" },
-      { id: "b", text: "Christmas" },
-      { id: "c", text: "Halloween" },
-      { id: "d", text: "Valentine's Day" },
-    ],
-    correctAnswer: "a",
-    explanation:
-      "Chinese New Year (Spring Festival) is the most important festival in China, celebrated on the first day of the first month of the lunar calendar.",
-  },
-  {
-    id: 2,
-    question: "What is the traditional color of marriage in China?",
-    options: [
-      { id: "a", text: "White" },
-      { id: "b", text: "Red" },
-      { id: "c", text: "Black" },
-      { id: "d", text: "Green" },
-    ],
-    correctAnswer: "b",
-    explanation:
-      "Red is considered the color of good luck and prosperity in China, so it is the traditional color of marriage.",
-  },
-  {
-    id: 3,
-    question: "What is the most important element in Chinese cuisine?",
-    options: [
-      { id: "a", text: "Meat" },
-      { id: "b", text: "Fish" },
-      { id: "c", text: "Rice" },
-      { id: "d", text: "Fruit" },
-    ],
-    correctAnswer: "c",
-    explanation:
-      "Rice is the most important element in Chinese cuisine, eaten with almost every meal.",
-  },
-  {
-    id: 4,
-    question: "What is the most important animal in the Chinese zodiac?",
-    options: [
-      { id: "a", text: "Dragon" },
-      { id: "b", text: "Tiger" },
-      { id: "c", text: "Rat" },
-      { id: "d", text: "Monkey" },
-    ],
-    correctAnswer: "c",
-    explanation:
-      "The Rat (Mouse) is the first animal in the Chinese zodiac cycle, starting the cycle.",
-  },
-  {
-    id: 5,
-    question: "What is the most important element in Feng Shui?",
-    options: [
-      { id: "a", text: "Water" },
-      { id: "b", text: "Fire" },
-      { id: "c", text: "Earth" },
-      { id: "d", text: "All of the above" },
-    ],
-    correctAnswer: "d",
-    explanation:
-      "Feng Shui consists of five elements: Water, Fire, Earth, Metal, and Wood. All are important for balance.",
-  },
-  {
-    id: 6,
-    question: "What is the most important philosophy in China?",
-    options: [
-      { id: "a", text: "Confucianism" },
-      { id: "b", text: "Taoism" },
-      { id: "c", text: "Buddhism" },
-      { id: "d", text: "All of the above" },
-    ],
-    correctAnswer: "d",
-    explanation:
-      "Confucianism, Taoism, and Buddhism are all important philosophies in China, with different influences on society.",
-  },
-  {
-    id: 7,
-    question: "What is the most important element in Chinese painting?",
-    options: [
-      { id: "a", text: "Color" },
-      { id: "b", text: "Line" },
-      { id: "c", text: "Space" },
-      { id: "d", text: "All of the above" },
-    ],
-    correctAnswer: "d",
-    explanation:
-      "Chinese painting consists of color, line, and space, all of which are important for the whole art.",
-  },
-  {
-    id: 8,
-    question: "What is the most important element in Chinese calligraphy?",
-    options: [
-      { id: "a", text: "Brush" },
-      { id: "b", text: "Ink" },
-      { id: "c", text: "Paper" },
-      { id: "d", text: "All of the above" },
-    ],
-    correctAnswer: "d",
-    explanation:
-      "Chinese calligraphy requires brush, ink, and paper, all of which are important for the art.",
-  },
-  {
-    id: 9,
-    question: "What is the most important element in Chinese tea ceremony?",
-    options: [
-      { id: "a", text: "Tea" },
-      { id: "b", text: "Teapot" },
-      { id: "c", text: "Cups" },
-      { id: "d", text: "All of the above" },
-    ],
-    correctAnswer: "d",
-    explanation:
-      "Chinese tea ceremony requires tea, teapot, and cups, all of which are important for the ceremony.",
-  },
-  {
-    id: 10,
-    question: "What is the most important element in Chinese garden?",
-    options: [
-      { id: "a", text: "Plants" },
-      { id: "b", text: "Water" },
-      { id: "c", text: "Rocks" },
-      { id: "d", text: "All of the above" },
-    ],
-    correctAnswer: "d",
-    explanation:
-      "Chinese garden consists of plants, water, and rocks, all of which are important for the whole garden.",
-  },
-];
+const quizQuestions = quizData.questions;
 
 const CulturalQuiz = () => {
   const navigate = useNavigate();
@@ -149,6 +24,14 @@ const CulturalQuiz = () => {
     // Shuffle the questions for the game
     const shuffled = [...quizQuestions].sort(() => Math.random() - 0.5);
     setShuffledQuestions(shuffled);
+
+    // Start background music when component mounts
+    playBackgroundMusic();
+
+    // Cleanup: stop background music when component unmounts
+    return () => {
+      stopBackgroundMusic();
+    };
   }, []);
 
   const handleAnswerSelect = (answerId) => {
@@ -159,6 +42,9 @@ const CulturalQuiz = () => {
 
     if (answerId === shuffledQuestions[currentQuestionIndex].correctAnswer) {
       setScore((prev) => prev + 10);
+      playSound("correct");
+    } else {
+      playSound("wrong");
     }
   };
 
@@ -169,6 +55,7 @@ const CulturalQuiz = () => {
       setShowExplanation(false);
     } else {
       setQuizComplete(true);
+      playSound("complete");
     }
   };
 
@@ -199,7 +86,6 @@ const CulturalQuiz = () => {
             className="flex items-center gap-1 text-[#6B3100] hover:text-[#6B3100]/80 text-sm sm:text-base"
           >
             <ArrowLeft size={16} className="sm:w-5 sm:h-5" />
-            <span>Back</span>
           </button>
           <div className="flex items-center gap-2">
             <div className="text-[#6B3100] font-medium text-sm sm:text-base">

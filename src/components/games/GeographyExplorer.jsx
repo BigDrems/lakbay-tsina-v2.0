@@ -13,6 +13,12 @@ import {
 } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
+import {
+  playSound,
+  playBackgroundMusic,
+  stopBackgroundMusic,
+} from "../../utils/soundManager";
+import locationsData from "../../data/locations.json";
 
 // China GeoJSON data
 const chinaGeoJSON = {
@@ -43,51 +49,7 @@ const bounds = [
   [54, 135], // Northeast corner
 ];
 
-const locations = [
-  {
-    id: 1,
-    name: "Great Wall of China",
-    description:
-      "One of the most iconic landmarks, stretching over 13,000 miles",
-    coordinates: [40.4319, 116.5704],
-    image: "/images/great-wall.jpg",
-  },
-  {
-    id: 2,
-    name: "Forbidden City",
-    description: "Imperial palace complex in Beijing, home to Chinese emperors",
-    coordinates: [39.9042, 116.4074],
-    image: "/images/forbidden-city.jpg",
-  },
-  {
-    id: 3,
-    name: "Terracotta Army",
-    description: "Ancient clay warrior statues in Xi'an",
-    coordinates: [34.3844, 109.2783],
-    image: "/images/terracotta-army.jpg",
-  },
-  {
-    id: 4,
-    name: "West Lake",
-    description: "Famous freshwater lake in Hangzhou",
-    coordinates: [30.2587, 120.1315],
-    image: "/images/west-lake.jpg",
-  },
-  {
-    id: 5,
-    name: "Mount Huangshan",
-    description: "Scenic mountain range known for its granite peaks",
-    coordinates: [30.1333, 118.1667],
-    image: "/images/huangshan.jpg",
-  },
-  {
-    id: 6,
-    name: "Three Gorges Dam",
-    description: "World's largest power station on the Yangtze River",
-    coordinates: [30.8231, 111.0039],
-    image: "/images/three-gorges.jpg",
-  },
-];
+const { locations } = locationsData;
 
 // Create custom marker icons
 const createMarkerIcon = (color) => {
@@ -115,8 +77,8 @@ const ChinaMask = () => {
         bounds={outerBounds}
         pathOptions={{
           color: "transparent",
-          fillColor: "rgba(0, 0, 0, 0.5)",
-          fillOpacity: 0.7,
+          fillColor: "rgba(255, 255, 255, 0.7)",
+          fillOpacity: 0.5,
         }}
       />
 
@@ -127,7 +89,7 @@ const ChinaMask = () => {
           color: "#6B3100",
           weight: 2,
           fillColor: "#F5E6D3",
-          fillOpacity: 0.2,
+          fillOpacity: 0.3,
         })}
       />
     </>
@@ -156,6 +118,16 @@ const GeographyExplorer = () => {
   const [gameComplete, setGameComplete] = useState(false);
   const [clickedPosition, setClickedPosition] = useState(null);
   const [feedback, setFeedback] = useState(null);
+
+  useEffect(() => {
+    // Start background music when component mounts
+    playBackgroundMusic();
+
+    // Cleanup: stop background music when component unmounts
+    return () => {
+      stopBackgroundMusic();
+    };
+  }, []);
 
   const calculateDistance = (pos1, pos2) => {
     // Haversine formula to calculate distance between two points
@@ -188,6 +160,7 @@ const GeographyExplorer = () => {
       // Within 200km radius
       setDiscoveredLocations((prev) => [...prev, selectedLocation.id]);
       setScore((prev) => prev + 10);
+      playSound("correct");
       setFeedback({
         type: "success",
         message: "Great job! You found the location!",
@@ -195,8 +168,10 @@ const GeographyExplorer = () => {
 
       if (discoveredLocations.length + 1 === locations.length) {
         setGameComplete(true);
+        playSound("complete");
       }
     } else {
+      playSound("wrong");
       let direction = "";
       const targetLat = selectedLocation.coordinates[0];
       const targetLng = selectedLocation.coordinates[1];
@@ -233,17 +208,16 @@ const GeographyExplorer = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#F5E6D3] py-4 sm:py-8 px-2 sm:px-4">
+    <div className="min-h-screen bg-[#F5E6D3] py-4 sm:py-8 px-2 sm:px-4 relative">
       <div className="max-w-4xl mx-auto">
-        <div className="flex flex-row justify-between items-center mb-4 gap-2">
+        <div className="flex flex-row justify-between items-center mb-4 gap-2 relative z-10">
           <button
             onClick={() => navigate("/entertainment")}
-            className="flex items-center gap-1 text-[#6B3100] hover:text-[#6B3100]/80 text-sm sm:text-base"
+            className="flex items-center gap-1 text-[#6B3100] hover:text-[#6B3100]/80 text-sm sm:text-base bg-[#F5E6D3] px-2 py-1 rounded"
           >
             <ArrowLeft size={16} className="sm:w-5 sm:h-5" />
-            <span>Back</span>
           </button>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 bg-[#F5E6D3] px-2 py-1 rounded">
             <div className="text-[#6B3100] font-medium text-sm sm:text-base">
               Score: {score}
             </div>
@@ -257,7 +231,7 @@ const GeographyExplorer = () => {
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow-lg p-3 sm:p-6">
+        <div className="bg-white rounded-lg shadow-lg p-3 sm:p-6 relative">
           <h1 className="text-xl sm:text-3xl font-bold text-[#6B3100] mb-2 text-center">
             Geography Explorer
           </h1>
@@ -306,7 +280,7 @@ const GeographyExplorer = () => {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="md:col-span-2 h-[500px] rounded-lg overflow-hidden">
+                <div className="md:col-span-2 h-[500px] rounded-lg overflow-hidden relative z-0">
                   <MapContainer
                     center={[35.8617, 104.1954]}
                     zoom={4}
@@ -314,6 +288,7 @@ const GeographyExplorer = () => {
                     maxBounds={bounds}
                     minZoom={4}
                     maxBoundsViscosity={1.0}
+                    style={{ zIndex: 0 }}
                   >
                     <TileLayer
                       url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

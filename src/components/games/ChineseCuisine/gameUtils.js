@@ -1,5 +1,10 @@
 import { useState, useEffect } from "react";
 import { recipes } from "./recipeData";
+import {
+  playSound,
+  playBackgroundMusic,
+  stopBackgroundMusic,
+} from "../../../utils/soundManager";
 
 // Hook for game state management
 export const useGameState = () => {
@@ -13,15 +18,20 @@ export const useGameState = () => {
   const [showFact, setShowFact] = useState(false);
   const [showFeedback, setShowFeedback] = useState(null);
 
-  // Cleanup timer on unmount
+  // Cleanup timer and stop music on unmount
   useEffect(() => {
+    // Start background music when component mounts
+    playBackgroundMusic();
+
     return () => {
       if (gameTimer) clearInterval(gameTimer);
+      stopBackgroundMusic();
     };
   }, [gameTimer]);
 
   const startGame = (difficulty) => {
     setDifficultyLevel(difficulty);
+    playSound("correct"); // Play sound when starting the game
 
     // Filter recipes by difficulty
     const filteredRecipes = recipes.filter(
@@ -62,6 +72,7 @@ export const useGameState = () => {
   const endGame = () => {
     if (gameTimer) clearInterval(gameTimer);
     setGameMode("complete");
+    playSound("complete");
   };
 
   const resetGame = () => {
@@ -77,6 +88,11 @@ export const useGameState = () => {
 
   const displayFeedback = (type, message) => {
     setShowFeedback({ type, message });
+    if (type === "success") {
+      playSound("correct");
+    } else if (type === "error") {
+      playSound("wrong");
+    }
 
     // Clear feedback after 1.5 seconds
     setTimeout(() => {

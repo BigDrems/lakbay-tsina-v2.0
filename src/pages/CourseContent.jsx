@@ -421,9 +421,9 @@ const CourseContent = () => {
                           handleLessonClick(lessons[currentIndex - 1]);
                         }
                       }}
+                      aria-label="Previous Lesson"
                     >
                       <ArrowLeft size={18} />
-                      <span>Previous Lesson</span>
                     </button>
 
                     <button
@@ -437,8 +437,8 @@ const CourseContent = () => {
                           handleLessonClick(lessons[currentIndex + 1]);
                         }
                       }}
+                      aria-label="Next Lesson"
                     >
-                      <span>Next Lesson</span>
                       <ChevronRight size={18} />
                     </button>
                   </div>

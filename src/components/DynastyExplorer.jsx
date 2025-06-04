@@ -1,19 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  ArrowLeft,
-  Info,
-  ChevronLeft,
-  ChevronRight,
-  X,
-  Calendar,
-  MapPin,
-  Book,
-  Users,
-  Flame,
-  Award,
-  Star,
-} from "lucide-react";
+import { ArrowLeft, Info } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
 import {
   dynastyData,
@@ -171,8 +158,8 @@ const DynastyExplorer = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#F5E6D3] dark:bg-gray-950 py-4 sm:py-8 px-2 sm:px-4">
-      <div className="max-w-6xl mx-auto">
+    <div className="min-h-screen bg-[#F5E6D3] dark:bg-gray-950 py-6 sm:py-10 px-4 sm:px-6">
+      <div className="max-w-7xl mx-auto">
         {/* Header Navigation */}
         <div className="flex justify-between items-center mb-4 gap-2">
           <div className="flex items-center gap-2">
@@ -182,7 +169,6 @@ const DynastyExplorer = () => {
               aria-label="Go back"
             >
               <ArrowLeft size={16} className="sm:w-5 sm:h-5" />
-              <span>Back</span>
             </button>
           </div>
 
@@ -208,7 +194,7 @@ const DynastyExplorer = () => {
         </div>
 
         {/* Main Content */}
-        <div className="bg-white dark:bg-gray-900 rounded-xl shadow-xl p-4 sm:p-6 transition-all">
+        <div className="bg-white dark:bg-gray-900 rounded-xl shadow-xl p-6 sm:p-8 transition-all">
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}

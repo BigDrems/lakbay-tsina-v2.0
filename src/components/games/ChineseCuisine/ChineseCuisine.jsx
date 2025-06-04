@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, RefreshCw, Clock, HelpCircle, ChefHat } from "lucide-react";
+import {
+  ArrowLeft,
+  RefreshCw,
+  Clock,
+  HelpCircle,
+  ChefHat,
+  BookOpen,
+} from "lucide-react";
 
 // Import components
 import { useGameState, generateAvailableIngredients } from "./gameUtils";
@@ -10,6 +17,7 @@ import StepArrangement from "./StepArrangement";
 import GameResult from "./GameResult";
 import HelpDialog from "./HelpDialog";
 import RecipeDetails from "./RecipeDetails";
+import LearnMoreDialog from "./LearnMoreDialog";
 
 const ChineseCuisine = () => {
   const navigate = useNavigate();
@@ -35,6 +43,7 @@ const ChineseCuisine = () => {
   const [availableIngredients, setAvailableIngredients] = useState([]);
   const [usedIngredients, setUsedIngredients] = useState([]);
   const [arrangedSteps, setArrangedSteps] = useState([]);
+  const [showLearnMore, setShowLearnMore] = useState(false);
 
   const handleStartGame = (difficulty) => {
     const recipe = startGame(difficulty);
@@ -67,7 +76,6 @@ const ChineseCuisine = () => {
             className="flex items-center gap-1 text-[#6B3100] hover:text-[#6B3100]/80 text-sm sm:text-base"
           >
             <ArrowLeft size={16} className="sm:w-5 sm:h-5" />
-            <span>Back</span>
           </button>
           <div className="flex items-center gap-2">
             {gameMode === "playing" && (
@@ -90,6 +98,13 @@ const ChineseCuisine = () => {
                 <span>Reset</span>
               </button>
             )}
+            <button
+              onClick={() => setShowLearnMore(true)}
+              className="flex items-center gap-1 text-[#6B3100] hover:text-[#6B3100]/80 text-sm sm:text-base"
+            >
+              <BookOpen size={16} className="sm:w-5 sm:h-5" />
+              <span>Learn More</span>
+            </button>
             <button
               onClick={toggleHelp}
               className="flex items-center gap-1 text-[#6B3100] hover:text-[#6B3100]/80 text-sm sm:text-base"
@@ -153,6 +168,10 @@ const ChineseCuisine = () => {
           )}
         </div>
       </div>
+
+      {showLearnMore && (
+        <LearnMoreDialog onClose={() => setShowLearnMore(false)} />
+      )}
     </div>
   );
 };
