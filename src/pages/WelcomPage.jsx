@@ -1,4 +1,3 @@
-// src/pages/WelcomePage.jsx
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Eye, EyeOff, Volume2, VolumeX } from "lucide-react";
@@ -202,28 +201,28 @@ function WelcomePage({ onComplete }) {
   };
 
   const renderHeader = () => (
-    <header className="bg-gradient-to-r from-amber-800 to-orange-700 py-6 px-6 md:px-8 relative overflow-hidden">
+    <header className="bg-gradient-to-r from-amber-800 to-orange-700 py-4 sm:py-6 px-4 sm:px-6 md:px-8 relative overflow-hidden">
       {/* Decorative elements */}
-      <div className="absolute top-0 right-0 w-40 h-40 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2"></div>
-      <div className="absolute bottom-0 left-10 w-10 h-10 bg-white/10 rounded-full translate-y-1/2"></div>
+      <div className="absolute top-0 right-0 w-20 sm:w-32 md:w-40 h-20 sm:h-32 md:h-40 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+      <div className="absolute bottom-0 left-4 sm:left-10 w-6 sm:w-8 md:w-10 h-6 sm:h-8 md:h-10 bg-white/10 rounded-full translate-y-1/2"></div>
 
-      <div className="flex items-center justify-between relative z-10">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between relative z-10 gap-3 sm:gap-0">
         <div className="flex flex-col">
-          <h1 className="text-2xl md:text-4xl font-semibold text-white tracking-wide">
+          <h1 className="text-xl sm:text-2xl md:text-4xl font-semibold text-white tracking-wide">
             Lakbay Tsina
           </h1>
           <div className="flex items-center mt-1">
-            <span className="text-amber-200 text-lg">游记</span>
-            <div className="w-24 h-[1px] bg-amber-200/50 ml-3"></div>
+            <span className="text-amber-200 text-base sm:text-lg">游记</span>
+            <div className="w-16 sm:w-20 md:w-24 h-[1px] bg-amber-200/50 ml-2 sm:ml-3"></div>
           </div>
         </div>
 
         {/* Controls */}
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center space-x-2 sm:space-x-3">
           <button
             onClick={handleSoundToggle}
             disabled={isPlaying}
-            className={`relative p-2.5 rounded-full bg-white/20 transition-all hover:bg-white/30 ${
+            className={`relative p-2 sm:p-2.5 rounded-full bg-white/20 transition-all hover:bg-white/30 ${
               isPlaying
                 ? "opacity-50 cursor-not-allowed"
                 : "hover:bg-white/30 hover:scale-105 active:scale-95"
@@ -231,17 +230,23 @@ function WelcomePage({ onComplete }) {
             aria-label={isSoundOn ? "Mute sound" : "Unmute sound"}
           >
             {isSoundOn ? (
-              <Volume2 size={24} className="text-black drop-shadow-md" />
+              <Volume2
+                size={20}
+                className="sm:w-6 sm:h-6 text-black drop-shadow-md"
+              />
             ) : (
-              <VolumeX size={24} className="text-black drop-shadow-md" />
+              <VolumeX
+                size={20}
+                className="sm:w-6 sm:h-6 text-black drop-shadow-md"
+              />
             )}
             {!hasInteracted && (
-              <div className="absolute -top-1 -right-1 w-4 h-4 bg-amber-300 ring-2 ring-white rounded-full animate-pulse"></div>
+              <div className="absolute -top-1 -right-1 w-3 sm:w-4 h-3 sm:h-4 bg-amber-300 ring-2 ring-white rounded-full animate-pulse"></div>
             )}
           </button>
 
           {isSoundOn && (
-            <div className="px-3 py-1.5 bg-white/20 rounded-lg flex items-center shadow-sm">
+            <div className="px-2 sm:px-3 py-1 sm:py-1.5 bg-white/20 rounded-lg flex items-center shadow-sm">
               <input
                 type="range"
                 min="0"
@@ -250,7 +255,7 @@ function WelcomePage({ onComplete }) {
                 value={volume}
                 onChange={(e) => setVolume(parseFloat(e.target.value))}
                 disabled={isPlaying}
-                className={`w-24 accent-amber-300 ${
+                className={`w-16 sm:w-20 md:w-24 accent-amber-300 ${
                   isPlaying ? "opacity-50 cursor-not-allowed" : ""
                 }`}
                 aria-label="Volume control"
@@ -261,7 +266,7 @@ function WelcomePage({ onComplete }) {
           <button
             onClick={() => setShowLiMei(!showLiMei)}
             disabled={isPlaying}
-            className={`p-2.5 rounded-full bg-white/20 transition-all ${
+            className={`p-2 sm:p-2.5 rounded-full bg-white/20 transition-all ${
               isPlaying
                 ? "opacity-50 cursor-not-allowed"
                 : "hover:bg-white/30 hover:scale-105 active:scale-95"
@@ -271,13 +276,13 @@ function WelcomePage({ onComplete }) {
           >
             {showLiMei ? (
               <Eye
-                size={24}
-                className="text-black lg:text-black drop-shadow-md"
+                size={20}
+                className="sm:w-6 sm:h-6 text-black lg:text-black drop-shadow-md"
               />
             ) : (
               <EyeOff
-                size={24}
-                className="text-black lg:text-black drop-shadow-md"
+                size={20}
+                className="sm:w-6 sm:h-6 text-black lg:text-black drop-shadow-md"
               />
             )}
           </button>
@@ -289,7 +294,7 @@ function WelcomePage({ onComplete }) {
   const renderConversationBubble = () => (
     <div
       onClick={skipTyping}
-      className={`bg-gradient-to-r from-amber-50 to-orange-50 p-5 rounded-xl relative shadow-sm 
+      className={`bg-gradient-to-r from-amber-50 to-orange-50 p-3 sm:p-4 md:p-5 rounded-xl relative shadow-sm 
         transition-all duration-300 ${
           isTyping
             ? "cursor-pointer hover:shadow-lg border-2 border-amber-300 hover:border-amber-500 hover:-translate-y-0.5"
@@ -328,7 +333,7 @@ function WelcomePage({ onComplete }) {
         </div>
       )}
 
-      <p className="text-amber-900 text-lg leading-relaxed">
+      <p className="text-amber-900 text-base sm:text-lg leading-relaxed">
         {conversation && conversation[step] && typingText
           ? typingText
           : conversation[step]?.text || "Loading..."}
@@ -358,11 +363,11 @@ function WelcomePage({ onComplete }) {
   );
 
   const renderPuzzle = () => (
-    <div className="bg-white p-6 rounded-xl border border-amber-200 shadow-sm transition-all duration-300 hover:shadow-md">
-      <h3 className="text-center text-lg font-medium text-amber-900 mb-4">
+    <div className="bg-white p-3 sm:p-4 md:p-6 rounded-xl border border-amber-200 shadow-sm transition-all duration-300 hover:shadow-md">
+      <h3 className="text-center text-base sm:text-lg font-medium text-amber-900 mb-3 sm:mb-4">
         Character Matching Puzzle
       </h3>
-      <div className="bg-amber-50/50 p-3 mb-4 rounded-lg text-sm text-amber-800 flex items-center">
+      <div className="bg-amber-50/50 p-2 sm:p-3 mb-3 sm:mb-4 rounded-lg text-xs sm:text-sm text-amber-800 flex items-center">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-5 w-5 mr-2 text-amber-600"
@@ -396,13 +401,13 @@ function WelcomePage({ onComplete }) {
     if (!conversation[step]?.options?.length) return null;
 
     return (
-      <div className="flex flex-col sm:flex-row gap-3 justify-center mt-6">
+      <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 justify-center mt-4 sm:mt-6">
         {conversation[step]?.options?.map((option, index) => (
           <button
             key={index}
             onClick={() => handleOptionClick(option.nextStep)}
             disabled={isPlaying || !isLoaded || isTyping}
-            className={`group px-6 py-3 rounded-lg transition-all duration-300 text-base font-medium
+            className={`group px-4 sm:px-6 py-2 sm:py-3 rounded-lg transition-all duration-300 text-sm sm:text-base font-medium
                      focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500
                      flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed
                      ${
@@ -415,7 +420,7 @@ function WelcomePage({ onComplete }) {
             {index === 0 && (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 transition-transform group-hover:translate-x-1"
+                className="h-4 w-4 sm:h-5 sm:w-5 transition-transform group-hover:translate-x-1"
                 viewBox="0 0 20 20"
                 fill="currentColor"
               >
@@ -471,7 +476,7 @@ function WelcomePage({ onComplete }) {
               clipRule="evenodd"
             />
           </svg>
-          Enable Li Mei's voice guide by clicking the sound icon
+          Enable Kuya Pao's voice guide by clicking the sound icon
         </p>
       </div>
     );
@@ -479,7 +484,7 @@ function WelcomePage({ onComplete }) {
 
   return (
     <div
-      className={`min-h-screen relative overflow-visible flex items-center justify-center p-4 md:p-8 transition-colors duration-1000 
+      className={`min-h-screen relative overflow-visible flex items-center justify-center p-2 sm:p-4 md:p-8 transition-colors duration-1000 
       ${
         bgAnimation
           ? "bg-gradient-to-b from-amber-100 to-orange-100"
@@ -488,70 +493,59 @@ function WelcomePage({ onComplete }) {
     >
       {/* Animated background elements */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute -top-10 -left-10 w-40 h-40 bg-amber-300 opacity-20 rounded-full filter blur-3xl animate-float"></div>
-        <div className="absolute top-20 -right-20 w-60 h-60 bg-orange-300 opacity-20 rounded-full filter blur-3xl animate-float-delayed"></div>
-        <div className="absolute bottom-10 left-20 w-40 h-40 bg-amber-400 opacity-10 rounded-full filter blur-3xl animate-float-slow"></div>
+        <div className="absolute -top-10 -left-10 w-20 sm:w-32 md:w-40 h-20 sm:h-32 md:h-40 bg-amber-300 opacity-20 rounded-full filter blur-3xl animate-float"></div>
+        <div className="absolute top-20 -right-20 w-40 sm:w-48 md:w-60 h-40 sm:h-48 md:h-60 bg-orange-300 opacity-20 rounded-full filter blur-3xl animate-float-delayed"></div>
+        <div className="absolute bottom-10 left-20 w-20 sm:w-32 md:w-40 h-20 sm:h-32 md:h-40 bg-amber-400 opacity-10 rounded-full filter blur-3xl animate-float-slow"></div>
       </div>
 
       {renderIntroAnimation()}
 
-      <div className="flex items-center gap-8">
-        <div
-          className={`w-full max-w-3xl bg-white rounded-xl shadow-xl overflow-hidden transition-all duration-700 
-          ${showIntroAnim ? "opacity-0 scale-95" : "opacity-100 scale-100"}`}
-        >
-          {renderHeader()}
+      <div className="relative w-full max-w-7xl mx-auto px-2 sm:px-4 md:px-8">
+        <div className="flex flex-col lg:flex-row items-center lg:items-end justify-center gap-4 lg:gap-0">
+          <div
+            className={`w-full max-w-3xl bg-white rounded-xl shadow-xl overflow-hidden transition-all duration-700 
+            ${showIntroAnim ? "opacity-0 scale-95" : "opacity-100 scale-100"}`}
+          >
+            <div
+              className={`transition-all duration-500 ${
+                showIntroAnim ? "opacity-0 scale-95" : "opacity-100 scale-100"
+              }`}
+            >
+              {renderHeader()}
 
-          <div className="p-6 md:p-8">
-            {renderSoundNotification()}
+              <div className="p-3 sm:p-4 md:p-6 lg:p-8">
+                {renderSoundNotification()}
 
-            <div className="space-y-6">
-              {renderConversationBubble()}
+                <div className="space-y-4 sm:space-y-6">
+                  {renderConversationBubble()}
 
-              {conversation[step]?.type === "puzzle"
-                ? renderPuzzle()
-                : renderOptions()}
+                  {conversation[step]?.type === "puzzle"
+                    ? renderPuzzle()
+                    : renderOptions()}
+                </div>
+
+                {renderStepIndicators()}
+              </div>
             </div>
-
-            {renderStepIndicators()}
           </div>
+
+          {showLiMei && (
+            <div className="absolute top-4 right-4 z-10 md:static md:ml-0 md:mt-0 md:block transition-all duration-500 hover:transform hover:scale-105 md:-ml-4 lg:-ml-19 md:-mb-4 lg:-mb-4 md:mt-0 lg:-mt-1">
+              <div className="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 lg:w-56 lg:h-56 xl:w-64 xl:h-64 rounded-full bg-gradient-to-r from-amber-100 to-orange-100 p-1 shadow-lg relative group">
+                <div className="w-full h-full rounded-full overflow-hidden border border-amber-200 transition-transform duration-300 group-hover:scale-110">
+                  <video
+                    src="/panda.mp4"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="w-full h-full object-cover object-[center_bottom]"
+                  />
+                </div>
+              </div>
+            </div>
+          )}
         </div>
-
-        {showLiMei && (
-          <div className="hidden lg:block transition-all duration-500 hover:transform hover:scale-105">
-            <div className="w-56 h-56 rounded-full bg-gradient-to-r from-amber-100 to-orange-100 p-1 shadow-lg relative group">
-              <div className="w-full h-full rounded-full overflow-hidden border border-amber-200 transition-transform duration-300 group-hover:scale-110">
-                <video
-                  src="/panda.mp4"
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="absolute -right-1 -bottom-1 w-8 h-8 bg-amber-500 rounded-full flex items-center justify-center shadow-md">
-                <span className="text-white text-xs font-bold">熊猫</span>
-              </div>
-            </div>
-            <div className="mt-2 text-center">
-              <h2 className="text-lg font-medium text-amber-900">
-                Panda Guide
-              </h2>
-              <p className="text-amber-700 text-sm">
-                Your friendly cultural companion
-              </p>
-              <div className="mt-1 flex justify-center space-x-1">
-                <span className="inline-block px-2 py-0.5 text-[10px] bg-amber-100 text-amber-800 rounded-full">
-                  Cultural Expert
-                </span>
-                <span className="inline-block px-2 py-0.5 text-[10px] bg-orange-100 text-orange-800 rounded-full">
-                  Friendly Guide
-                </span>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );
