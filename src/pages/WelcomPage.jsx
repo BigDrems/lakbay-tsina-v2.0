@@ -286,41 +286,6 @@ function WelcomePage({ onComplete }) {
     </header>
   );
 
-  const renderGuideAvatar = () => {
-    if (!showLiMei) return null;
-
-    return (
-      <div className="flex items-center mb-6 transition-all duration-500 hover:transform hover:scale-105">
-        <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-gradient-to-r from-amber-100 to-orange-100 p-1 shadow-lg relative group">
-          <div className="w-full h-full rounded-full overflow-hidden border border-amber-200 transition-transform duration-300 group-hover:scale-110">
-            <img
-              src="/avatar.jpg"
-              alt="Li Mei"
-              className="w-full h-full object-cover"
-            />
-          </div>
-          <div className="absolute -right-1 -bottom-1 w-8 h-8 bg-amber-500 rounded-full flex items-center justify-center shadow-md">
-            <span className="text-white text-xs font-bold">李梅</span>
-          </div>
-        </div>
-        <div className="ml-4 flex-1">
-          <h2 className="text-lg font-medium text-amber-900">Li Mei</h2>
-          <p className="text-amber-700 text-sm">
-            Your guide to Chinese culture
-          </p>
-          <div className="mt-1 flex space-x-1">
-            <span className="inline-block px-2 py-0.5 text-[10px] bg-amber-100 text-amber-800 rounded-full">
-              Language Expert
-            </span>
-            <span className="inline-block px-2 py-0.5 text-[10px] bg-orange-100 text-orange-800 rounded-full">
-              Cultural Guide
-            </span>
-          </div>
-        </div>
-      </div>
-    );
-  };
-
   const renderConversationBubble = () => (
     <div
       onClick={skipTyping}
@@ -514,7 +479,7 @@ function WelcomePage({ onComplete }) {
 
   return (
     <div
-      className={`min-h-screen relative overflow-hidden flex items-center justify-center p-4 md:p-8 transition-colors duration-1000 
+      className={`min-h-screen relative overflow-visible flex items-center justify-center p-4 md:p-8 transition-colors duration-1000 
       ${
         bgAnimation
           ? "bg-gradient-to-b from-amber-100 to-orange-100"
@@ -530,26 +495,63 @@ function WelcomePage({ onComplete }) {
 
       {renderIntroAnimation()}
 
-      <div
-        className={`w-full max-w-3xl bg-white rounded-xl shadow-xl overflow-hidden transition-all duration-700 
-        ${showIntroAnim ? "opacity-0 scale-95" : "opacity-100 scale-100"}`}
-      >
-        {renderHeader()}
+      <div className="flex items-center gap-8">
+        <div
+          className={`w-full max-w-3xl bg-white rounded-xl shadow-xl overflow-hidden transition-all duration-700 
+          ${showIntroAnim ? "opacity-0 scale-95" : "opacity-100 scale-100"}`}
+        >
+          {renderHeader()}
 
-        <div className="p-6 md:p-8">
-          {renderSoundNotification()}
+          <div className="p-6 md:p-8">
+            {renderSoundNotification()}
 
-          <div className="space-y-6">
-            {renderGuideAvatar()}
-            {renderConversationBubble()}
+            <div className="space-y-6">
+              {renderConversationBubble()}
 
-            {conversation[step]?.type === "puzzle"
-              ? renderPuzzle()
-              : renderOptions()}
+              {conversation[step]?.type === "puzzle"
+                ? renderPuzzle()
+                : renderOptions()}
+            </div>
+
+            {renderStepIndicators()}
           </div>
-
-          {renderStepIndicators()}
         </div>
+
+        {showLiMei && (
+          <div className="hidden lg:block transition-all duration-500 hover:transform hover:scale-105">
+            <div className="w-56 h-56 rounded-full bg-gradient-to-r from-amber-100 to-orange-100 p-1 shadow-lg relative group">
+              <div className="w-full h-full rounded-full overflow-hidden border border-amber-200 transition-transform duration-300 group-hover:scale-110">
+                <video
+                  src="/panda.mp4"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="absolute -right-1 -bottom-1 w-8 h-8 bg-amber-500 rounded-full flex items-center justify-center shadow-md">
+                <span className="text-white text-xs font-bold">熊猫</span>
+              </div>
+            </div>
+            <div className="mt-2 text-center">
+              <h2 className="text-lg font-medium text-amber-900">
+                Panda Guide
+              </h2>
+              <p className="text-amber-700 text-sm">
+                Your friendly cultural companion
+              </p>
+              <div className="mt-1 flex justify-center space-x-1">
+                <span className="inline-block px-2 py-0.5 text-[10px] bg-amber-100 text-amber-800 rounded-full">
+                  Cultural Expert
+                </span>
+                <span className="inline-block px-2 py-0.5 text-[10px] bg-orange-100 text-orange-800 rounded-full">
+                  Friendly Guide
+                </span>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

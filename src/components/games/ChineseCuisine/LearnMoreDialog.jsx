@@ -1,14 +1,23 @@
 import React, { useState } from "react";
 import { X, ChevronRight, ChevronLeft, BookOpen } from "lucide-react";
 import RecipeCard from "./RecipeCard";
-import recipeData from "../../../../src/data/chineseRecipes.json";
+import { recipes } from "./recipeData";
 
 const LearnMoreDialog = ({ onClose }) => {
   const [currentPage, setCurrentPage] = useState(0);
 
-  const recipePages = recipeData.pages.map((page, index) => ({
-    ...page,
-    items: recipeData.recipes,
+  // Create pages of recipes, 4 recipes per page
+  const recipesPerPage = 4;
+  const recipePages = Array.from({
+    length: Math.ceil(recipes.length / recipesPerPage),
+  }).map((_, pageIndex) => ({
+    title: `Chinese Cuisine - Page ${pageIndex + 1}`,
+    subtitle:
+      "Explore these authentic Chinese dishes and their rich cultural heritage",
+    items: recipes.slice(
+      pageIndex * recipesPerPage,
+      (pageIndex + 1) * recipesPerPage
+    ),
   }));
 
   const currentContent = recipePages[currentPage];

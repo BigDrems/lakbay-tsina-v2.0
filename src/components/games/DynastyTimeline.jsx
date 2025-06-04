@@ -171,22 +171,19 @@ const DynastyTimeline = () => {
         </div>
 
         <div className="bg-[#6B3100]/5 p-6 sm:p-8 rounded-lg border border-[#6B3100]/20">
-          <h3 className="font-semibold text-[#6B3100] mb-4 text-lg sm:text-xl">
+          <h3 className="font-semibold text-[#6B3100] mb-4 text-lg sm:text-[20px]">
             Kilalanin ang dinastiyang ito:
           </h3>
           <div className="space-y-4">
-            <p className="text-base sm:text-lg">
-              <span className="font-medium">Panahon:</span>{" "}
-              {currentDynasty.period}
-            </p>
-            <p className="text-base sm:text-lg">
-              <span className="font-medium">Paglalarawan:</span>{" "}
-              {currentDynasty.description}
-            </p>
-            <p className="text-base sm:text-lg">
-              <span className="font-medium">Mga Nagawa:</span>{" "}
-              {currentDynasty.achievements}
-            </p>
+            <div className="text-center">
+              <p className="text-base uppercase sm:text-lg font-bold mb-4">
+                {currentDynasty.description}
+              </p>
+              <p className="text-left sm:text-lg">
+                <span className="font-medium">Nagawa:</span>{" "}
+                <li className="ml-10">{currentDynasty.achievements}</li>
+              </p>
+            </div>
           </div>
         </div>
 

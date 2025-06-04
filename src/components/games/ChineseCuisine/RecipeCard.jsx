@@ -3,9 +3,10 @@ import {
   ChevronDown,
   ChevronUp,
   Clock,
-  Users,
+  MapPin,
   ChefHat,
   Utensils,
+  Lightbulb,
 } from "lucide-react";
 
 const RecipeCard = ({ recipe }) => {
@@ -27,15 +28,15 @@ const RecipeCard = ({ recipe }) => {
             <div className="flex flex-wrap gap-4 text-sm text-[#6B3100]/70">
               <div className="flex items-center gap-1">
                 <Clock className="w-4 h-4" />
-                <span>{recipe.cookingTime}</span>
+                <span>{recipe.preparationTime}</span>
               </div>
               <div className="flex items-center gap-1">
-                <Users className="w-4 h-4" />
-                <span>Serves {recipe.servings}</span>
+                <MapPin className="w-4 h-4" />
+                <span>{recipe.region}</span>
               </div>
               <div className="flex items-center gap-1">
                 <ChefHat className="w-4 h-4" />
-                <span>{recipe.difficulty}</span>
+                <span className="capitalize">{recipe.difficulty}</span>
               </div>
             </div>
           </div>
@@ -66,22 +67,20 @@ const RecipeCard = ({ recipe }) => {
                     className="flex items-center gap-2 p-2 rounded-lg bg-[#6B3100]/5 hover:bg-[#6B3100]/10 transition-colors"
                   >
                     <div className="w-2 h-2 rounded-full bg-[#6B3100]" />
-                    <span className="text-[#6B3100]/80">
-                      {ingredient.amount} {ingredient.unit} {ingredient.name}
-                    </span>
+                    <span className="text-[#6B3100]/80">{ingredient}</span>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Cooking Methods Section */}
+            {/* Steps Section */}
             <div>
               <h4 className="text-lg font-semibold text-[#6B3100] mb-3 flex items-center gap-2">
                 <Utensils className="w-5 h-5" />
-                Cooking Methods
+                Cooking Steps
               </h4>
               <div className="space-y-4">
-                {recipe.methods.map((method, index) => (
+                {recipe.steps.map((step, index) => (
                   <div
                     key={index}
                     className="p-4 rounded-lg bg-[#6B3100]/5 hover:bg-[#6B3100]/10 transition-colors"
@@ -90,32 +89,21 @@ const RecipeCard = ({ recipe }) => {
                       <div className="flex-shrink-0 w-6 h-6 rounded-full bg-[#6B3100] text-white flex items-center justify-center text-sm font-medium">
                         {index + 1}
                       </div>
-                      <div>
-                        <h5 className="font-medium text-[#6B3100] mb-1">
-                          {method.name}
-                        </h5>
-                        <p className="text-[#6B3100]/70 text-sm">
-                          {method.description}
-                        </p>
-                        {method.tips && (
-                          <p className="mt-2 text-sm text-[#6B3100]/60 italic">
-                            Tip: {method.tips}
-                          </p>
-                        )}
-                      </div>
+                      <p className="text-[#6B3100]/80">{step}</p>
                     </div>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Additional Notes */}
-            {recipe.notes && (
+            {/* Fun Fact Section */}
+            {recipe.funFact && (
               <div className="p-4 rounded-lg bg-[#FFF5E6] border border-[#6B3100]/10">
-                <h4 className="text-lg font-semibold text-[#6B3100] mb-2">
-                  Chef's Notes
+                <h4 className="text-lg font-semibold text-[#6B3100] mb-2 flex items-center gap-2">
+                  <Lightbulb className="w-5 h-5" />
+                  Fun Fact
                 </h4>
-                <p className="text-[#6B3100]/70">{recipe.notes}</p>
+                <p className="text-[#6B3100]/70">{recipe.funFact}</p>
               </div>
             )}
           </div>
