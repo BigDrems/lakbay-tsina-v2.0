@@ -47,12 +47,19 @@ const Home = () => {
 
   // Show welcome popup on component mount
   useEffect(() => {
-    // Small delay to ensure smooth animation
-    const timer = setTimeout(() => {
-      setShowWelcomePopup(true);
-    }, 500);
+    // Check if popup has already been shown in this session
+    const hasSeenPopup = sessionStorage.getItem("welcomePopupShown");
 
-    return () => clearTimeout(timer);
+    if (!hasSeenPopup) {
+      // Small delay to ensure smooth animation
+      const timer = setTimeout(() => {
+        setShowWelcomePopup(true);
+        // Mark popup as shown in session storage
+        sessionStorage.setItem("welcomePopupShown", "true");
+      }, 500);
+
+      return () => clearTimeout(timer);
+    }
   }, []);
 
   const handleCloseWelcomePopup = () => {
