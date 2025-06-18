@@ -72,7 +72,7 @@ const CulturalQuiz = () => {
   if (shuffledQuestions.length === 0) {
     return (
       <div className="min-h-screen bg-[#F5E6D3] flex items-center justify-center">
-        <div className="text-[#6B3100]">Loading...</div>
+        <div className="text-[#6B3100]">Naglo-load...</div>
       </div>
     );
   }

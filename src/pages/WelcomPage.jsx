@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
-import { conversation, characterPuzzle } from "../data/welcomePageData";
-import CharacterPuzzle from "../components/CharacterPuzzle";
+import { conversation } from "../data/welcomePageData";
 import IntroAnimation from "../components/welcome/IntroAnimation";
+import EmbeddedWorldMap from "../components/EmbeddedWorldMap";
 
 function WelcomePage({ onComplete }) {
   const navigate = useNavigate();
@@ -11,10 +11,7 @@ function WelcomePage({ onComplete }) {
   // State management
   const [step, setStep] = useState(0);
   const [showLiMei, setShowLiMei] = useState(true);
-  const [solvedPairs, setSolvedPairs] = useState([]);
-  const [puzzleComplete, setPuzzleComplete] = useState(false);
-  const [draggedItem, setDraggedItem] = useState(null);
-  const [dragOverItem, setDragOverItem] = useState(null);
+  const [worldMapComplete, setWorldMapComplete] = useState(false);
   const [bgAnimation, setBgAnimation] = useState(false);
   const [showIntroAnim, setShowIntroAnim] = useState(true);
   const [typingText, setTypingText] = useState("");
@@ -104,52 +101,9 @@ function WelcomePage({ onComplete }) {
     }
   };
 
-  // Puzzle drag-and-drop handlers
-  const handleDragStart = (e, item, type) => {
-    setDraggedItem({ ...item, type });
-    e.dataTransfer.setData("text/plain", "");
-    e.currentTarget.classList.add("opacity-50");
-  };
-
-  const handleDragEnd = (e) => {
-    setDraggedItem(null);
-    e.currentTarget.classList.remove("opacity-50");
-  };
-
-  const handleDragOver = (e, item, type) => {
-    e.preventDefault();
-    if (!draggedItem || draggedItem.type === type) return;
-    setDragOverItem({ ...item, type });
-  };
-
-  const handleDragLeave = () => {
-    setDragOverItem(null);
-  };
-
-  const handleDrop = (e, item, type) => {
-    e.preventDefault();
-    if (!draggedItem || draggedItem.type === type) return;
-
-    const match =
-      draggedItem.type === "character"
-        ? draggedItem.meaning === item.meaning
-        : item.meaning === draggedItem.meaning;
-
-    if (match) {
-      const matchedChar = draggedItem.type === "character" ? draggedItem : item;
-      if (!solvedPairs.some((pair) => pair.id === matchedChar.id)) {
-        const newSolvedPairs = [...solvedPairs, matchedChar];
-        setSolvedPairs(newSolvedPairs);
-
-        if (newSolvedPairs.length === characterPuzzle.length) {
-          setPuzzleComplete(true);
-          setStep(4);
-        }
-      }
-    }
-
-    setDraggedItem(null);
-    setDragOverItem(null);
+  const handleWorldMapComplete = () => {
+    setWorldMapComplete(true);
+    setStep(4); // Move to the next step after map completion
   };
 
   const handleOptionClick = async (nextStep) => {
@@ -177,7 +131,9 @@ function WelcomePage({ onComplete }) {
             Lakbay Tsina
           </h1>
           <div className="flex items-center mt-1">
-            <span className="text-amber-200 text-base sm:text-lg">游记</span>
+            <span className="text-amber-200 text-base sm:text-lg">
+              去中国旅行
+            </span>
             <div className="w-16 sm:w-20 md:w-24 h-[1px] bg-amber-200/50 ml-2 sm:ml-3"></div>
           </div>
         </div>
@@ -244,7 +200,7 @@ function WelcomePage({ onComplete }) {
       <p className="text-amber-900 text-base sm:text-lg leading-relaxed">
         {conversation && conversation[step] && typingText
           ? typingText
-          : conversation[step]?.text || "Loading..."}
+          : conversation[step]?.text || "Naglo-load..."}
         {isTyping && (
           <span className="inline-block w-1.5 h-5 bg-amber-700 ml-0.5 animate-blink"></span>
         )}
@@ -270,10 +226,10 @@ function WelcomePage({ onComplete }) {
     </div>
   );
 
-  const renderPuzzle = () => (
+  const renderWorldMap = () => (
     <div className="bg-white p-3 sm:p-4 md:p-6 rounded-xl border border-amber-200 shadow-sm transition-all duration-300 hover:shadow-md">
       <h3 className="text-center text-base sm:text-lg font-medium text-amber-900 mb-3 sm:mb-4">
-        Character Matching Puzzle
+        Tuklasin ang China sa Mapa
       </h3>
       <div className="bg-amber-50/50 p-2 sm:p-3 mb-3 sm:mb-4 rounded-lg text-xs sm:text-sm text-amber-800 flex items-center">
         <svg
@@ -287,21 +243,14 @@ function WelcomePage({ onComplete }) {
             strokeLinecap="round"
             strokeLinejoin="round"
             strokeWidth={2}
-            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-1.447-.894L15 4m0 13V4m0 0L9 7"
           />
         </svg>
-        Drag the characters to match them with their meanings
+        I-click ang marker sa China para simulan ang iyong paglalakbay
       </div>
-      <CharacterPuzzle
-        solvedPairs={solvedPairs}
-        draggedItem={draggedItem}
-        dragOverItem={dragOverItem}
-        onDragStart={handleDragStart}
-        onDragEnd={handleDragEnd}
-        onDragOver={handleDragOver}
-        onDrop={handleDrop}
-        onDragLeave={handleDragLeave}
-      />
+      <div className="h-64 sm:h-80 md:h-96 rounded-lg overflow-hidden border border-amber-200">
+        <EmbeddedWorldMap onComplete={handleWorldMapComplete} />
+      </div>
     </div>
   );
 
@@ -402,7 +351,7 @@ function WelcomePage({ onComplete }) {
                   {renderConversationBubble()}
 
                   {conversation[step]?.type === "puzzle"
-                    ? renderPuzzle()
+                    ? renderWorldMap()
                     : renderOptions()}
                 </div>
 

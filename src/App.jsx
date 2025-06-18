@@ -30,7 +30,7 @@ const GameLoading = () => (
   <div className="min-h-screen bg-[#F5E6D3] flex items-center justify-center">
     <div className="text-center">
       <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#6B3100] mx-auto mb-4"></div>
-      <p className="text-[#6B3100]">Loading game...</p>
+      <p className="text-[#6B3100]">Naglo-load ng laro...</p>
     </div>
   </div>
 );
@@ -52,31 +52,8 @@ function App() {
     }
   });
 
-  const [worldMapShown, setWorldMapShown] = useState(() => {
-    try {
-      // Check if world map has been shown in this session
-      const sessionData = JSON.parse(sessionStorage.getItem("worldMapSession"));
-      if (sessionData && sessionData.expiry > Date.now()) {
-        return true;
-      }
-      return false;
-    } catch (error) {
-      return false;
-    }
-  });
-
   // Show navbar if welcome is dismissed OR if we're not on the home page
   const showNavbar = welcomeDismissed || location.pathname !== "/";
-
-  const handleWorldMapComplete = () => {
-    // Create session with expiration time for world map
-    const sessionData = {
-      shown: true,
-      expiry: Date.now() + SESSION_DURATION,
-    };
-    sessionStorage.setItem("worldMapSession", JSON.stringify(sessionData));
-    setWorldMapShown(true);
-  };
 
   const handleWelcomeComplete = () => {
     // Create session with expiration time
@@ -118,8 +95,6 @@ function App() {
   const renderHomeContent = () => {
     if (welcomeDismissed) {
       return <Home />;
-    } else if (!worldMapShown) {
-      return <WorldMap onComplete={handleWorldMapComplete} />;
     } else {
       return <WelcomePage onComplete={handleWelcomeComplete} />;
     }

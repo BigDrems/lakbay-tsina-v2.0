@@ -175,7 +175,7 @@ const IntroAnimation = ({ showIntroAnim }) => {
               whileHover={{ scale: 1.1, rotate: [0, 5, -5, 0] }}
               whileTap={{ scale: 0.9 }}
               onClick={handleBambooClick}
-              aria-label="Collect bamboo to speed up loading"
+              aria-label="Mangolekta ng bamboo para mapabilis ang paglo-load"
             >
               <div className="text-green-400 text-5xl filter drop-shadow-md">
                 🎋
@@ -196,7 +196,7 @@ const IntroAnimation = ({ showIntroAnim }) => {
         {/* Loading progress bar with text feedback */}
         <div className="max-w-lg mx-auto">
           <div className="flex justify-between mb-2 text-white">
-            <span>Loading your journey...</span>
+            <span>Naglo-load ng iyong paglalakbay...</span>
             <span aria-live="polite">{Math.floor(loading)}%</span>
           </div>
 
@@ -218,7 +218,8 @@ const IntroAnimation = ({ showIntroAnim }) => {
               exit={{ opacity: 0 }}
             >
               <p>
-                Interact with the panda and collect bamboo to speed up loading!
+                Makipag-interact sa panda at mangolekta ng bamboo para mapabilis
+                ang paglo-load!
               </p>
             </motion.div>
           )}

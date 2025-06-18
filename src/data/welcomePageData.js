@@ -1,53 +1,27 @@
 export const websitePurpose =
-  "Maligayang pagdating sa Lakbay Tsina!! Ako si Kuya Pao ang inyong kaibigang gabay sa paglalakbay na ito. Hali na’t tuklasin natin ang makulay na kasaysayan at mahahalagang aral mula sa Sinaunang Kabihasnan ng Tsina.";
+  "Maligayang pagdating sa Lakbay Tsina! Ako si Kuya Pao, ang iyong gabay. Halina’t tuklasin natin ang makulay na kasaysayan at mahahalagang aral ng Sinaunang Tsina. Tara, lakbayin natin ang nakaraan!";
 
 export const pages = [
   {
-    name: "Cultural",
-    purpose: "Discover the amazing traditions and culture of China.",
+    name: "Kultura",
+    purpose:
+      "Tuklasin ang mga kamangha-manghang tradisyon at kultura ng China.",
     path: "/",
   },
   {
-    name: "About",
-    purpose: "Discover the creator and content of the website.",
+    name: "Patungkol",
+    purpose: "Tuklasin ang mga tagalikha at nilalaman ng website.",
     path: "/about",
   },
   {
-    name: "Lessons",
-    purpose: "Discover the lessons and activities of the website.",
+    name: "Aralin",
+    purpose: "Tuklasin ang mga aralin at aktibidad ng website.",
     path: "/lessons",
   },
   {
-    name: "Entertainment",
-    purpose: "Discover the entertainment and fun of the website.",
+    name: "Libangan",
+    purpose: "Tuklasin ang mga libangan at kasiyahan ng website.",
     path: "/entertainment",
-  },
-];
-
-export const characterPuzzle = [
-  {
-    character: "文",
-    meaning: "Culture",
-    hint: "Discover the beauty and elegance of China.",
-    id: "char1",
-  },
-  {
-    character: "化",
-    meaning: "Change",
-    hint: "Change and development",
-    id: "char2",
-  },
-  {
-    character: "旅",
-    meaning: "Journey",
-    hint: "Travel and discovery",
-    id: "char3",
-  },
-  {
-    character: "学",
-    meaning: "Learning",
-    hint: "Learning and information",
-    id: "char4",
   },
 ];
 
@@ -64,18 +38,21 @@ export const conversation = [
     ],
   },
   {
-    text: "Sagutin mo ang mga tanong at ika'y aking gagabayan sa tamang landas!",
+    text: "Tingnan natin ang mapa ng mundo at tuklasin kung saan matatagpuan ang bansang ito!",
     type: "puzzle",
-    options: [],
   },
   {
-    text: "Magaling! Ipinapakita ng scroll ang apat na kamangha-manghang landas na maaari mong tuklasin. Bawat landas ay naglalaman ng mga kapanapanabik at kawili-wiling impormasyon tungkol sa Tsina!",
-    options: [{ label: "Ipakita mo sa akin ang mga daan!", nextStep: 4 }],
+    text: "Sige! Ang bansang ito ay isa sa pinakamalaking bansa sa mundo. Mayroon itong mahaba at mayamang kasaysayan na umaabot ng libu-libong taon. Kilala ito sa mga sinaunang dinastiya, magagandang templo, at kamangha-manghang kultura. Ngayon, tingnan natin kung saan ito matatagpuan sa mapa!",
+    options: [{ label: "Tingnan ang Mapa", nextStep: 2 }],
+  },
+  {
+    text: "Magaling! Natukoy mo ang China sa mapa! Ang bansang ito ay talagang napakalaki at mayaman sa kasaysayan. Ngayon, may apat na kamangha-manghang landas na maaari mong tuklasin. Bawat landas ay naglalaman ng mga kapanapanabik at kawili-wiling impormasyon tungkol sa Tsina!",
+    options: [{ label: "Ipakita mo sa akin ang mga daan!", nextStep: 5 }],
   },
   {
     text: "Aling landas ang nais mong malaman muna?",
     options: pages.map((page) => ({
-      label: `Tuklasin ${page.name}`,
+      label: `${page.name}`,
       nextStep: page.path,
     })),
   },

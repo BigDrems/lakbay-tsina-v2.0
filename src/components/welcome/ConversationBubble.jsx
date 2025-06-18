@@ -23,7 +23,7 @@ const ConversationBubble = ({
         </div>
       )}
       <p className="text-amber-900 text-lg leading-relaxed">
-        {typingText ? typingText : text || "Loading..."}
+        {typingText ? typingText : text || "Naglo-load..."}
         {isTyping && (
           <span className="inline-block w-1.5 h-5 bg-amber-700 ml-0.5 animate-blink"></span>
         )}
