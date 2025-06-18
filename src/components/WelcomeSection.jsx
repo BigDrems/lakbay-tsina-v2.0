@@ -197,24 +197,6 @@ export default function WelcomePopup({ isOpen, onClose }) {
                   kabihasnang Tsino batay sa mga aspeto ng politika, ekonomiya,
                   kultura, relihiyon, paniniwala, at lipunan.
                 </motion.p>
-
-                <motion.p variants={itemVariants}>
-                  Ang aming layunin ay magbigay ng mas interaktibo at engaging
-                  na paraan ng pag-aaral para sa mga mag-aaral ng Grade 8. Sa
-                  pamamagitan ng mga laro, timeline, at multimedia content,
-                  inaasahan naming mas madaling maunawaan at maalala ng mga
-                  mag-aaral ang mga mahahalagang pangyayari at konsepto sa
-                  kasaysayan ng Tsina.
-                </motion.p>
-
-                <motion.p variants={itemVariants}>
-                  Ang website na ito ay naglalaman ng iba't ibang interactive
-                  features tulad ng dynasty timeline, cultural games, geography
-                  explorer, at marami pang iba. Bawat feature ay dinisenyo para
-                  matulungan ang mga mag-aaral na mas malalim na maunawaan ang
-                  kultura at kasaysayan ng Sinaunang Tsina.
-                </motion.p>
-
                 <motion.p
                   className={styles.welcomeHighlight}
                   variants={highlightVariants}

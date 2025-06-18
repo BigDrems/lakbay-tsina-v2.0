@@ -96,6 +96,12 @@ const Home = () => {
 
   return (
     <>
+      {/* Welcome Popup */}
+      <WelcomePopup
+        isOpen={showWelcomePopup}
+        onClose={handleCloseWelcomePopup}
+      />
+
       <main className={page.main}>
         {!isMobile ? (
           <Suspense fallback={<LoadingFallback />}>
