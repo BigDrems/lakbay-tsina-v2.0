@@ -3,6 +3,21 @@ import { Link } from "react-router-dom";
 import { Users, Star, ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
 
+// Function to get teacher image based on instructor name
+const getTeacherImage = (instructorName) => {
+  const teacherImages = {
+    "Ralph Joshua Mapula": "/teacher/ralph.jpg",
+    "Maybeline Lastimado": "/teacher/maybeline.jpg",
+    "Cristina Magdaraog": "/teacher/cristina.jpg",
+    "Angela Bacunawa": "/teacher/angela.jpg",
+    "Abetto Palconit | Jenilyn Verian Florito": "/teacher/abetto.jpg", // Using Abetto as primary
+    "Abetto Palconit": "/teacher/abetto.jpg",
+    "Jenilyn Verian Florito": "/teacher/jenilyn.jpg",
+  };
+
+  return teacherImages[instructorName] || "/teacher/ralph.jpg"; // Default fallback
+};
+
 const LessonCard = ({ lesson, index }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
 
@@ -43,9 +58,9 @@ const LessonCard = ({ lesson, index }) => {
             <div className="flex items-center gap-2 mb-3">
               <div className="w-6 h-6 rounded-full overflow-hidden">
                 <img
-                  src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${lesson.instructor}`}
+                  src={getTeacherImage(lesson.instructor)}
                   alt={lesson.instructor}
-                  className="w-full h-full"
+                  className="w-full h-full object-cover"
                   loading="lazy"
                 />
               </div>

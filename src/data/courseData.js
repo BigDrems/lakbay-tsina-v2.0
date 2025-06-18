@@ -280,7 +280,7 @@ export const courseOverview = [
   {
     id: 3,
     title: "Pulitika at Pamahalaan",
-    instructor: "Cristina Bacunawa",
+    instructor: "Cristina Magdaraog",
     description:
       "Pag-aralan ang sistema ng pamahalaan sa Tsina, ang Communist Party, at ang mga patakaran nito sa modernong panahon.",
     image: "/images/culture.jpg",

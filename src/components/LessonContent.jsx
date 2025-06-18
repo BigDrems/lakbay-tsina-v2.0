@@ -3,12 +3,25 @@ import {
   Book,
   ChevronRight,
   Play,
-  User,
   ArrowRight,
   Clock,
   Award,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+
+// Function to get teacher image based on instructor name
+const getTeacherImage = (instructorName) => {
+  const teacherImages = {
+    "Ralph Joshua Mapula": "/teacher/ralph.jpg",
+    "Maybeline Lastimado": "/teacher/maybeline.jpg",
+    "Cristina Magdaraog": "/teacher/cristina.jpg",
+    "Angela Bacunawa": "/teacher/angela.jpg",
+    "Abetto Palconit | Jenilyn Verian Florito": "/teacher/abetto.jpg", // Using Abetto as primary
+    "Abetto Palconit": "/teacher/abetto.jpg",
+    "Jenilyn Verian Florito": "/teacher/jenilyn.jpg",
+  };
+  return teacherImages[instructorName] || "/teacher/ralph.jpg";
+};
 
 const LessonContent = ({ lesson }) => {
   const navigate = useNavigate();
@@ -98,8 +111,12 @@ const LessonContent = ({ lesson }) => {
           <div className="mb-6 bg-gray-50 p-4 rounded-xl">
             <h3 className="text-xl font-bold mb-4 text-gray-900">Guro</h3>
             <div className="flex items-center gap-4">
-              <div className="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center">
-                <User size={24} className="text-gray-600" />
+              <div className="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
+                <img
+                  src={getTeacherImage(lesson.instructor)}
+                  alt={lesson.instructor}
+                  className="w-full h-full object-cover"
+                />
               </div>
               <div>
                 <p className="font-medium">{lesson.instructor}</p>
