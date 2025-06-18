@@ -1,9 +1,9 @@
 import { memo, useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { FileText } from "lucide-react";
 
 // Components
 import PowerPointViewer from "../components/PowerPointViewer";
+import LessonCard from "../components/LessonCard";
 
 // Data and constants
 import { courseOverview } from "../data/courseData";
@@ -18,11 +18,11 @@ const HeroSection = memo(() => (
       transition={{ duration: 0.5 }}
     >
       <h1 className="text-4xl font-extrabold text-gray-900 mb-4">
-        Mga Presentation Tungkol sa Tsina
+        Maglibang Habang Natututo Tungkol sa Tsina! 🇨🇳
       </h1>
       <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-        Tuklasin ang mayamang kasaysayan at kultura ng Tsina sa pamamagitan ng
-        mga interactive na presentation.
+        Halika! Tuklasin natin ang mga nakakatuwang kwento at makukulay na
+        kultura ng Tsina sa pamamagitan ng mga masayang presentation at aralin!
       </p>
     </motion.div>
   </div>
@@ -63,7 +63,9 @@ const PresentationsSection = memo(({ onPresentationSelect }) => {
   return (
     <div className="mb-12">
       <div className="mb-6">
-        <h2 className="text-2xl font-bold text-gray-900">Mga Presentation</h2>
+        <h2 className="text-2xl font-bold text-gray-900">
+          Mga Masayang Presentation 📚
+        </h2>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -88,7 +90,6 @@ const PresentationsSection = memo(({ onPresentationSelect }) => {
                 <span className="text-xs font-medium text-blue-600 bg-blue-100 px-2 py-1 rounded-full">
                   {presentation.category}
                 </span>
-                <FileText size={16} className="text-gray-400" />
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2 text-center">
                 {presentation.title}
@@ -101,6 +102,29 @@ const PresentationsSection = memo(({ onPresentationSelect }) => {
               </button>
             </div>
           </motion.div>
+        ))}
+      </div>
+    </div>
+  );
+});
+
+// Lessons Section Component
+const LessonsSection = memo(() => {
+  return (
+    <div className="mb-12">
+      <div className="mb-6">
+        <h2 className="text-2xl font-bold text-gray-900">
+          Mga Nakakatuwang Aralin 🎓
+        </h2>
+        <p className="text-gray-600 mt-2">
+          Halika! Matuto tayo tungkol sa kasaysayan, kultura, pulitika,
+          ekonomiya, at heograpiya ng Tsina sa masayang paraan!
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {courseOverview.map((lesson, index) => (
+          <LessonCard key={lesson.id} lesson={lesson} index={index} />
         ))}
       </div>
     </div>
@@ -167,6 +191,9 @@ const Aralin = () => {
 
         {/* Presentations Section */}
         <PresentationsSection onPresentationSelect={handlePresentationSelect} />
+
+        {/* Lessons Section */}
+        <LessonsSection />
       </div>
     </div>
   );
