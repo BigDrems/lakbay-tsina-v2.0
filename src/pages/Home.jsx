@@ -1,6 +1,7 @@
 import { useEffect, useState, lazy, Suspense } from "react";
 import Lenis from "@studio-freight/lenis";
 import page from "../styles/home.module.scss";
+import WelcomeSection from "../components/WelcomeSection";
 
 // Lazy load components
 const ZoomParallax = lazy(() => import("../components/ZoomParallax"));
@@ -67,7 +68,9 @@ const Home = () => {
   return (
     <>
       <main className={page.main}>
-        {!isMobile && (
+        {isMobile ? (
+          <WelcomeSection />
+        ) : (
           <Suspense fallback={<LoadingFallback />}>
             <ZoomParallax />
           </Suspense>

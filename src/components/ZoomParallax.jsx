@@ -1,6 +1,7 @@
 import styles from "../styles/styles.module.scss";
 import { useScroll, useTransform, motion } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
+import WelcomeSection from "./WelcomeSection";
 
 export default function Index() {
   const container = useRef(null);
@@ -138,42 +139,7 @@ export default function Index() {
           })}
         </div>
       </div>
-
-      {/* Welcome Section */}
-      <motion.div
-        ref={welcomeRef}
-        style={{ opacity: welcomeOpacity, y: welcomeY }}
-        className={styles.welcomeSection}
-      >
-        <div className={styles.welcomeContent}>
-          <h1 className={styles.welcomeTitle}>
-            Maligayang Pagdating sa Lakbay Tsina!
-          </h1>
-          <div className={styles.welcomeText}>
-            <p>
-              Kami ay mga mag-aaral mula sa kursong Bachelor of Secondary
-              Education major in Social Studies, at ang website na ito ay bahagi
-              ng aming course requirement sa asignaturang Research in Social
-              Studies. Layunin naming pagbutihin ang paraan ng pagtuturo at
-              pagkatuto ng Sinaunang Kabihasnan sa Tsina sa pamamagitan ng isang
-              interakibong web-based material.
-            </p>
-            <p>
-              Ang mga nilalaman ng Lakbay Tsina ay hango sa Most Essential
-              Learning Competencies (MELCs) ng Department of Education (DepEd)
-              para sa Araling Panlipunan 8, partikular sa Quarter 1, Week 7-8.
-              Dito, masusing tatalakayin at susuriin ang kabihasnang Tsino batay
-              sa mga aspeto ng politika, ekonomiya, kultura, relihiyon,
-              paniniwala, at lipunan.
-            </p>
-            <p className={styles.welcomeHighlight}>
-              Kaya halina't samahan si Kuya Pao, ang aming masayang gabay, sa
-              isang kapana-panabik na paglalakbay tungo sa kaalaman at
-              kasaysayan ng Tsina!
-            </p>
-          </div>
-        </div>
-      </motion.div>
+      <WelcomeSection />
     </>
   );
 }
