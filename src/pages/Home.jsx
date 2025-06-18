@@ -22,7 +22,11 @@ const Home = () => {
   useEffect(() => {
     // Check if screen is mobile
     const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 640);
+      const isMobileDevice =
+        window.innerWidth <= 768 ||
+        "ontouchstart" in window ||
+        navigator.maxTouchPoints > 0;
+      setIsMobile(isMobileDevice);
     };
 
     // Initial check
@@ -67,13 +71,16 @@ const Home = () => {
   };
 
   const projects = [
-    { title1: "Qin", title2: "Dynasty", src: "qin.webp" },
-    { title1: "Han", title2: "Dynasty", src: "Liu-bang.jpg" },
-    { title1: "Tang", title2: "Dynasty", src: "Li_Xian.jpg" },
-    { title1: "Song", title2: "Dynasty", src: "song.webp" },
-    { title1: "Sui", title2: "Dynasty", src: "sui.jpg" },
-    { title1: "Yuan", title2: "Dynasty", src: "yuan.jpg" },
+    { title1: "Xia", title2: "Dynasty", src: "xia.jpg" },
+    { title1: "Shang", title2: "Dynasty", src: "shang.jpg" },
     { title1: "Zhou", title2: "Dynasty", src: "zhou.jpg" },
+    { title1: "Qin", title2: "Dynasty", src: "qin.jpg" },
+    { title1: "Han", title2: "Dynasty", src: "han.jpg" },
+    { title1: "Tang", title2: "Dynasty", src: "tang.jpg" },
+    { title1: "Song", title2: "Dynasty", src: "song.jpg" },
+    { title1: "Yuan", title2: "Dynasty", src: "yuan.jpg" },
+    { title1: "Ming", title2: "Dynasty", src: "ming.jpg" },
+    { title1: "Qing", title2: "Dynasty", src: "qing.jpg" },
   ];
 
   // Preload dynasty images
@@ -82,25 +89,19 @@ const Home = () => {
       // Only preload the first few images initially
       const imagesToPreload = projects
         .slice(0, 3)
-        .map((project) => `/images/${project.src}`);
+        .map((project) => `/dynasty/${project.src}`);
       preloadImages(imagesToPreload);
     });
   }, []);
 
   return (
     <>
-      {/* Welcome Popup */}
-      <WelcomePopup
-        isOpen={showWelcomePopup}
-        onClose={handleCloseWelcomePopup}
-      />
-
       <main className={page.main}>
-        {!isMobile && (
+        {!isMobile ? (
           <Suspense fallback={<LoadingFallback />}>
             <ZoomParallax />
           </Suspense>
-        )}
+        ) : null}
       </main>
 
       <Suspense fallback={<LoadingFallback />}>

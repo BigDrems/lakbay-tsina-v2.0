@@ -70,6 +70,18 @@ export const GAMES_DATA = [
     path: "/games/geography-explorer",
     popular: false,
   },
+  {
+    id: 6,
+    title: "Pagsusulit sa mga Termino",
+    description:
+      "Basahin ang kahulugan at tingnan ang larawan, pagkatapos ay isulat ang tamang termino. Subukan ang iyong kaalaman sa mga terminong Tsino!",
+    icon: "BookOpen",
+    difficulty: "Madali",
+    category: "Wika",
+    image: "/images/history.png",
+    path: "/games/term-definition",
+    popular: true,
+  },
 ];
 
 // Animation variants

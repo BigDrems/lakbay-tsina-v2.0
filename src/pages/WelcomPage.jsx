@@ -4,6 +4,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { conversation } from "../data/welcomePageData";
 import IntroAnimation from "../components/welcome/IntroAnimation";
 import EmbeddedWorldMap from "../components/EmbeddedWorldMap";
+import Pretest from "../components/games/Pretest";
 
 function WelcomePage({ onComplete }) {
   const navigate = useNavigate();
@@ -16,6 +17,7 @@ function WelcomePage({ onComplete }) {
   const [showIntroAnim, setShowIntroAnim] = useState(true);
   const [typingText, setTypingText] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  const [showPretest, setShowPretest] = useState(false);
   const textRef = useRef("");
   const typingIntervalRef = useRef(null);
 
@@ -110,14 +112,32 @@ function WelcomePage({ onComplete }) {
     setStep(4); // Move to the next step after map completion
   };
 
+  const handlePretestComplete = () => {
+    setShowPretest(false);
+    setStep(7); // Move to the final step after pretest completion
+  };
+
   const handleOptionClick = async (nextStep) => {
     if (typeof nextStep === "string") {
-      onComplete();
-      navigate(nextStep);
+      if (nextStep === "pretest") {
+        setShowPretest(true);
+      } else {
+        onComplete();
+        navigate(nextStep);
+      }
     } else if (nextStep !== null) {
       setStep(nextStep);
     }
   };
+
+  // If pretest is showing, render the pretest component
+  if (showPretest) {
+    return (
+      <div className="min-h-screen bg-[#F5E6D3]">
+        <Pretest onComplete={handlePretestComplete} />
+      </div>
+    );
+  }
 
   const renderIntroAnimation = () => {
     return <IntroAnimation showIntroAnim={showIntroAnim} />;

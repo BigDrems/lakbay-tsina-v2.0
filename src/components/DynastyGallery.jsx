@@ -20,7 +20,7 @@ export default function DynastyGallery({ project }) {
 
   useEffect(() => {
     // Preload the image immediately when component mounts
-    const imagePath = `/images/${src}`;
+    const imagePath = `/dynasty/${src}`;
 
     import("../utils/imageUtils").then(({ preloadImage }) => {
       preloadImage(imagePath)
@@ -64,7 +64,7 @@ export default function DynastyGallery({ project }) {
           className={`${styles.imgContainer} group-hover:opacity-90 transition-opacity`}
         >
           <img
-            src={`/images/${src}`}
+            src={`/dynasty/${src}`}
             className={`${styles.galleryImage} transition-transform duration-300 group-hover:scale-105`}
             alt={`${title1} ${title2}`}
             style={{ visibility: imageLoaded ? "visible" : "hidden" }}

@@ -3,8 +3,8 @@ export const dynastyData = {
   dynasties: [
     {
       name: "Xia Dynasty",
-      years: "c. 2070–1600 BCE",
-      img: "qin.webp",
+      years: "2070–1600 BCE",
+      img: "xia.jpg",
       capital: "Iba't ibang lokasyon (hindi tiyak ang eksaktong lugar)",
       culture: "Kulturang Panahon ng Tanso, maagang pagbuo ng estado sa Tsina",
       inventions: [
@@ -21,7 +21,7 @@ export const dynastyData = {
     {
       name: "Shang Dynasty",
       years: "1600–1046 BCE",
-      img: "Liu-bang.jpg",
+      img: "xia.jpg",
       capital: "Yinxu (malapit sa modernong Anyang)",
       culture: "Sibilisasyong Panahon ng Tanso, oracle bone script",
       inventions: [
@@ -54,7 +54,7 @@ export const dynastyData = {
     {
       name: "Qin Dynasty",
       years: "221–206 BCE",
-      img: "qin.webp",
+      img: "qin.jpg",
       capital: "Xianyang",
       culture: "Legalistang estado, standardisasyon",
       inventions: [
@@ -70,7 +70,7 @@ export const dynastyData = {
     {
       name: "Han Dynasty",
       years: "206 BCE–220 CE",
-      img: "Liu-bang.jpg",
+      img: "han.jpg",
       capital: "Chang'an, Luoyang",
       culture: "Estadong Confucian, kalakalan sa Silk Road",
       inventions: ["Papel", "Seismoscope", "Advanced na produksyon ng seda"],
@@ -83,7 +83,7 @@ export const dynastyData = {
     {
       name: "Tang Dynasty",
       years: "618–907 CE",
-      img: "Li_Xian.jpg",
+      img: "tang.jpg",
       capital: "Chang'an",
       culture: "Ginintuang panahon, umunlad ang tula",
       inventions: ["Woodblock printing", "Gunpowder", "Mekanikal na orasan"],
@@ -95,7 +95,7 @@ export const dynastyData = {
     {
       name: "Song Dynasty",
       years: "960–1279 CE",
-      img: "song.webp",
+      img: "song.jpg",
       capital: "Bianjing, Lin'an",
       culture: "Nangingibabaw ang scholar-official class, landscape painting",
       inventions: [
@@ -142,7 +142,7 @@ export const dynastyData = {
     {
       name: "Qing Dynasty",
       years: "1644–1912 CE",
-      img: "sui.jpg",
+      img: "qing.jpg",
       capital: "Beijing",
       culture: "Pamumunong Manchu, huling imperyal na dinastiya",
       inventions: [
@@ -163,19 +163,18 @@ export const dynastyData = {
   },
 };
 
-// Map dynasty names to image sources
+// Map dynasty names to image sources from the dynasty folder
 export const dynastyImageMap = {
-  "Qin Dynasty": "qin.webp",
-  "Han Dynasty": "Liu-bang.jpg",
-  "Tang Dynasty": "Li_Xian.jpg",
-  "Song Dynasty": "song.webp",
-  "Yuan Dynasty": "yuan.jpg",
+  "Xia Dynasty": "xia.jpg",
+  "Shang Dynasty": "shang.jpg",
   "Zhou Dynasty": "zhou.jpg",
-  // Default images for dynasties not in the original gallery
-  "Xia Dynasty": "qin.webp", // Using Qin image as placeholder
-  "Shang Dynasty": "Liu-bang.jpg", // Using Han image as placeholder
+  "Qin Dynasty": "qin.jpg",
+  "Han Dynasty": "han.jpg",
+  "Tang Dynasty": "tang.jpg",
+  "Song Dynasty": "song.jpg",
+  "Yuan Dynasty": "yuan.jpg",
   "Ming Dynasty": "ming.jpg",
-  "Qing Dynasty": "sui.jpg",
+  "Qing Dynasty": "qing.jpg",
 };
 
 // Timeline configuration

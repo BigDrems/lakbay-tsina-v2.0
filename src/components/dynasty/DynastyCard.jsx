@@ -14,7 +14,7 @@ const DynastyCard = ({ dynasty, index, onClick, imageSrc }) => {
     >
       <div className="h-40 overflow-hidden relative">
         <img
-          src={`/images/${imageSrc}`}
+          src={`/dynasty/${imageSrc}`}
           alt={dynasty.name}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
         />

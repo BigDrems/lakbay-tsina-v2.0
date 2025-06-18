@@ -24,6 +24,10 @@ const MusicMemory = lazy(() => import("./components/games/MusicMemory"));
 const GeographyExplorer = lazy(() =>
   import("./components/games/GeographyExplorer")
 );
+const TermDefinitionGame = lazy(() =>
+  import("./components/games/TermDefinitionGame")
+);
+const Pretest = lazy(() => import("./components/games/Pretest"));
 
 // Loading component for game routes
 const GameLoading = () => (
@@ -154,6 +158,22 @@ function App() {
               element={
                 <Suspense fallback={<GameLoading />}>
                   <GeographyExplorer />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/games/term-definition"
+              element={
+                <Suspense fallback={<GameLoading />}>
+                  <TermDefinitionGame />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/games/pretest"
+              element={
+                <Suspense fallback={<GameLoading />}>
+                  <Pretest />
                 </Suspense>
               }
             />

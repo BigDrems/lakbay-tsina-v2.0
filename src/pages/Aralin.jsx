@@ -1,22 +1,16 @@
 import { memo, useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Search } from "lucide-react";
-
-// Custom hooks
-import useFilteredLessons from "../hooks/useFilteredLessons";
+import { FileText } from "lucide-react";
 
 // Components
-import LessonCard from "../components/LessonCard";
-import EmptyState from "../components/EmptyState";
-import LessonCardSkeleton from "../components/LessonCardSkeleton";
+import PowerPointViewer from "../components/PowerPointViewer";
 
 // Data and constants
-import { SORT_OPTIONS } from "../utils/constants";
 import { courseOverview } from "../data/courseData";
 import { preloadImages } from "../utils/imageUtils";
 
 // Memoized section components for better performance
-const HeroSection = memo(({ searchQuery, setSearchQuery }) => (
+const HeroSection = memo(() => (
   <div className="mb-12 text-center">
     <motion.div
       initial={{ opacity: 0, y: -20 }}
@@ -24,92 +18,99 @@ const HeroSection = memo(({ searchQuery, setSearchQuery }) => (
       transition={{ duration: 0.5 }}
     >
       <h1 className="text-4xl font-extrabold text-gray-900 mb-4">
-        Mga Aralin Tungkol sa Tsina
+        Mga Presentation Tungkol sa Tsina
       </h1>
       <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-        Simulan ang iyong paglalakbay sa pag-aaral tungkol sa mayamang kultura
-        at kasaysayan ng Tsina.
+        Tuklasin ang mayamang kasaysayan at kultura ng Tsina sa pamamagitan ng
+        mga interactive na presentation.
       </p>
     </motion.div>
-
-    {/* Search */}
-    <div className="mt-8 max-w-2xl mx-auto">
-      <div className="relative">
-        <input
-          type="text"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          placeholder="Maghanap ng aralin..."
-          className="w-full pl-12 pr-4 py-3.5 rounded-full border border-gray-200 focus:border-[#cd201c] focus:ring focus:ring-red-100 focus:outline-none shadow-sm"
-        />
-        <Search
-          className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"
-          size={20}
-        />
-      </div>
-    </div>
   </div>
 ));
 
-const ResultsHeader = memo(
-  ({ filteredLessons, selectedCategory, sortOption, setSortOption }) => (
-    <div className="mb-6 flex justify-between items-center">
-      <h2 className="text-xl font-bold text-gray-800">
-        {filteredLessons.length}{" "}
-        {filteredLessons.length === 1 ? "Aralin" : "Mga Aralin"}{" "}
-        {selectedCategory !== "All" ? `sa ${selectedCategory}` : ""}
-      </h2>
-      <div className="text-sm text-gray-500">
-        <select
-          className="bg-white border border-gray-200 rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-red-100"
-          value={sortOption}
-          onChange={(e) => setSortOption(e.target.value)}
-        >
-          {SORT_OPTIONS.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </select>
-      </div>
-    </div>
-  )
-);
-
-// Updated component to handle loading state
-const LessonsGrid = memo(({ filteredLessons, isLoading }) => {
-  if (isLoading) {
-    return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {[...Array(6)].map((_, index) => (
-          <LessonCardSkeleton key={index} index={index} />
-        ))}
-      </div>
-    );
-  }
+// Presentations Section Component
+const PresentationsSection = memo(({ onPresentationSelect }) => {
+  const presentations = [
+    {
+      id: 1,
+      title: "Xia Dynasty",
+      description:
+        "Ang unang dinastiya ng Tsina at ang mga sinaunang tradisyon nito",
+      pdfUrl: "/presentations/xia.pdf",
+      thumbnail: "/dynasty/xia.jpg",
+      category: "Kasaysayan",
+    },
+    {
+      id: 2,
+      title: "Shang Dynasty",
+      description:
+        "Ang ikalawang dinastiya ng Tsina at ang mga kontribusyon nito sa sibilisasyon",
+      pdfUrl: "/presentations/shang.pdf",
+      thumbnail: "/dynasty/shang.jpg",
+      category: "Kasaysayan",
+    },
+    {
+      id: 3,
+      title: "Song Dynasty",
+      description:
+        "Pag-aaral tungkol sa Song Dynasty at ang mga kontribusyon nito sa kasaysayan ng Tsina",
+      pdfUrl: "/presentations/song.pdf",
+      thumbnail: "/dynasty/song.jpg",
+      category: "Kasaysayan",
+    },
+  ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {filteredLessons.map((lesson, index) => (
-        <LessonCard key={lesson.id} lesson={lesson} index={index} />
-      ))}
+    <div className="mb-12">
+      <div className="mb-6">
+        <h2 className="text-2xl font-bold text-gray-900">Mga Presentation</h2>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {presentations.map((presentation, index) => (
+          <motion.div
+            key={presentation.id}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.1 }}
+            className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
+            onClick={() => onPresentationSelect(presentation)}
+          >
+            <div className="h-48 overflow-hidden">
+              <img
+                src={presentation.thumbnail}
+                alt={presentation.title}
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="p-6">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-xs font-medium text-blue-600 bg-blue-100 px-2 py-1 rounded-full">
+                  {presentation.category}
+                </span>
+                <FileText size={16} className="text-gray-400" />
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2 text-center">
+                {presentation.title}
+              </h3>
+              <p className="text-gray-600 text-sm mb-4">
+                {presentation.description}
+              </p>
+              <button className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                Tingnan ang Presentation
+              </button>
+            </div>
+          </motion.div>
+        ))}
+      </div>
     </div>
   );
 });
 
 // Main component
 const Aralin = () => {
-  const {
-    filteredLessons,
-    selectedCategory,
-    searchQuery,
-    setSearchQuery,
-    sortOption,
-    setSortOption,
-    resetFilters,
-  } = useFilteredLessons();
-
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedPresentation, setSelectedPresentation] = useState(null);
 
   // Preload lesson images when component mounts
   useEffect(() => {
@@ -140,29 +141,32 @@ const Aralin = () => {
       });
   }, []);
 
+  const handlePresentationSelect = (presentation) => {
+    setSelectedPresentation(presentation);
+  };
+
+  const handleClosePresentation = () => {
+    setSelectedPresentation(null);
+  };
+
+  // If a presentation is selected, show the PowerPoint viewer
+  if (selectedPresentation) {
+    return (
+      <PowerPointViewer
+        pdfUrl={selectedPresentation.pdfUrl}
+        title={selectedPresentation.title}
+        onBack={handleClosePresentation}
+      />
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16">
-        <HeroSection
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-        />
+        <HeroSection />
 
-        <ResultsHeader
-          filteredLessons={filteredLessons}
-          selectedCategory={selectedCategory}
-          sortOption={sortOption}
-          setSortOption={setSortOption}
-        />
-
-        {filteredLessons.length > 0 || isLoading ? (
-          <LessonsGrid
-            filteredLessons={filteredLessons}
-            isLoading={isLoading}
-          />
-        ) : (
-          <EmptyState resetFilters={resetFilters} />
-        )}
+        {/* Presentations Section */}
+        <PresentationsSection onPresentationSelect={handlePresentationSelect} />
       </div>
     </div>
   );

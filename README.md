@@ -1,12 +1,61 @@
-# React + Vite
+# Lakbay Tsina v2.0
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+An interactive educational platform for learning about Chinese culture, history, and language through engaging games and lessons.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Games Available
 
-## Expanding the ESLint configuration
+1. **Pagpapares ng mga Karakter ng Tsino** - Match Chinese characters with their Filipino meanings
+2. **Tagpo ng mga Dinastiya** - Arrange Chinese dynasties in chronological order
+3. **Pagsusulit sa Kultura** - Cultural quiz about Chinese festivals and traditions
+4. **Dakilang Tagapagluto ng Lutuing Tsino** - Chinese cuisine cooking game
+5. **Taggalug ng Heograpiya** - Interactive geography exploration of China
+6. **Pagsusulit sa mga Termino** - Term definition matching game with images
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### New Game: Pagsusulit sa mga Termino
+
+The latest addition to the game collection is a term definition matching game that features:
+
+- **10 Important Terms**: Tanso, Papel, Irigasyon, Silk Road, Yellow River, Artisan, Magsasaka, Tsaa, Seda, Seramika
+- **Interactive Learning**: Users read definitions and view images, then type the correct term
+- **Visual Learning**: Each term is accompanied by relevant images
+- **Progressive Scoring**: Earn points for correct answers
+- **Educational Content**: Learn about Chinese history, technology, culture, and geography
+
+## Getting Started
+
+1. Clone the repository
+2. Install dependencies: `npm install`
+3. Start the development server: `npm run dev`
+4. Open your browser and navigate to the application
+
+## Technology Stack
+
+- React 18
+- Vite
+- Framer Motion
+- Tailwind CSS
+- Lucide React Icons
+
+## Project Structure
+
+```
+src/
+├── components/
+│   ├── games/
+│   │   ├── TermDefinitionGame.jsx    # New term definition game
+│   │   ├── CharacterMatch.jsx
+│   │   ├── CulturalQuiz.jsx
+│   │   └── ...
+│   └── ...
+├── data/
+│   ├── termDefinitionGame.js         # New game data
+│   ├── games.js                      # Updated with new game
+│   └── ...
+└── ...
+```
+
+## Contributing
+
+Feel free to contribute to this project by adding new games, improving existing features, or enhancing the educational content.

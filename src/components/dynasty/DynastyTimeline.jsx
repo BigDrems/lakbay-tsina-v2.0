@@ -140,7 +140,7 @@ const TimelineTooltip = ({ dynasty }) => {
       <div className="flex items-start gap-2">
         <div className="w-10 h-10 rounded-md overflow-hidden flex-shrink-0">
           <img
-            src={`/images/${dynastyImageMap[dynasty.name] || "qin.webp"}`}
+            src={`/dynasty/${dynastyImageMap[dynasty.name] || "xia.jpg"}`}
             alt={dynasty.name}
             className="w-full h-full object-cover"
           />

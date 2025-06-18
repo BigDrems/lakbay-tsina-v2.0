@@ -11,14 +11,14 @@ const studentEducators = [
   {
     id: 2,
     image: "/teacher/angela.jpg",
-    name: "Angela Bacunawa",
+    name: "Cristina Magdaraog",
     description:
       '"Ang pag-aaral ay isang paglalakbay, hindi isang destinasyon."\n\n- Ralph Waldo Emerson',
   },
   {
     id: 3,
     image: "/teacher/cristina.jpg",
-    name: "Cristina Magdaraog",
+    name: "Angela Bacunawa",
     description:
       '"Ang edukasyon ay hindi paghahanda para sa buhay; ito ay buhay mismo."\n\n- John Dewey',
   },

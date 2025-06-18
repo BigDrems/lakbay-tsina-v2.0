@@ -8,8 +8,8 @@ const ImagePreloader = () => {
     // Get all unique image sources from dynastyImageMap
     const imageSources = [...new Set(Object.values(dynastyImageMap))];
 
-    // Convert to full paths
-    const fullPaths = imageSources.map((src) => `/images/${src}`);
+    // Convert to full paths from dynasty folder
+    const fullPaths = imageSources.map((src) => `/dynasty/${src}`);
 
     // Preload all images using dynamic import
     import("../utils/imageUtils").then(({ preloadImages }) => {

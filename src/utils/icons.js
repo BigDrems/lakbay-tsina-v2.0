@@ -1,4 +1,12 @@
-import { Book, Brain, Trophy, ChefHat, Gamepad2, Music } from "lucide-react";
+import {
+  Book,
+  Brain,
+  Trophy,
+  ChefHat,
+  Gamepad2,
+  Music,
+  BookOpen,
+} from "lucide-react";
 
 const iconMap = {
   Book,
@@ -7,6 +15,7 @@ const iconMap = {
   ChefHat,
   Gamepad2,
   Music,
+  BookOpen,
 };
 
 export const getIconComponent = (iconName) => {

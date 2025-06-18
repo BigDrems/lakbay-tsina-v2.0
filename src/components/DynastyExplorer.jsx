@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, Info } from "lucide-react";
+import { Info } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
 import {
   dynastyData,
@@ -150,7 +150,7 @@ const DynastyExplorer = () => {
             dynasty={dynasty}
             index={index}
             onClick={() => handleDynastyClick(dynasty)}
-            imageSrc={dynastyImageMap[dynasty.name] || "qin.webp"}
+            imageSrc={dynastyImageMap[dynasty.name] || "xia.jpg"}
           />
         ))}
       </div>
@@ -164,31 +164,23 @@ const DynastyExplorer = () => {
         <div className="flex justify-between items-center mb-4 gap-2">
           <div className="flex items-center gap-2">
             <button
-              onClick={() => navigate("/")}
-              className="flex items-center gap-1 px-3 py-2 rounded-lg bg-white dark:bg-gray-800 text-[#6B3100] dark:text-white hover:bg-[#6B3100]/10 dark:hover:bg-gray-700 transition-colors"
-              aria-label="Go back"
-            >
-              <ArrowLeft size={16} className="sm:w-5 sm:h-5" />
-            </button>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <button
               onClick={() =>
                 setViewMode(viewMode === "grid" ? "timeline" : "grid")
               }
               className="px-3 py-2 rounded-lg bg-white dark:bg-gray-800 text-[#6B3100] dark:text-white hover:bg-[#6B3100]/10 dark:hover:bg-gray-700 transition-colors text-sm"
             >
-              {viewMode === "grid" ? "Timeline View" : "Grid View"}
+              {viewMode === "grid"
+                ? "Tingnan ang Timeline"
+                : "Tingnan ang Grid"}
             </button>
 
             <button
               onClick={() => setShowInfo(!showInfo)}
               className="flex items-center gap-1 px-3 py-2 rounded-lg bg-white dark:bg-gray-800 text-[#6B3100] dark:text-white hover:bg-[#6B3100]/10 dark:hover:bg-gray-700 transition-colors"
-              aria-label="About this explorer"
+              aria-label="Tungkol sa explorer na ito"
             >
               <Info size={16} className="sm:w-5 sm:h-5" />
-              <span className="hidden sm:inline">About</span>
+              <span className="hidden sm:inline">Tungkol</span>
             </button>
           </div>
         </div>
@@ -201,11 +193,11 @@ const DynastyExplorer = () => {
             transition={{ duration: 0.3 }}
           >
             <h1 className="text-2xl sm:text-3xl font-bold text-[#6B3100] dark:text-amber-500 mb-2 text-center">
-              Chinese Dynasties Explorer
+              Tagpo ng mga Dinastiya ng Tsina
             </h1>
             <p className="text-center text-gray-600 dark:text-gray-400 mb-6 text-sm sm:text-base">
-              Discover the rich legacy of China's imperial dynasties spanning
-              over 4,000 years
+              Tuklasin ang mayamang pamana ng mga imperyal na dinastiya ng Tsina
+              na sumasaklaw sa mahigit 4,000 taon
             </p>
           </motion.div>
 

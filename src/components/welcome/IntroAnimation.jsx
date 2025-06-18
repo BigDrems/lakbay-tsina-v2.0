@@ -79,7 +79,7 @@ const IntroAnimation = ({ showIntroAnim }) => {
             <span aria-label="Lakbay Tsina">Lakbay Tsina</span>
           </h1>
           <p className="text-xl text-emerald-200 font-medium">
-            Your journey through Chinese culture
+            Ang Iyong Paglalakbay sa Sinaunang Kabihasnan ng Tsina
           </p>
         </motion.div>
 
