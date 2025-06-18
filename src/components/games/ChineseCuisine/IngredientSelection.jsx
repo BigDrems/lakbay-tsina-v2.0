@@ -40,12 +40,12 @@ const IngredientSelection = ({
       if (!usedIngredients.includes(draggedIngredient)) {
         setUsedIngredients((prev) => [...prev, draggedIngredient]);
         setScore((prev) => prev + 5);
-        displayFeedback("success", "Correct ingredient!");
+        displayFeedback("success", "Tamang sangkap!");
       }
     } else {
       // Wrong ingredient
       setScore((prev) => Math.max(0, prev - 2));
-      displayFeedback("error", "Wrong ingredient!");
+      displayFeedback("error", "Maling sangkap!");
     }
 
     setDraggedIngredient(null);
@@ -54,7 +54,7 @@ const IngredientSelection = ({
   return (
     <div>
       <h3 className="font-medium text-[#6B3100] mb-3">
-        Step 1: Select the correct ingredients
+        Hakbang 1: Pumili ng tamang mga sangkap
       </h3>
 
       <div
@@ -63,7 +63,9 @@ const IngredientSelection = ({
         onDrop={handleIngredientDrop}
       >
         {usedIngredients.length === 0 ? (
-          <p className="text-gray-500 text-sm italic">Drag ingredients here</p>
+          <p className="text-gray-500 text-sm italic">
+            I-drag ang mga sangkap dito
+          </p>
         ) : (
           <div className="flex flex-wrap gap-2 justify-center">
             {usedIngredients.map((ingredient, index) => (
@@ -78,18 +80,18 @@ const IngredientSelection = ({
         )}
       </div>
 
-      <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
         {availableIngredients.map((ingredient, index) => (
           <motion.div
             key={index}
             draggable
             onDragStart={() => handleIngredientDrag(ingredient)}
             whileHover={{ scale: 1.05 }}
-            className={`bg-white border border-gray-200 rounded-md p-2 text-center text-xs sm:text-sm shadow-sm cursor-grab ${
+            className={`bg-white border border-gray-200 rounded-md p-2 text-center text-xs sm:text-sm shadow-sm cursor-grab min-h-[60px] flex items-center justify-center ${
               usedIngredients.includes(ingredient) ? "opacity-50" : ""
             }`}
           >
-            {ingredient}
+            <span className="break-words leading-tight">{ingredient}</span>
           </motion.div>
         ))}
       </div>

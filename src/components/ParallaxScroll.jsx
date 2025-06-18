@@ -4,9 +4,9 @@ import FlipText from "./FlipText";
 import { fadeIn } from "../utils/variants";
 
 const heading =
-  "Educational website that explores the rich history, culture, and dynasties of China.";
+  "Isang pang-edukasyong website na sumusuri sa makulay na kasaysayan, kultura, at mga dinastiya ng Tsina.";
 const subHeading =
-  "It provides interactive learning experiences, historical insights, and multimedia content to enhance users' understanding of China's heritage.";
+  "Nagbibigay ito ng interaktibong karanasan sa pagkatuto, makasaysayang kaalaman, at multimedia na nilalaman upang mapalalim ang pag-unawa ng mga gumagamit sa pamana ng Tsina.";
 
 export default function ParallaxScroll() {
   const containerRef = useRef(null);

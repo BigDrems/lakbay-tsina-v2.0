@@ -96,7 +96,7 @@ const StepArrangement = ({
 
   const checkArrangement = () => {
     if (arrangedSteps.length !== currentRecipe.steps.length) {
-      displayFeedback("error", "You need to arrange all steps!");
+      displayFeedback("error", "Kailangan mong ayusin ang lahat ng hakbang!");
       return;
     }
 
@@ -108,7 +108,7 @@ const StepArrangement = ({
     if (isCorrect) {
       setScore((prev) => prev + currentRecipe.steps.length * 5); // Bonus for correct arrangement
       setStepComplete(true);
-      displayFeedback("success", "Perfect arrangement! +30 bonus points");
+      displayFeedback("success", "Perpektong pagkakaayos! +30 bonus points");
       setTimeout(() => {
         onComplete(arrangedSteps);
       }, 2000);
@@ -120,7 +120,7 @@ const StepArrangement = ({
 
       displayFeedback(
         "error",
-        `${correctCount} steps in the right order. Try again!`
+        `${correctCount} hakbang sa tamang pagkakasunud-sunod. Subukan muli!`
       );
     }
   };
@@ -135,18 +135,24 @@ const StepArrangement = ({
     <div>
       <h3 className="font-medium text-[#6B3100] mb-3 flex items-center gap-2">
         <Utensils className="w-5 h-5" />
-        <span>Step 2: Arrange the cooking steps in the correct order</span>
+        <span>
+          Hakbang 2: Ayusin ang mga hakbang sa pagluluto sa tamang
+          pagkakasunud-sunod
+        </span>
       </h3>
 
       <div className="bg-[#FFF9F0] p-4 rounded-lg border border-[#E8D5B5] mb-4">
         <div className="text-sm text-[#6B3100] mb-3 flex justify-between items-center">
-          <span>Drag and arrange steps in the correct cooking order</span>
+          <span>
+            I-drag at ayusin ang mga hakbang sa tamang pagkakasunud-sunod ng
+            pagluluto
+          </span>
           {arrangedSteps.length > 0 && (
             <button
               onClick={resetArrangement}
               className="text-xs bg-[#6B3100]/10 hover:bg-[#6B3100]/20 text-[#6B3100] px-2 py-1 rounded"
             >
-              Reset
+              I-reset
             </button>
           )}
         </div>
@@ -159,7 +165,8 @@ const StepArrangement = ({
         >
           {arrangedSteps.length === 0 ? (
             <div className="text-center py-6 text-[#6B3100]/50 italic text-sm">
-              Drag steps here and arrange them in the correct order
+              I-drag ang mga hakbang dito at ayusin ang mga ito sa tamang
+              pagkakasunud-sunod
             </div>
           ) : (
             <div className="space-y-2">
@@ -208,7 +215,7 @@ const StepArrangement = ({
         {/* Remaining steps */}
         <div className="mb-4">
           <h4 className="text-sm font-medium text-[#6B3100] mb-2">
-            Available Steps:
+            Mga Magagamit na Hakbang:
           </h4>
           <div
             className="flex flex-wrap gap-2"
@@ -222,14 +229,14 @@ const StepArrangement = ({
                 onDragStart={(e) => handleDragStart(e, step)}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.98 }}
-                className="bg-white p-2 rounded border border-gray-200 text-sm cursor-grab shadow-sm max-w-[150px] sm:max-w-[200px]"
+                className="bg-white p-3 rounded border border-gray-200 text-sm cursor-grab shadow-sm max-w-[200px] sm:max-w-[250px] min-h-[60px] flex items-center"
               >
-                {step.text}
+                <span className="break-words leading-tight">{step.text}</span>
               </motion.div>
             ))}
             {shuffledSteps.length === 0 && arrangedSteps.length > 0 && (
               <div className="italic text-sm text-gray-500">
-                All steps arranged
+                Lahat ng hakbang naayos na
               </div>
             )}
           </div>
@@ -247,7 +254,7 @@ const StepArrangement = ({
             }`}
           >
             <Check size={18} />
-            Check My Arrangement
+            Suriin ang Aking Pagkakaayos
           </button>
         )}
 
@@ -259,8 +266,10 @@ const StepArrangement = ({
             transition={{ delay: 0.2 }}
             className="bg-green-100 border border-green-300 p-3 rounded-lg text-center text-green-800"
           >
-            <div className="font-bold mb-1">Perfect Arrangement!</div>
-            <div className="text-sm">Your cooking knowledge is impressive!</div>
+            <div className="font-bold mb-1">Perpektong Pagkakaayos!</div>
+            <div className="text-sm">
+              Kahanga-hanga ang iyong kaalaman sa pagluluto!
+            </div>
           </motion.div>
         )}
       </div>

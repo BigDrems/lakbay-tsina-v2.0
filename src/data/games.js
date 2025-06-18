@@ -12,11 +12,11 @@ export const CATEGORIES = [
 export const GAMES_DATA = [
   {
     id: 1,
-    title: "Chinese Character Match",
+    title: "Pagpapares ng mga Karakter ng Tsino",
     description:
-      "Match Chinese characters with their Filipino meanings. Test your knowledge of basic Chinese characters!",
+      "I-pares ang mga karakter ng Tsino sa kanilang mga kahulugan sa Filipino. Subukan ang iyong kaalaman sa mga pangunahing karakter ng Tsino!",
     icon: "Book",
-    difficulty: "Easy",
+    difficulty: "Madali",
     category: "Wika",
     image: "/images/character-match.png",
     path: "/games/character-match",
@@ -24,11 +24,11 @@ export const GAMES_DATA = [
   },
   {
     id: 2,
-    title: "Dynasty Timeline",
+    title: "Tagpo ng mga Dinastiya",
     description:
-      "Arrange Chinese dynasties in chronological order. Learn about the rich history of China!",
+      "Ayusin ang mga dinastiya ng Tsino sa pagkakasunud-sunod ng panahon. Matuto tungkol sa mayamang kasaysayan ng China!",
     icon: "Brain",
-    difficulty: "Medium",
+    difficulty: "Katamtaman",
     category: "Kasaysayan",
     image: "/images/dynasty-timeline.png",
     path: "/games/dynasty-timeline",
@@ -36,11 +36,11 @@ export const GAMES_DATA = [
   },
   {
     id: 3,
-    title: "Cultural Quiz",
+    title: "Pagsusulit sa Kultura",
     description:
-      "Test your knowledge about Chinese festivals, traditions, and customs.",
+      "Subukan ang iyong kaalaman tungkol sa mga pista, tradisyon, at kaugalian ng Tsino.",
     icon: "Trophy",
-    difficulty: "Medium",
+    difficulty: "Katamtaman",
     category: "Kultura",
     image: "/images/cultural-quiz.png",
     path: "/games/cultural-quiz",
@@ -48,11 +48,11 @@ export const GAMES_DATA = [
   },
   {
     id: 4,
-    title: "Chinese Cuisine Master",
+    title: "Dakilang Tagapagluto ng Lutuing Tsino",
     description:
-      "Learn to cook famous Chinese dishes and discover culinary traditions. Drag ingredients and follow cooking steps!",
+      "Matuto magluto ng mga kilalang putahe ng Tsino at tuklasin ang mga tradisyon sa pagluluto. I-drag ang mga sangkap at sundin ang mga hakbang sa pagluluto!",
     icon: "ChefHat",
-    difficulty: "Easy",
+    difficulty: "Madali",
     category: "Kultura",
     image: "/images/chef.png",
     path: "/games/music-memory",
@@ -60,11 +60,11 @@ export const GAMES_DATA = [
   },
   {
     id: 5,
-    title: "Geography Explorer",
+    title: "Taggalug ng Heograpiya",
     description:
-      "Explore China's geography through an interactive map game. Learn about provinces and landmarks!",
+      "Tuklasin ang heograpiya ng China sa pamamagitan ng interactive na laro sa mapa. Matuto tungkol sa mga lalawigan at mga landmark!",
     icon: "Gamepad2",
-    difficulty: "Medium",
+    difficulty: "Katamtaman",
     category: "Heograpiya",
     image: "/images/geography.jpg",
     path: "/games/geography-explorer",

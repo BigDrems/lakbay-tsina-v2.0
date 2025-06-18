@@ -103,10 +103,10 @@ const CulturalQuiz = () => {
 
         <div className="bg-white rounded-lg shadow-lg p-3 sm:p-6">
           <h1 className="text-xl sm:text-3xl font-bold text-[#6B3100] mb-2 text-center">
-            Cultural Quiz
+            Pagsusulit sa Kultura
           </h1>
           <p className="text-center text-gray-600 mb-4 text-xs sm:text-base">
-            Test your knowledge about Chinese culture
+            Subukan ang iyong kaalaman tungkol sa kultura ng Tsino
           </p>
 
           {quizComplete ? (
@@ -116,17 +116,19 @@ const CulturalQuiz = () => {
               className="text-center py-6 sm:py-8"
             >
               <h2 className="text-lg sm:text-2xl font-bold text-[#6B3100] mb-3">
-                Great job!
+                Napakagaling!
               </h2>
-              <p className="text-sm sm:text-lg mb-4">You completed the quiz!</p>
+              <p className="text-sm sm:text-lg mb-4">
+                Natapos mo ang pagsusulit!
+              </p>
               <div className="text-base sm:text-xl font-bold mb-6">
-                Your Score: {score} / {quizQuestions.length * 10}
+                Iyong Puntos: {score} / {quizQuestions.length * 10}
               </div>
               <button
                 onClick={resetQuiz}
                 className="bg-[#6B3100] text-white px-4 py-2 rounded-lg lg:hover:bg-[#6B3100]/90 transition-colors text-sm sm:text-base"
               >
-                Play Again
+                Laruin Muli
               </button>
             </motion.div>
           ) : (
@@ -145,7 +147,7 @@ const CulturalQuiz = () => {
                   ></div>
                 </div>
                 <p className="text-center text-[#6B3100] font-medium text-xs sm:text-sm">
-                  Question {currentQuestionIndex + 1} of{" "}
+                  Tanong {currentQuestionIndex + 1} ng{" "}
                   {shuffledQuestions.length}
                 </p>
               </div>
@@ -231,7 +233,7 @@ const CulturalQuiz = () => {
                   className="mb-4 p-2 sm:p-3 bg-[#6B3100]/10 rounded-lg"
                 >
                   <h3 className="font-semibold text-[#6B3100] mb-1 text-xs sm:text-sm">
-                    Explanation:
+                    Paliwanag:
                   </h3>
                   <p className="text-xs sm:text-sm">
                     {shuffledQuestions[currentQuestionIndex].explanation}
@@ -246,8 +248,8 @@ const CulturalQuiz = () => {
                     className="bg-[#6B3100] text-white px-4 py-2 rounded-lg hover:bg-[#6B3100]/90 transition-colors text-sm sm:text-base"
                   >
                     {currentQuestionIndex < shuffledQuestions.length - 1
-                      ? "Next Question"
-                      : "Finish Quiz"}
+                      ? "Susunod na Tanong"
+                      : "Tapusin ang Pagsusulit"}
                   </button>
                 </div>
               )}

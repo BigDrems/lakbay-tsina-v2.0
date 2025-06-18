@@ -75,7 +75,9 @@ const GameCard = React.memo(
             </div>
             <h3 className="text-xl font-semibold text-amber-900">{title}</h3>
           </div>
-          <p className="text-amber-800/70 mb-5 flex-grow">{description}</p>
+          <p className="text-amber-800/70 mb-5 flex-grow text-justify">
+            {description}
+          </p>
           <div className="mt-auto">
             <span className="text-xs font-medium text-amber-600 mb-2 block">
               {category}

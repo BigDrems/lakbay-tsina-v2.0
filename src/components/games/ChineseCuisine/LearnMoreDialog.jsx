@@ -11,9 +11,9 @@ const LearnMoreDialog = ({ onClose }) => {
   const recipePages = Array.from({
     length: Math.ceil(recipes.length / recipesPerPage),
   }).map((_, pageIndex) => ({
-    title: `Chinese Cuisine - Page ${pageIndex + 1}`,
+    title: `Mga Resipe ng Tsino - Pahina ${pageIndex + 1}`,
     subtitle:
-      "Explore these authentic Chinese dishes and their rich cultural heritage",
+      "Tuklasin ang mga tunay na putahe ng Tsino at ang kanilang mayamang pamana sa kultura",
     items: recipes.slice(
       pageIndex * recipesPerPage,
       (pageIndex + 1) * recipesPerPage
@@ -35,10 +35,10 @@ const LearnMoreDialog = ({ onClose }) => {
               <BookOpen className="w-8 h-8 text-[#6B3100]" />
               <div>
                 <h2 className="text-2xl font-bold text-[#6B3100]">
-                  Chinese Recipes
+                  Mga Resipe ng Tsino
                 </h2>
                 <p className="text-[#6B3100]/70 text-sm mt-1">
-                  Discover authentic Chinese dishes
+                  Tuklasin ang mga tunay na putahe ng Tsino
                 </p>
               </div>
             </div>
@@ -77,7 +77,7 @@ const LearnMoreDialog = ({ onClose }) => {
                 onClick={() => setCurrentPage(Math.max(0, currentPage - 1))}
                 disabled={currentPage === 0}
                 className="flex items-center gap-2 px-6 py-2.5 rounded-lg bg-[#6B3100]/5 text-[#6B3100] disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[#6B3100]/10 transition-colors duration-200 font-medium"
-                aria-label="Previous page"
+                aria-label="Nakaraang pahina"
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
@@ -102,7 +102,7 @@ const LearnMoreDialog = ({ onClose }) => {
                 }
                 disabled={currentPage === recipePages.length - 1}
                 className="flex items-center gap-2 px-6 py-2.5 rounded-lg bg-[#6B3100]/5 text-[#6B3100] disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[#6B3100]/10 transition-colors duration-200 font-medium"
-                aria-label="Next page"
+                aria-label="Susunod na pahina"
               >
                 <ChevronRight className="w-5 h-5" />
               </button>

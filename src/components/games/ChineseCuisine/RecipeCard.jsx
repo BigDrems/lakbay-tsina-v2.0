@@ -58,7 +58,7 @@ const RecipeCard = ({ recipe }) => {
             <div>
               <h4 className="text-lg font-semibold text-[#6B3100] mb-3 flex items-center gap-2">
                 <ChefHat className="w-5 h-5" />
-                Ingredients
+                Mga Sangkap
               </h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {recipe.ingredients.map((ingredient, index) => (
@@ -77,7 +77,7 @@ const RecipeCard = ({ recipe }) => {
             <div>
               <h4 className="text-lg font-semibold text-[#6B3100] mb-3 flex items-center gap-2">
                 <Utensils className="w-5 h-5" />
-                Cooking Steps
+                Mga Hakbang sa Pagluluto
               </h4>
               <div className="space-y-4">
                 {recipe.steps.map((step, index) => (
@@ -101,7 +101,7 @@ const RecipeCard = ({ recipe }) => {
               <div className="p-4 rounded-lg bg-[#FFF5E6] border border-[#6B3100]/10">
                 <h4 className="text-lg font-semibold text-[#6B3100] mb-2 flex items-center gap-2">
                   <Lightbulb className="w-5 h-5" />
-                  Fun Fact
+                  Kagiliw-giliw na Katotohanan
                 </h4>
                 <p className="text-[#6B3100]/70">{recipe.funFact}</p>
               </div>

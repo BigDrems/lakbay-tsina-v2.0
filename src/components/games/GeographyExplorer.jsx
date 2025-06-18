@@ -233,10 +233,10 @@ const GeographyExplorer = () => {
 
         <div className="bg-white rounded-lg shadow-lg p-3 sm:p-6 relative">
           <h1 className="text-xl sm:text-3xl font-bold text-[#6B3100] mb-2 text-center">
-            Geography Explorer
+            Taggalug ng Heograpiya
           </h1>
           <p className="text-center text-gray-600 mb-4 text-xs sm:text-base">
-            Find famous locations across China
+            Hanapin ang mga kilalang lugar sa buong China
           </p>
 
           {gameComplete ? (
@@ -246,19 +246,19 @@ const GeographyExplorer = () => {
               className="text-center py-6 sm:py-8"
             >
               <h2 className="text-lg sm:text-2xl font-bold text-[#6B3100] mb-3">
-                Excellent!
+                Napakahusay!
               </h2>
               <p className="text-sm sm:text-lg mb-4">
-                You discovered all locations in {attempts} attempts!
+                Natuklasan mo ang lahat ng lugar sa {attempts} pagsubok!
               </p>
               <div className="text-base sm:text-xl font-bold mb-6">
-                Your Score: {score}
+                Iyong Puntos: {score}
               </div>
               <button
                 onClick={resetGame}
                 className="bg-[#6B3100] text-white px-4 py-2 rounded-lg lg:hover:bg-[#6B3100]/90 transition-colors text-sm sm:text-base"
               >
-                Play Again
+                Laruin Muli
               </button>
             </motion.div>
           ) : (
@@ -275,7 +275,7 @@ const GeographyExplorer = () => {
                   ></div>
                 </div>
                 <p className="text-center text-[#6B3100] font-medium text-xs sm:text-sm">
-                  {discoveredLocations.length} / {locations.length} Discovered
+                  {discoveredLocations.length} / {locations.length} Natuklasan
                 </p>
               </div>
 
@@ -319,14 +319,14 @@ const GeographyExplorer = () => {
                   </MapContainer>
                 </div>
 
-                <div className="space-y-2">
+                <div className="space-y-2 max-h-[500px] overflow-y-auto">
                   {locations.map((location) => (
                     <motion.button
                       key={location.id}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                       className={`
-                        w-full p-2 rounded-lg border-2 text-left
+                        w-full p-3 rounded-lg border-2 text-left
                         ${
                           discoveredLocations.includes(location.id)
                             ? "bg-green-100 border-green-500"
@@ -338,24 +338,24 @@ const GeographyExplorer = () => {
                       onClick={() => setSelectedLocation(location)}
                       disabled={discoveredLocations.includes(location.id)}
                     >
-                      <div className="flex items-center gap-2">
-                        <div className="w-10 h-10 rounded-lg overflow-hidden bg-gray-200 flex-shrink-0">
+                      <div className="flex items-start gap-3">
+                        <div className="w-12 h-12 rounded-lg overflow-hidden bg-gray-200 flex-shrink-0">
                           <img
                             src={location.image}
                             alt={location.name}
                             className="w-full h-full object-cover"
                           />
                         </div>
-                        <div>
-                          <h3 className="font-semibold text-[#6B3100] text-sm">
+                        <div className="flex-1 min-w-0">
+                          <h3 className="font-semibold text-[#6B3100] text-sm mb-1">
                             {location.name}
                           </h3>
-                          <p className="text-xs text-gray-600 line-clamp-1">
+                          <p className="text-xs text-gray-600 leading-tight line-clamp-2">
                             {location.description}
                           </p>
                         </div>
                         {discoveredLocations.includes(location.id) && (
-                          <Check className="text-green-500 flex-shrink-0 w-4 h-4" />
+                          <Check className="text-green-500 flex-shrink-0 w-4 h-4 mt-1" />
                         )}
                       </div>
                     </motion.button>
@@ -382,8 +382,8 @@ const GeographyExplorer = () => {
 
               <div className="mt-4 text-center">
                 <p className="text-xs sm:text-sm text-gray-600">
-                  Select a location from the list and click on the map to find
-                  it
+                  Pumili ng lugar mula sa listahan at i-click sa mapa para
+                  hanapin ito
                 </p>
               </div>
             </>

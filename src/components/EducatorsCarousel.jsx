@@ -1,49 +1,51 @@
 import { useState, useEffect, useRef } from "react";
 
-const educators = [
+const studentEducators = [
   {
     id: 1,
-    image: "/images/kevin.jpg",
-    name: "Prof. Li Wei",
-    specialty: "Chinese History",
+    image: "/teacher/abetto.jpg",
+    name: "Abetto Palconit",
     description:
-      "Expert in Chinese dynasties with over 15 years of teaching experience at Beijing University. Specializes in Tang and Ming dynasty cultural developments.",
+      '"Ang kaalaman ay ang pinakamagandang kayamanan na hindi mananakaw sa atin."\n\n- Confucius',
   },
   {
     id: 2,
-    image: "/images/zhenzhi.jpg",
-    name: "Dr. Chen Mei",
-    specialty: "Mandarin Language",
+    image: "/teacher/angela.jpg",
+    name: "Angela Bacunawa",
     description:
-      "Certified language instructor with innovative teaching methods. Developed multiple learning programs for non-native speakers focusing on practical conversation.",
+      '"Ang pag-aaral ay isang paglalakbay, hindi isang destinasyon."\n\n- Ralph Waldo Emerson',
   },
   {
     id: 3,
-    image: "/images/zhenzhi_2.jpg",
-    name: "Prof. Zhang Yong",
-    specialty: "Chinese Literature",
+    image: "/teacher/cristina.jpg",
+    name: "Cristina Magdaraog",
     description:
-      "Award-winning literature professor specializing in classical Chinese poetry and modern Chinese novels. Published author of three books on Chinese literary traditions.",
+      '"Ang edukasyon ay hindi paghahanda para sa buhay; ito ay buhay mismo."\n\n- John Dewey',
   },
   {
     id: 4,
-    image: "/images/Li_Xian.jpg",
-    name: "Dr. Wang Fei",
-    specialty: "Chinese Philosophy",
+    image: "/teacher/jenilyn.jpg",
+    name: "Jenilyn Verian Florito",
     description:
-      "Renowned expert in Confucian and Taoist philosophy with a focus on applying ancient wisdom to modern challenges. Regular speaker at international conferences.",
+      '"Ang karunungan ay nagsisimula sa pagkamangha."\n\n- Socrates',
   },
   {
     id: 5,
-    image: "/images/Liu-bang.jpg",
-    name: "Prof. Liu Jing",
-    specialty: "Chinese Art History",
+    image: "/teacher/maybeline.jpg",
+    name: "Maybeline Lastimado",
     description:
-      "Specialized in traditional Chinese painting, calligraphy, and ceramics. Curator for several international exhibitions featuring Chinese artistic traditions.",
+      '"Ang sining ay ang pinakamagandang paraan ng pagpapahayag ng katotohanan."\n\n- Pablo Picasso',
+  },
+  {
+    id: 6,
+    image: "/teacher/ralph.jpg",
+    name: "Ralph Joshua Mapula",
+    description:
+      '"Ang mundo ay isang aklat, at ang mga hindi naglalakbay ay nagbabasa lamang ng isang pahina."\n\n- Saint Augustine',
   },
 ];
 
-const EducatorsCarousel = () => {
+const StudentEducatorsCarousel = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const carouselRef = useRef(null);
@@ -81,14 +83,18 @@ const EducatorsCarousel = () => {
     if (autoplayRef.current) {
       clearTimeout(autoplayRef.current);
     }
-    setActiveIndex((prev) => (prev === 0 ? educators.length - 1 : prev - 1));
+    setActiveIndex((prev) =>
+      prev === 0 ? studentEducators.length - 1 : prev - 1
+    );
   };
 
   const handleNext = () => {
     if (autoplayRef.current) {
       clearTimeout(autoplayRef.current);
     }
-    setActiveIndex((prev) => (prev === educators.length - 1 ? 0 : prev + 1));
+    setActiveIndex((prev) =>
+      prev === studentEducators.length - 1 ? 0 : prev + 1
+    );
   };
 
   const handleDotClick = (index) => {
@@ -98,18 +104,19 @@ const EducatorsCarousel = () => {
     setActiveIndex(index);
   };
 
-  // Calculate which educators to show in desktop view
-  const getVisibleEducators = () => {
+  // Calculate which student educators to show in desktop view
+  const getVisibleStudentEducators = () => {
     if (isMobile) {
-      return [educators[activeIndex]];
+      return [studentEducators[activeIndex]];
     }
 
-    // Show 3 educators in desktop view with the active one in the middle
+    // Show 3 student educators in desktop view with the active one in the middle
     const result = [];
     for (let i = -1; i <= 1; i++) {
-      const index = (activeIndex + i + educators.length) % educators.length;
+      const index =
+        (activeIndex + i + studentEducators.length) % studentEducators.length;
       result.push({
-        educator: educators[index],
+        studentEducator: studentEducators[index],
         position: i, // -1 = left, 0 = center, 1 = right
       });
     }
@@ -121,14 +128,15 @@ const EducatorsCarousel = () => {
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <h3 className="text-red-600 font-medium uppercase mb-2">
-            MEET OUR TEAM
+            MEET OUR STUDENT EDUCATORS
           </h3>
           <h2 className="text-3xl md:text-5xl font-bold text-gray-800 mb-6">
-            Our Educators
+            Learning & Teaching Together
           </h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            Our team consists of highly qualified educators with expertise in
-            various aspects of Chinese language, history, and culture.
+            Our student educators are passionate learners who also help others
+            discover Chinese language, history, and culture through peer-to-peer
+            learning.
           </p>
         </div>
 
@@ -137,7 +145,7 @@ const EducatorsCarousel = () => {
           <button
             onClick={handlePrev}
             className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-3 shadow-md hover:bg-gray-100 transition-all"
-            aria-label="Previous educator"
+            aria-label="Previous student educator"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -159,36 +167,33 @@ const EducatorsCarousel = () => {
             {isMobile ? (
               // Mobile carousel
               <div className="transition-all duration-500 ease-in-out">
-                {educators.map((educator, index) => (
+                {studentEducators.map((studentEducator, index) => (
                   <div
-                    key={educator.id}
+                    key={studentEducator.id}
                     className={`
                       transition-all duration-500 ease-in-out flex flex-col items-center
                       ${index === activeIndex ? "block" : "hidden"}
                       p-6 bg-white rounded-xl shadow-md
                     `}
                   >
-                    <div className="w-24 h-24 rounded-full overflow-hidden mb-4 border-4 border-red-600">
+                    <div className="w-32 h-40 rounded-2xl overflow-hidden mb-6 border-4 border-red-600">
                       <img
-                        src={educator.image}
-                        alt={educator.name}
+                        src={studentEducator.image}
+                        alt={studentEducator.name}
                         className="w-full h-full object-cover"
                         onError={(e) => {
                           e.target.src =
-                            "https://via.placeholder.com/150?text=Profile";
+                            "https://via.placeholder.com/150?text=Student+Educator";
                         }}
                       />
                     </div>
 
                     <h3 className="text-xl font-bold text-gray-800">
-                      {educator.name}
+                      {studentEducator.name}
                     </h3>
-                    <p className="text-sm text-red-600 uppercase tracking-wider mb-4 font-semibold">
-                      {educator.specialty}
-                    </p>
 
-                    <p className="text-center text-gray-600 mb-6">
-                      {educator.description}
+                    <p className="text-center text-gray-600 mb-6 whitespace-pre-line italic">
+                      {studentEducator.description}
                     </p>
                   </div>
                 ))}
@@ -197,10 +202,11 @@ const EducatorsCarousel = () => {
               // Desktop carousel
               <div className="flex justify-center items-center">
                 <div className="flex gap-6 md:gap-8 items-center justify-center">
-                  {getVisibleEducators().map(({ educator, position }) => (
-                    <div
-                      key={educator.id}
-                      className={`
+                  {getVisibleStudentEducators().map(
+                    ({ studentEducator, position }) => (
+                      <div
+                        key={studentEducator.id}
+                        className={`
                         transition-all duration-500 ease-in-out flex flex-col items-center
                         p-6 rounded-xl 
                         ${
@@ -212,31 +218,29 @@ const EducatorsCarousel = () => {
                         ${position === 1 ? "transform translate-x-4" : ""}
                         min-w-[280px] max-w-sm
                       `}
-                    >
-                      <div className="w-24 h-24 rounded-full overflow-hidden mb-4 border-4 border-red-600">
-                        <img
-                          src={educator.image}
-                          alt={educator.name}
-                          className="w-full h-full object-cover"
-                          onError={(e) => {
-                            e.target.src =
-                              "https://via.placeholder.com/150?text=Profile";
-                          }}
-                        />
+                      >
+                        <div className="w-32 h-40 rounded-2xl overflow-hidden mb-6 border-4 border-red-600">
+                          <img
+                            src={studentEducator.image}
+                            alt={studentEducator.name}
+                            className="w-full h-full object-cover"
+                            onError={(e) => {
+                              e.target.src =
+                                "https://via.placeholder.com/150?text=Student+Educator";
+                            }}
+                          />
+                        </div>
+
+                        <h3 className="text-xl font-bold text-gray-800">
+                          {studentEducator.name}
+                        </h3>
+
+                        <p className="text-center text-gray-600 mb-6 whitespace-pre-line italic">
+                          {studentEducator.description}
+                        </p>
                       </div>
-
-                      <h3 className="text-xl font-bold text-gray-800">
-                        {educator.name}
-                      </h3>
-                      <p className="text-sm text-red-600 uppercase tracking-wider mb-4 font-semibold">
-                        {educator.specialty}
-                      </p>
-
-                      <p className="text-center text-gray-600 mb-6">
-                        {educator.description}
-                      </p>
-                    </div>
-                  ))}
+                    )
+                  )}
                 </div>
               </div>
             )}
@@ -245,7 +249,7 @@ const EducatorsCarousel = () => {
           <button
             onClick={handleNext}
             className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-3 shadow-md hover:bg-gray-100 transition-all"
-            aria-label="Next educator"
+            aria-label="Next student educator"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -266,14 +270,14 @@ const EducatorsCarousel = () => {
 
         {/* Dot indicators (visible on both mobile and desktop) */}
         <div className="flex justify-center mt-8">
-          {educators.map((_, index) => (
+          {studentEducators.map((_, index) => (
             <button
               key={index}
               onClick={() => handleDotClick(index)}
               className={`w-3 h-3 mx-1 rounded-full transition-all duration-300 ${
                 index === activeIndex ? "bg-red-600 scale-125" : "bg-gray-300"
               }`}
-              aria-label={`Go to educator ${index + 1}`}
+              aria-label={`Go to student educator ${index + 1}`}
             />
           ))}
         </div>
@@ -282,4 +286,4 @@ const EducatorsCarousel = () => {
   );
 };
 
-export default EducatorsCarousel;
+export default StudentEducatorsCarousel;

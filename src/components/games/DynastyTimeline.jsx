@@ -194,7 +194,7 @@ const DynastyTimeline = () => {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               className={`
-                p-3 rounded-lg border-2 text-left
+                p-4 rounded-lg border-2 text-left
                 ${
                   selectedDynasty?.id === dynasty.id
                     ? "bg-[#6B3100]/10 border-[#6B3100]"
@@ -204,19 +204,21 @@ const DynastyTimeline = () => {
               onClick={() => handleDynastySelect(dynasty)}
               disabled={selectedDynasty !== null}
             >
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-lg overflow-hidden bg-gray-200 flex-shrink-0">
+              <div className="flex items-start gap-3">
+                <div className="w-14 h-14 rounded-lg overflow-hidden bg-gray-200 flex-shrink-0">
                   <img
                     src={dynasty.image}
                     alt={dynasty.name}
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <div>
-                  <h3 className="font-semibold text-[#6B3100]">
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-semibold text-[#6B3100] text-sm mb-1">
                     {dynasty.name}
                   </h3>
-                  <p className="text-xs text-gray-600">{dynasty.period}</p>
+                  <p className="text-xs text-gray-600 leading-tight">
+                    {dynasty.period}
+                  </p>
                 </div>
               </div>
             </motion.button>

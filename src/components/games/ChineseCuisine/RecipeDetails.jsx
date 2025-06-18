@@ -19,7 +19,7 @@ const RecipeDetails = ({ currentRecipe, showFeedback }) => {
           {currentRecipe.name}
         </h2>
         <p className="text-xs sm:text-sm text-gray-600 mb-2">
-          {currentRecipe.region} Cuisine • {currentRecipe.preparationTime}
+          Lutuing {currentRecipe.region} • {currentRecipe.preparationTime}
         </p>
         <p className="text-xs sm:text-sm mb-3">{currentRecipe.description}</p>
 

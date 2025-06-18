@@ -126,14 +126,14 @@ const Footer = () => {
 
           {/* Games */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Games</h3>
+            <h3 className="text-lg font-semibold mb-4">Mga Laro</h3>
             <ul className="space-y-2">
               <li>
                 <Link
                   to="/games/character-match"
                   className="text-slate-300 hover:text-white transition-colors"
                 >
-                  Character Match
+                  Pagpapares ng mga Karakter
                 </Link>
               </li>
               <li>
@@ -141,7 +141,7 @@ const Footer = () => {
                   to="/games/dynasty-timeline"
                   className="text-slate-300 hover:text-white transition-colors"
                 >
-                  Dynasty Timeline
+                  Tagpo ng mga Dinastiya
                 </Link>
               </li>
               <li>
@@ -149,7 +149,7 @@ const Footer = () => {
                   to="/games/cultural-quiz"
                   className="text-slate-300 hover:text-white transition-colors"
                 >
-                  Cultural Quiz
+                  Pagsusulit sa Kultura
                 </Link>
               </li>
               <li>
@@ -157,7 +157,7 @@ const Footer = () => {
                   to="/games/music-memory"
                   className="text-slate-300 hover:text-white transition-colors"
                 >
-                  Music Memory
+                  Dakilang Tagapagluto ng Lutuing Tsino
                 </Link>
               </li>
               <li>
@@ -165,7 +165,7 @@ const Footer = () => {
                   to="/games/geography-explorer"
                   className="text-slate-300 hover:text-white transition-colors"
                 >
-                  Geography Explorer
+                  Taggalug ng Heograpiya
                 </Link>
               </li>
             </ul>
