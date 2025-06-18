@@ -17,6 +17,7 @@ function WelcomePage({ onComplete }) {
   const [typingText, setTypingText] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const textRef = useRef("");
+  const typingIntervalRef = useRef(null);
 
   // Effects ------------------------------------------
 
@@ -43,7 +44,6 @@ function WelcomePage({ onComplete }) {
     setTypingText("");
 
     // Create refs to track interval and typing state within the effect
-    let typingIntervalRef = null;
     let isCanceledRef = false;
 
     const startTyping = () => {
@@ -54,9 +54,9 @@ function WelcomePage({ onComplete }) {
       setTypingText(currentText.charAt(0));
       index = 1;
 
-      typingIntervalRef = setInterval(() => {
+      typingIntervalRef.current = setInterval(() => {
         if (isCanceledRef) {
-          clearInterval(typingIntervalRef);
+          clearInterval(typingIntervalRef.current);
           return;
         }
 
@@ -64,7 +64,7 @@ function WelcomePage({ onComplete }) {
           setTypingText(currentText.substring(0, index + 1));
           index++;
         } else {
-          clearInterval(typingIntervalRef);
+          clearInterval(typingIntervalRef.current);
           setIsTyping(false);
         }
       }, 60);
@@ -76,7 +76,7 @@ function WelcomePage({ onComplete }) {
     return () => {
       isCanceledRef = true;
       clearTimeout(typingTimer);
-      if (typingIntervalRef) clearInterval(typingIntervalRef);
+      if (typingIntervalRef.current) clearInterval(typingIntervalRef.current);
     };
   }, [step]);
 
@@ -91,13 +91,17 @@ function WelcomePage({ onComplete }) {
 
   const skipTyping = () => {
     if (isTyping && textRef.current) {
-      // Stop any ongoing typing
+      // Clear the typing interval
+      if (typingIntervalRef.current) {
+        clearInterval(typingIntervalRef.current);
+        typingIntervalRef.current = null;
+      }
+
+      // Stop typing state
       setIsTyping(false);
 
-      // Immediately set the full text from the ref
-      requestAnimationFrame(() => {
-        setTypingText(textRef.current);
-      });
+      // Immediately set the full text
+      setTypingText(textRef.current);
     }
   };
 
@@ -197,14 +201,18 @@ function WelcomePage({ onComplete }) {
         </div>
       )}
 
-      <p className="text-amber-900 text-base sm:text-lg leading-relaxed">
-        {conversation && conversation[step] && typingText
-          ? typingText
-          : conversation[step]?.text || "Naglo-load..."}
-        {isTyping && (
-          <span className="inline-block w-1.5 h-5 bg-amber-700 ml-0.5 animate-blink"></span>
-        )}
-      </p>
+      <p
+        className="text-amber-900 text-base sm:text-lg leading-relaxed text-justify"
+        dangerouslySetInnerHTML={{
+          __html:
+            conversation && conversation[step] && typingText
+              ? typingText
+              : conversation[step]?.text || "Naglo-load...",
+        }}
+      ></p>
+      {isTyping && (
+        <span className="inline-block w-1.5 h-5 bg-amber-700 ml-0.5 animate-blink"></span>
+      )}
 
       {isTyping && (
         <div className="absolute bottom-2 right-2 text-xs font-medium text-amber-600 bg-amber-100 px-2 py-1 rounded-md flex items-center space-x-1">

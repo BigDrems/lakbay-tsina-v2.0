@@ -1,5 +1,5 @@
 export const websitePurpose =
-  "Maligayang pagdating sa Lakbay Tsina! Ako si Kuya Pao, ang iyong gabay. Halina’t tuklasin natin ang makulay na kasaysayan at mahahalagang aral ng Sinaunang Tsina. Tara, lakbayin natin ang nakaraan!";
+  "<strong>Maligayang pagdating sa Lakbay Tsina! <br> </strong> Ako si <strong>Kuya Pao</strong>, ang iyong gabay. Halina't tuklasin natin ang makulay na kasaysayan at mahahalagang aral ng Sinaunang Tsina. Tara, lakbayin natin ang nakaraan!";
 
 export const pages = [
   {
