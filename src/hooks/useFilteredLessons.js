@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { lessons } from "../data/lessons";
+import { courseOverview } from "../data/courseData";
 
 export const useFilteredLessons = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -8,7 +8,7 @@ export const useFilteredLessons = () => {
 
   const filteredLessons = useMemo(() => {
     // Filter by category and search query
-    const filtered = lessons.filter(
+    const filtered = courseOverview.filter(
       (lesson) =>
         (selectedCategory === "All" || lesson.category === selectedCategory) &&
         (searchQuery === "" ||
@@ -19,13 +19,13 @@ export const useFilteredLessons = () => {
     // Sort based on selected option
     return [...filtered].sort((a, b) => {
       switch (sortOption) {
-        case "popular":
-          return b.students - a.students;
-        case "highest-rated":
-          return b.ratings - a.ratings;
         case "newest":
         default:
           return b.id - a.id;
+        case "alphabetical":
+          return a.title.localeCompare(b.title);
+        case "category":
+          return a.category.localeCompare(b.category);
       }
     });
   }, [selectedCategory, searchQuery, sortOption]);

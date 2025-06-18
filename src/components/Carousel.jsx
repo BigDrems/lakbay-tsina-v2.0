@@ -191,7 +191,7 @@ const Carousel = () => {
 
                     {/* Button with animated arrow */}
                     <div className="mt-1 sm:mt-2">
-                      <button className="group bg-[#daff0d] text-black px-6 sm:px-8 py-2.5 sm:py-3 rounded-full text-sm sm:text-base font-semibold hover:bg-opacity-90 transition-all duration-300 flex items-center gap-2">
+                      <button className="group bg-[#daff0d] text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-full text-sm sm:text-base font-semibold hover:bg-opacity-90 transition-all duration-300 flex items-center gap-2">
                         {slide.buttonText}
                         <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">
                           →

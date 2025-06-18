@@ -108,18 +108,12 @@ const LessonContent = ({ lesson }) => {
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-2 gap-3 mb-6">
+          <div className="grid grid-cols-1 gap-3 mb-6">
             <div className="bg-gray-50 p-4 rounded-xl text-center">
               <p className="text-3xl font-bold text-[#cd201c]">
-                {lesson.modules || 5}
+                {lesson.topics?.length || 5}
               </p>
               <p className="text-sm text-gray-600">Mga Modyul</p>
-            </div>
-            <div className="bg-gray-50 p-4 rounded-xl text-center">
-              <p className="text-3xl font-bold text-[#cd201c]">
-                {lesson.students || 1250}+
-              </p>
-              <p className="text-sm text-gray-600">Mga Estudyante</p>
             </div>
           </div>
 

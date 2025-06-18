@@ -157,6 +157,16 @@ button:focus-visible {
   }
 }
 
+/* Shimmer animation for modern progress bar */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
 @layer components {
   .image {
     -webkit-mask-image: url(/images/o.png);

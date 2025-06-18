@@ -96,7 +96,7 @@ const CharacterPuzzle = ({
                     solvedPairs.some((pair) => pair.id === char.id)
                       ? "bg-[#6B3100]/20 border-[#6B3100]/20 cursor-default"
                       : dragOverItem?.id === char.id
-                      ? "bg-[#6B3100] text-black border-[#6B3100]"
+                      ? "bg-[#6B3100] text-white border-[#6B3100]"
                       : touchedItem
                       ? "border-[#6B3100] bg-white"
                       : "border-[#6B3100] hover:bg-[#6B3100]/10 active:bg-[#6B3100]/20"
@@ -137,7 +137,7 @@ const CharacterPuzzle = ({
                     solvedPairs.some((pair) => pair.id === char.id)
                       ? "bg-[#6B3100]/20 border-[#6B3100]/20 cursor-default"
                       : dragOverItem?.id === char.id
-                      ? "bg-[#6B3100] text-black border-[#6B3100]"
+                      ? "bg-[#6B3100] text-white border-[#6B3100]"
                       : touchedItem
                       ? "border-[#6B3100] bg-white"
                       : "border-[#6B3100] hover:bg-[#6B3100]/10 active:bg-[#6B3100]/20"

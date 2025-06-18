@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { Eye, EyeOff, Volume2, VolumeX } from "lucide-react";
+import { Eye, EyeOff } from "lucide-react";
 import { conversation, characterPuzzle } from "../data/welcomePageData";
 import CharacterPuzzle from "../components/CharacterPuzzle";
-import { useSpeechSynthesis } from "../hooks/useSpeechSynthesis";
 import IntroAnimation from "../components/welcome/IntroAnimation";
 
 function WelcomePage({ onComplete }) {
@@ -21,18 +20,6 @@ function WelcomePage({ onComplete }) {
   const [typingText, setTypingText] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const textRef = useRef("");
-
-  // Speech synthesis hook
-  const {
-    isSoundOn,
-    volume,
-    setVolume,
-    isPlaying,
-    isLoaded,
-    hasInteracted,
-    speakText,
-    toggleSound,
-  } = useSpeechSynthesis();
 
   // Effects ------------------------------------------
 
@@ -96,13 +83,6 @@ function WelcomePage({ onComplete }) {
     };
   }, [step]);
 
-  // Speak current step text when step changes or sound is toggled on
-  useEffect(() => {
-    if (conversation[step] && hasInteracted) {
-      speakText(conversation[step].text);
-    }
-  }, [step, hasInteracted, speakText]);
-
   // Background animation toggle when step changes
   useEffect(() => {
     setBgAnimation(true);
@@ -112,10 +92,6 @@ function WelcomePage({ onComplete }) {
 
   // Event handlers ------------------------------------------
 
-  const handleSoundToggle = () => {
-    toggleSound(conversation[step]?.text);
-  };
-
   const skipTyping = () => {
     if (isTyping && textRef.current) {
       // Stop any ongoing typing
@@ -124,11 +100,6 @@ function WelcomePage({ onComplete }) {
       // Immediately set the full text from the ref
       requestAnimationFrame(() => {
         setTypingText(textRef.current);
-
-        // Trigger speech if appropriate
-        if (hasInteracted && isSoundOn && !isPlaying) {
-          speakText(textRef.current);
-        }
       });
     }
   };
@@ -171,9 +142,6 @@ function WelcomePage({ onComplete }) {
         setSolvedPairs(newSolvedPairs);
 
         if (newSolvedPairs.length === characterPuzzle.length) {
-          speakText(
-            "Napakaganda! Nabuksan mo ang sinaunang karunungan. Naghihintay na ang iyong paglalakbay..."
-          );
           setPuzzleComplete(true);
           setStep(4);
         }
@@ -186,9 +154,6 @@ function WelcomePage({ onComplete }) {
 
   const handleOptionClick = async (nextStep) => {
     if (typeof nextStep === "string") {
-      speakText(
-        "Congratulations! You've proven yourself worthy to explore the wonders of China. Your journey begins now, and I'll be here to guide you along the way. Let's discover the treasures that await!"
-      );
       onComplete();
       navigate(nextStep);
     } else if (nextStep !== null) {
@@ -220,57 +185,8 @@ function WelcomePage({ onComplete }) {
         {/* Controls */}
         <div className="flex items-center space-x-2 sm:space-x-3">
           <button
-            onClick={handleSoundToggle}
-            disabled={isPlaying}
-            className={`relative p-2 sm:p-2.5 rounded-full bg-white/20 transition-all hover:bg-white/30 ${
-              isPlaying
-                ? "opacity-50 cursor-not-allowed"
-                : "hover:bg-white/30 hover:scale-105 active:scale-95"
-            }`}
-            aria-label={isSoundOn ? "Mute sound" : "Unmute sound"}
-          >
-            {isSoundOn ? (
-              <Volume2
-                size={20}
-                className="sm:w-6 sm:h-6 text-black drop-shadow-md"
-              />
-            ) : (
-              <VolumeX
-                size={20}
-                className="sm:w-6 sm:h-6 text-black drop-shadow-md"
-              />
-            )}
-            {!hasInteracted && (
-              <div className="absolute -top-1 -right-1 w-3 sm:w-4 h-3 sm:h-4 bg-amber-300 ring-2 ring-white rounded-full animate-pulse"></div>
-            )}
-          </button>
-
-          {isSoundOn && (
-            <div className="px-2 sm:px-3 py-1 sm:py-1.5 bg-white/20 rounded-lg flex items-center shadow-sm">
-              <input
-                type="range"
-                min="0"
-                max="1"
-                step="0.1"
-                value={volume}
-                onChange={(e) => setVolume(parseFloat(e.target.value))}
-                disabled={isPlaying}
-                className={`w-16 sm:w-20 md:w-24 accent-amber-300 ${
-                  isPlaying ? "opacity-50 cursor-not-allowed" : ""
-                }`}
-                aria-label="Volume control"
-              />
-            </div>
-          )}
-
-          <button
             onClick={() => setShowLiMei(!showLiMei)}
-            disabled={isPlaying}
-            className={`p-2 sm:p-2.5 rounded-full bg-white/20 transition-all ${
-              isPlaying
-                ? "opacity-50 cursor-not-allowed"
-                : "hover:bg-white/30 hover:scale-105 active:scale-95"
-            }`}
+            className="p-2 sm:p-2.5 rounded-full bg-white/20 transition-all hover:bg-white/30 hover:scale-105 active:scale-95"
             title={showLiMei ? "Hide Li Mei" : "Show Li Mei"}
             aria-label={showLiMei ? "Hide Li Mei" : "Show Li Mei"}
           >
@@ -305,14 +221,6 @@ function WelcomePage({ onComplete }) {
       tabIndex={isTyping ? 0 : -1}
       onKeyDown={(e) => isTyping && e.key === "Enter" && skipTyping()}
     >
-      {isPlaying && (
-        <div className="absolute right-3 top-3 flex space-x-1">
-          <span className="w-2 h-2 bg-amber-500 rounded-full animate-bounce [animation-delay:-0.3s]"></span>
-          <span className="w-2 h-2 bg-amber-500 rounded-full animate-bounce [animation-delay:-0.15s]"></span>
-          <span className="w-2 h-2 bg-amber-500 rounded-full animate-bounce"></span>
-        </div>
-      )}
-
       {/* Indicate clickable state visually */}
       {isTyping && (
         <div className="absolute -top-2 -right-2 w-7 h-7 bg-amber-500 rounded-full flex items-center justify-center shadow-md animate-pulse z-10">
@@ -406,7 +314,7 @@ function WelcomePage({ onComplete }) {
           <button
             key={index}
             onClick={() => handleOptionClick(option.nextStep)}
-            disabled={isPlaying || !isLoaded || isTyping}
+            disabled={isTyping}
             className={`group px-4 sm:px-6 py-2 sm:py-3 rounded-lg transition-all duration-300 text-sm sm:text-base font-medium
                      focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500
                      flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed
@@ -443,7 +351,7 @@ function WelcomePage({ onComplete }) {
         <button
           key={index}
           onClick={() => !isTyping && setStep(index)}
-          disabled={isPlaying || isTyping}
+          disabled={isTyping}
           className={`w-2.5 h-2.5 rounded-full transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 disabled:opacity-50 disabled:cursor-not-allowed
           ${
             index === step
@@ -457,30 +365,6 @@ function WelcomePage({ onComplete }) {
       ))}
     </div>
   );
-
-  const renderSoundNotification = () => {
-    if (hasInteracted || isSoundOn) return null;
-
-    return (
-      <div className="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-lg mb-6 animate-pulse">
-        <p className="text-amber-800 font-medium flex items-center">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5 mr-2"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-          >
-            <path
-              fillRule="evenodd"
-              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-              clipRule="evenodd"
-            />
-          </svg>
-          Enable Kuya Pao's voice guide by clicking the sound icon
-        </p>
-      </div>
-    );
-  };
 
   return (
     <div
@@ -514,8 +398,6 @@ function WelcomePage({ onComplete }) {
               {renderHeader()}
 
               <div className="p-3 sm:p-4 md:p-6 lg:p-8">
-                {renderSoundNotification()}
-
                 <div className="space-y-4 sm:space-y-6">
                   {renderConversationBubble()}
 
@@ -530,7 +412,7 @@ function WelcomePage({ onComplete }) {
           </div>
 
           {showLiMei && (
-            <div className="absolute top-4 right-4 z-10 md:static md:ml-0 md:mt-0 md:block transition-all duration-500 hover:transform hover:scale-105 md:-ml-4 lg:-ml-19 md:-mb-4 lg:-mb-4 md:mt-0 lg:-mt-1">
+            <div className="absolute top-4 right-4 z-10 md:static md:block transition-all duration-500 hover:transform hover:scale-105 md:-ml-4 lg:-ml-19 md:-mb-4 lg:-mb-4 md:mt-0 lg:-mt-1">
               <div className="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 lg:w-56 lg:h-56 xl:w-64 xl:h-64 rounded-full bg-gradient-to-r from-amber-100 to-orange-100 p-1 shadow-lg relative group">
                 <div className="w-full h-full rounded-full overflow-hidden border border-amber-200 transition-transform duration-300 group-hover:scale-110">
                   <video

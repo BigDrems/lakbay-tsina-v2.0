@@ -114,7 +114,7 @@ const DynastyTimeline = () => {
       <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
         <button
           onClick={startGame}
-          className="bg-[#6B3100] lg:text-black text-white px-6 py-3 rounded-lg lg:hover:bg-[#6B3100]/90 transition-colors text-sm sm:text-base"
+          className="bg-[#6B3100] text-white px-6 py-3 rounded-lg lg:hover:bg-[#6B3100]/90 transition-colors text-sm sm:text-base"
         >
           Simulan ang Laro
         </button>

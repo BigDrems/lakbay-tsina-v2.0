@@ -5,6 +5,7 @@ import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import { useState, useEffect } from "react";
 import WelcomePage from "./pages/WelcomPage";
+import WorldMap from "./components/WorldMap";
 import Tungkol from "./pages/Tungkol";
 import Aralin from "./pages/Aralin";
 import Libangan from "./pages/Libangan";
@@ -51,8 +52,31 @@ function App() {
     }
   });
 
+  const [worldMapShown, setWorldMapShown] = useState(() => {
+    try {
+      // Check if world map has been shown in this session
+      const sessionData = JSON.parse(sessionStorage.getItem("worldMapSession"));
+      if (sessionData && sessionData.expiry > Date.now()) {
+        return true;
+      }
+      return false;
+    } catch (error) {
+      return false;
+    }
+  });
+
   // Show navbar if welcome is dismissed OR if we're not on the home page
   const showNavbar = welcomeDismissed || location.pathname !== "/";
+
+  const handleWorldMapComplete = () => {
+    // Create session with expiration time for world map
+    const sessionData = {
+      shown: true,
+      expiry: Date.now() + SESSION_DURATION,
+    };
+    sessionStorage.setItem("worldMapSession", JSON.stringify(sessionData));
+    setWorldMapShown(true);
+  };
 
   const handleWelcomeComplete = () => {
     // Create session with expiration time
@@ -90,6 +114,17 @@ function App() {
     }
   }, [welcomeDismissed, SESSION_DURATION]);
 
+  // Determine what to show on the home route
+  const renderHomeContent = () => {
+    if (welcomeDismissed) {
+      return <Home />;
+    } else if (!worldMapShown) {
+      return <WorldMap onComplete={handleWorldMapComplete} />;
+    } else {
+      return <WelcomePage onComplete={handleWelcomeComplete} />;
+    }
+  };
+
   return (
     <>
       <ImagePreloader />
@@ -97,16 +132,7 @@ function App() {
         {showNavbar && <NavBar />}
         <div className="max-w-[1920px] relative">
           <Routes>
-            <Route
-              path="/"
-              element={
-                welcomeDismissed ? (
-                  <Home />
-                ) : (
-                  <WelcomePage onComplete={handleWelcomeComplete} />
-                )
-              }
-            />
+            <Route path="/" element={renderHomeContent()} />
           </Routes>
         </div>
         <div className="mt-18 h-full">

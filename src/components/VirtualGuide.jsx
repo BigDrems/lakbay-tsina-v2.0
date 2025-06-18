@@ -1,16 +1,12 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Volume2, VolumeX, Mic, Send } from "lucide-react";
+import { Send } from "lucide-react";
 
 const VirtualGuide = () => {
   const [isListening, setIsListening] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
-  const [volume, setVolume] = useState(0.7);
   const [messages, setMessages] = useState([]);
   const [userInput, setUserInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
-  const audioRef = useRef(null);
-  const speechRef = useRef(null);
   const messagesEndRef = useRef(null);
 
   const scrollToBottom = () => {
@@ -25,25 +21,9 @@ const VirtualGuide = () => {
     "Hey there! I'm Alex, your virtual guide. Glad you're here—let's chat! What brings you here today?";
 
   useEffect(() => {
-    // Play initial greeting
-    speak(initialGreeting);
+    // Add initial greeting message
+    setMessages([{ text: initialGreeting, sender: "alex" }]);
   }, []);
-
-  const speak = (text) => {
-    if (isMuted) return;
-
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.volume = volume;
-    utterance.rate = 1;
-    utterance.pitch = 1;
-
-    // Use a female voice if available
-    const voices = speechSynthesis.getVoices();
-    const femaleVoice = voices.find((voice) => voice.name.includes("Female"));
-    if (femaleVoice) utterance.voice = femaleVoice;
-
-    speechSynthesis.speak(utterance);
-  };
 
   const handleUserInput = (e) => {
     e.preventDefault();
@@ -57,7 +37,6 @@ const VirtualGuide = () => {
     setTimeout(() => {
       const response = generateResponse(userInput);
       setMessages((prev) => [...prev, { text: response, sender: "alex" }]);
-      speak(response);
       setIsTyping(false);
     }, 1500);
 
@@ -76,21 +55,6 @@ const VirtualGuide = () => {
     return responses[Math.floor(Math.random() * responses.length)];
   };
 
-  const toggleMute = () => {
-    setIsMuted(!isMuted);
-    if (!isMuted) {
-      speechSynthesis.cancel();
-    }
-  };
-
-  const handleVolumeChange = (e) => {
-    const newVolume = parseFloat(e.target.value);
-    setVolume(newVolume);
-    if (audioRef.current) {
-      audioRef.current.volume = newVolume;
-    }
-  };
-
   return (
     <div className="fixed bottom-4 right-4 z-50 w-[90%] sm:w-96 bg-white rounded-lg shadow-xl overflow-hidden">
       {/* Header */}
@@ -107,27 +71,6 @@ const VirtualGuide = () => {
             </h3>
             <p className="text-white/80 text-xs sm:text-sm">Virtual Guide</p>
           </div>
-        </div>
-        <div className="flex items-center space-x-2">
-          <button
-            onClick={toggleMute}
-            className="p-1.5 sm:p-2 rounded-full hover:bg-white/10 transition-colors"
-          >
-            {isMuted ? (
-              <VolumeX className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-            ) : (
-              <Volume2 className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-            )}
-          </button>
-          <input
-            type="range"
-            min="0"
-            max="1"
-            step="0.1"
-            value={volume}
-            onChange={handleVolumeChange}
-            className="w-16 sm:w-20"
-          />
         </div>
       </div>
 

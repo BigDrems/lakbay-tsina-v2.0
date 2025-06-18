@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { courseContent, getYouTubeVideoId } from "../data/courseData";
+import ModernProgressBar from "../components/ModernProgressBar";
 
 const CourseContent = () => {
   const { id } = useParams();
@@ -28,7 +29,25 @@ const CourseContent = () => {
     const storedLessons = localStorage.getItem(`course_${id}_lessons`);
 
     if (storedLessons) {
-      setLessons(JSON.parse(storedLessons));
+      const parsedStoredLessons = JSON.parse(storedLessons);
+
+      // Merge courseData.js with localStorage data to ensure videoUrl updates are reflected
+      const mergedLessons = courseLessons.map((courseLesson, index) => {
+        const storedLesson = parsedStoredLessons[index];
+        return {
+          ...courseLesson, // This ensures videoUrl and other properties from courseData.js are used
+          completed: storedLesson?.completed || courseLesson.completed || false,
+          // Preserve any other localStorage-specific data if needed
+        };
+      });
+
+      setLessons(mergedLessons);
+
+      // Update localStorage with merged data
+      localStorage.setItem(
+        `course_${id}_lessons`,
+        JSON.stringify(mergedLessons)
+      );
     } else {
       // Initialize lessons with completed status from courseContent or set to false
       const initializedLessons = courseLessons.map((lesson) => ({
@@ -90,6 +109,26 @@ const CourseContent = () => {
     // Show toast or notification (could be added here)
   };
 
+  // Function to reset localStorage and reload from courseData.js
+  const handleResetCourseData = () => {
+    // Clear localStorage for this course
+    localStorage.removeItem(`course_${id}_lessons`);
+
+    // Reload the component by re-initializing lessons
+    const courseLessons = courseContent[id] || [];
+    const initializedLessons = courseLessons.map((lesson) => ({
+      ...lesson,
+      completed: lesson.completed || false,
+    }));
+    setLessons(initializedLessons);
+
+    // Store fresh data in localStorage
+    localStorage.setItem(
+      `course_${id}_lessons`,
+      JSON.stringify(initializedLessons)
+    );
+  };
+
   // Animations
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -127,36 +166,48 @@ const CourseContent = () => {
               <span className="font-medium">Back to Course</span>
             </button>
 
-            <button
-              onClick={() => setShowMobileMenu(!showMobileMenu)}
-              className="lg:hidden flex items-center gap-2 bg-white px-4 py-2 rounded-lg shadow-sm"
-            >
-              <BookOpen size={18} />
-              <span>Lessons</span>
-              <ChevronRight
-                size={16}
-                className={`transform transition-transform ${
-                  showMobileMenu ? "rotate-90" : ""
-                }`}
-              />
-            </button>
+            <div className="flex items-center gap-2">
+              {/* Reset button for development - only show in development mode */}
+              {process.env.NODE_ENV === "development" && (
+                <button
+                  onClick={handleResetCourseData}
+                  className="bg-orange-500 hover:bg-orange-600 text-white px-3 py-1.5 rounded-lg text-sm transition-colors"
+                  title="Reset course data from courseData.js"
+                >
+                  Reset Data
+                </button>
+              )}
+
+              <button
+                onClick={() => setShowMobileMenu(!showMobileMenu)}
+                className="lg:hidden flex items-center gap-2 bg-white px-4 py-2 rounded-lg shadow-sm"
+              >
+                <BookOpen size={18} />
+                <span>Lessons</span>
+                <ChevronRight
+                  size={16}
+                  className={`transform transition-transform ${
+                    showMobileMenu ? "rotate-90" : ""
+                  }`}
+                />
+              </button>
+            </div>
           </div>
 
           {/* Overall Progress */}
-          <div className="bg-white rounded-xl shadow-sm p-4 mb-6">
-            <div className="flex justify-between items-center mb-2">
-              <h3 className="font-semibold text-gray-700">Course Progress</h3>
-              <span className="text-sm font-medium text-gray-500">
-                {Math.round(progress)}% Complete
-              </span>
-            </div>
-            <div className="w-full bg-gray-200 rounded-full h-2.5">
-              <div
-                className="bg-gradient-to-r from-[#cd201c] to-[#ff4b45] h-2.5 rounded-full transition-all duration-500 ease-out"
-                style={{ width: `${progress}%` }}
-              ></div>
-            </div>
-          </div>
+          <ModernProgressBar
+            progress={progress}
+            title="Course Progress"
+            subtitle="Keep going! You're doing great"
+            showStats={true}
+            showMilestones={true}
+            showCompletionMessage={true}
+            size="default"
+            className="mb-6"
+            completedCount={lessons.filter((l) => l.completed).length}
+            totalCount={lessons.length}
+            completionMessage="Course Completed!"
+          />
         </div>
 
         {/* Course Content Layout */}

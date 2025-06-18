@@ -9,8 +9,8 @@ export const THEME_COLORS = {
 
 export const SORT_OPTIONS = [
   { value: "newest", label: "Newest First" },
-  { value: "popular", label: "Popular" },
-  { value: "highest-rated", label: "Highest Rated" },
+  { value: "alphabetical", label: "Alphabetical" },
+  { value: "category", label: "By Category" },
 ];
 
 export const LEVELS = [

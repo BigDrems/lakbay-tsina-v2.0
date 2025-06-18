@@ -57,22 +57,7 @@ const LessonDetail = () => {
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.3 }}
                 >
-                  <div className="flex items-center gap-2">
-                    <Users size={18} />
-                    <span>{lesson.students} Mag-aaral</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Star size={18} className="text-yellow-400 fill-current" />
-                    <span>{lesson.ratings} Rating</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Clock size={18} />
-                    <span>{lesson.duration}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Award size={18} />
-                    <span>{lesson.status}</span>
-                  </div>
+                  {/* Removed the stats display since those fields are no longer in courseOverview */}
                 </motion.div>
               </div>
             </div>

@@ -12,7 +12,7 @@ import LessonCardSkeleton from "../components/LessonCardSkeleton";
 
 // Data and constants
 import { SORT_OPTIONS } from "../utils/constants";
-import { lessons } from "../data/lessons";
+import { courseOverview } from "../data/courseData";
 import { preloadImages } from "../utils/imageUtils";
 
 // Memoized section components for better performance
@@ -115,8 +115,8 @@ const Aralin = () => {
   useEffect(() => {
     setIsLoading(true);
 
-    const lessonImages = lessons.map((lesson) => lesson.image);
-    const avatarImages = lessons.map(
+    const lessonImages = courseOverview.map((lesson) => lesson.image);
+    const avatarImages = courseOverview.map(
       (lesson) =>
         `https://api.dicebear.com/7.x/avataaars/svg?seed=${lesson.instructor}`
     );

@@ -33,17 +33,6 @@ const LessonCard = ({ lesson, index }) => {
             />
           </div>
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-          <span className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full text-sm font-medium text-gray-800 shadow-sm">
-            {lesson.status}
-          </span>
-          <div className="absolute bottom-4 left-4 flex gap-2">
-            <span className="px-2.5 py-1 bg-white/90 backdrop-blur-sm rounded-full text-xs font-medium text-gray-800">
-              {lesson.duration}
-            </span>
-            <span className="px-2.5 py-1 bg-white/90 backdrop-blur-sm rounded-full text-xs font-medium text-gray-800">
-              {lesson.level}
-            </span>
-          </div>
         </div>
 
         <div className="flex-grow p-5 flex flex-col justify-between">
@@ -68,27 +57,6 @@ const LessonCard = ({ lesson, index }) => {
           </div>
 
           <div className="mt-auto">
-            <div className="flex flex-wrap items-center justify-between text-sm">
-              <div className="flex items-center gap-4">
-                <div className="flex items-center gap-1.5 text-gray-600">
-                  <Users size={15} className="text-gray-500" />
-                  <span>{lesson.students}</span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <Star size={15} className="text-amber-400 fill-current" />
-                  <span className="font-medium">{lesson.ratings}</span>
-                </div>
-              </div>
-              <span
-                className={`font-semibold ${
-                  lesson.price === "Free"
-                    ? "text-emerald-600"
-                    : "text-[#cd201c]"
-                }`}
-              >
-                {lesson.price}
-              </span>
-            </div>
             <div className="mt-4 w-full">
               <span className="flex items-center justify-center w-full py-2 px-4 bg-gray-100 rounded-lg text-gray-700 font-medium group-hover:bg-[#cd201c] group-hover:text-white transition-all duration-300">
                 <span>Mag-aral Ngayon</span>

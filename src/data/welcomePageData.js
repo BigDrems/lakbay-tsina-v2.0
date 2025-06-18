@@ -1,5 +1,5 @@
 export const websitePurpose =
-  "Welcome to Lakbay China! I am Li Mei, your enthusiastic guide to discovering the culture and history of China.";
+  "Maligayang pagdating sa Lakbay Tsina!! Ako si Kuya Pao ang inyong kaibigang gabay sa paglalakbay na ito. Hali na’t tuklasin natin ang makulay na kasaysayan at mahahalagang aral mula sa Sinaunang Kabihasnan ng Tsina.";
 
 export const pages = [
   {
@@ -53,29 +53,29 @@ export const characterPuzzle = [
 
 export const conversation = [
   {
-    text: `${websitePurpose} Are you ready to start an unforgettable journey in China?`,
-    options: [{ label: "Let's explore!", nextStep: 1 }],
+    text: `${websitePurpose} Kaya tara na, at sabay-sabay nating lakbayin ang nakaraan upang mas maunawaan ang kasalukuyan!`,
+    options: [{ label: "Magpatuloy", nextStep: 1 }],
   },
   {
-    text: "I found an exciting ancient scroll with secrets about Chinese culture. Would you like to help me figure out what it means?",
+    text: "Nakakita ako ng isang kapana-panabik na lugar na may mga lihim tungkol sa kulturang Tsino. Maaari mo ba akong tulungang matukoy ang lugar na ito?",
     options: [
-      { label: "Yes, I'll help you!", nextStep: 2 },
-      { label: "Tell me the details first!", nextStep: 3 },
+      { label: "Opo, Tutulungan Kita!", nextStep: 2 },
+      { label: "Sabihin mo muna sa akin ang mga detalye!", nextStep: 3 },
     ],
   },
   {
-    text: "Match the items from China! When you match correctly, you'll get a piece!",
+    text: "Sagutin mo ang mga tanong at ika'y aking gagabayan sa tamang landas!",
     type: "puzzle",
     options: [],
   },
   {
-    text: "Excellent! The scroll shows four amazing paths that you can explore. Each path reveals cool and interesting information about China!",
-    options: [{ label: "Show me the paths", nextStep: 4 }],
+    text: "Magaling! Ipinapakita ng scroll ang apat na kamangha-manghang landas na maaari mong tuklasin. Bawat landas ay naglalaman ng mga kapanapanabik at kawili-wiling impormasyon tungkol sa Tsina!",
+    options: [{ label: "Ipakita mo sa akin ang mga daan!", nextStep: 4 }],
   },
   {
-    text: "Which path would you like to learn about first?",
+    text: "Aling landas ang nais mong malaman muna?",
     options: pages.map((page) => ({
-      label: `Explore ${page.name}`,
+      label: `Tuklasin ${page.name}`,
       nextStep: page.path,
     })),
   },

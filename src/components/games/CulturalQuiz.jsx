@@ -243,7 +243,7 @@ const CulturalQuiz = () => {
                 <div className="flex justify-center">
                   <button
                     onClick={handleNextQuestion}
-                    className="bg-[#6B3100] text-black px-4 py-2 rounded-lg hover:bg-[#6B3100]/90 transition-colors text-sm sm:text-base"
+                    className="bg-[#6B3100] text-white px-4 py-2 rounded-lg hover:bg-[#6B3100]/90 transition-colors text-sm sm:text-base"
                   >
                     {currentQuestionIndex < shuffledQuestions.length - 1
                       ? "Next Question"
