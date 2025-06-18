@@ -1,7 +1,7 @@
 import { useEffect, useState, lazy, Suspense } from "react";
 import Lenis from "@studio-freight/lenis";
 import page from "../styles/home.module.scss";
-import WelcomeSection from "../components/WelcomeSection";
+import WelcomePopup from "../components/WelcomeSection";
 
 // Lazy load components
 const ZoomParallax = lazy(() => import("../components/ZoomParallax"));
@@ -17,6 +17,7 @@ const LoadingFallback = () => (
 
 const Home = () => {
   const [isMobile, setIsMobile] = useState(false);
+  const [showWelcomePopup, setShowWelcomePopup] = useState(false);
 
   useEffect(() => {
     // Check if screen is mobile
@@ -44,6 +45,20 @@ const Home = () => {
     requestAnimationFrame(raf);
   }, []);
 
+  // Show welcome popup on component mount
+  useEffect(() => {
+    // Small delay to ensure smooth animation
+    const timer = setTimeout(() => {
+      setShowWelcomePopup(true);
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  const handleCloseWelcomePopup = () => {
+    setShowWelcomePopup(false);
+  };
+
   const projects = [
     { title1: "Qin", title2: "Dynasty", src: "qin.webp" },
     { title1: "Han", title2: "Dynasty", src: "Liu-bang.jpg" },
@@ -67,10 +82,14 @@ const Home = () => {
 
   return (
     <>
+      {/* Welcome Popup */}
+      <WelcomePopup
+        isOpen={showWelcomePopup}
+        onClose={handleCloseWelcomePopup}
+      />
+
       <main className={page.main}>
-        {isMobile ? (
-          <WelcomeSection />
-        ) : (
+        {!isMobile && (
           <Suspense fallback={<LoadingFallback />}>
             <ZoomParallax />
           </Suspense>

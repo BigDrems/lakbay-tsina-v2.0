@@ -519,7 +519,7 @@
   background: rgba(255, 255, 255, 0.95);
   border-radius: 24px;
   border: 1px solid rgba(205, 32, 28, 0.1);
-  padding: clamp(3rem, 6vw, 5rem);
+  padding: clamp(4rem, 8vw, 6rem);
   box-shadow: 0 25px 50px -12px rgba(205, 32, 28, 0.15),
     0 0 0 1px rgba(205, 32, 28, 0.05) inset, 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   transform: translateZ(0);
@@ -534,20 +534,25 @@
 
   // Responsive design
   @media (max-width: 640px) {
-    padding: clamp(2rem, 4vw, 3rem);
+    padding: clamp(2.5rem, 5vw, 3.5rem);
     border-radius: 16px;
     margin: 0 1rem;
     backdrop-filter: blur(10px);
   }
 
   @media (min-width: 641px) and (max-width: 768px) {
-    padding: clamp(2.5rem, 5vw, 3.5rem);
+    padding: clamp(3rem, 6vw, 4rem);
     border-radius: 20px;
   }
 
   @media (min-width: 769px) and (max-width: 1024px) {
-    padding: clamp(3rem, 5vw, 4rem);
+    padding: clamp(3.5rem, 7vw, 5rem);
     border-radius: 22px;
+  }
+
+  @media (min-width: 1025px) {
+    padding: clamp(4rem, 8vw, 6rem);
+    border-radius: 24px;
   }
 
   // High contrast mode
@@ -559,10 +564,10 @@
 }
 
 .welcomeTitle {
-  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-size: clamp(3rem, 7vw, 5.5rem);
   font-weight: 800;
-  padding-bottom: 15px;
-  margin-bottom: clamp(2rem, 4vw, 3rem);
+  padding-bottom: 20px;
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
   line-height: 1.1;
   letter-spacing: -0.02em;
   background: linear-gradient(135deg, #cd201c 0%, #b81c18 50%, #a91815 100%);
@@ -580,31 +585,35 @@
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 80px;
-    height: 4px;
+    width: 100px;
+    height: 5px;
     background: linear-gradient(90deg, #cd201c, #6b3100, #cd201c);
-    border-radius: 2px;
+    border-radius: 3px;
     opacity: 0.8;
   }
 
   // Responsive typography
   @media (max-width: 640px) {
-    font-size: clamp(2rem, 8vw, 3rem);
-    margin-bottom: clamp(1.5rem, 3vw, 2rem);
+    font-size: clamp(2.5rem, 9vw, 3.5rem);
+    margin-bottom: clamp(2rem, 4vw, 2.5rem);
     line-height: 1.2;
 
     &::after {
-      width: 60px;
-      height: 3px;
+      width: 80px;
+      height: 4px;
     }
   }
 
   @media (min-width: 641px) and (max-width: 768px) {
-    font-size: clamp(2.2rem, 7vw, 3.5rem);
+    font-size: clamp(2.8rem, 8vw, 4rem);
   }
 
   @media (min-width: 769px) and (max-width: 1024px) {
-    font-size: clamp(2.8rem, 6.5vw, 4rem);
+    font-size: clamp(3.5rem, 7.5vw, 4.5rem);
+  }
+
+  @media (min-width: 1025px) {
+    font-size: clamp(3rem, 7vw, 5.5rem);
   }
 
   // High contrast mode
@@ -616,10 +625,10 @@
 }
 
 .welcomeText {
-  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+  font-size: clamp(1.2rem, 3vw, 1.6rem);
   line-height: 1.8;
   color: #2d2d2d;
-  max-width: 900px;
+  max-width: 1000px;
   margin: 0 auto;
   font-weight: 400;
   font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
@@ -627,7 +636,7 @@
   text-align: justify;
 
   p {
-    margin-bottom: clamp(1.5rem, 3vw, 2rem);
+    margin-bottom: clamp(1.8rem, 3.5vw, 2.5rem);
     text-align: justify;
     hyphens: auto;
     position: relative;
@@ -645,40 +654,51 @@
 
     @media (max-width: 640px) {
       text-align: justify;
-      font-size: clamp(1rem, 4vw, 1.2rem);
+      font-size: clamp(1.1rem, 4.5vw, 1.3rem);
       line-height: 1.7;
-      margin-bottom: clamp(1.2rem, 2.5vw, 1.5rem);
+      margin-bottom: clamp(1.5rem, 3vw, 2rem);
     }
 
     @media (min-width: 641px) and (max-width: 768px) {
-      font-size: clamp(1.05rem, 3vw, 1.25rem);
+      font-size: clamp(1.15rem, 3.5vw, 1.35rem);
       line-height: 1.75;
     }
 
     @media (min-width: 769px) and (max-width: 1024px) {
-      font-size: clamp(1.15rem, 2.8vw, 1.35rem);
+      font-size: clamp(1.25rem, 3.2vw, 1.45rem);
+      line-height: 1.8;
+    }
+
+    @media (min-width: 1025px) {
+      font-size: clamp(1.2rem, 3vw, 1.6rem);
       line-height: 1.8;
     }
   }
 
   // Responsive container
   @media (max-width: 640px) {
-    font-size: clamp(1rem, 4vw, 1.2rem);
+    font-size: clamp(1.1rem, 4.5vw, 1.3rem);
     line-height: 1.7;
     max-width: 100%;
     text-align: justify;
   }
 
   @media (min-width: 641px) and (max-width: 768px) {
-    font-size: clamp(1.05rem, 3vw, 1.25rem);
+    font-size: clamp(1.15rem, 3.5vw, 1.35rem);
     line-height: 1.75;
     max-width: 95%;
   }
 
   @media (min-width: 769px) and (max-width: 1024px) {
-    font-size: clamp(1.15rem, 2.8vw, 1.35rem);
+    font-size: clamp(1.25rem, 3.2vw, 1.45rem);
     line-height: 1.8;
     max-width: 92%;
+  }
+
+  @media (min-width: 1025px) {
+    font-size: clamp(1.2rem, 3vw, 1.6rem);
+    line-height: 1.8;
+    max-width: 1000px;
   }
 
   // High contrast mode
@@ -854,5 +874,253 @@
 
   @media (prefers-contrast: high) {
     color: #cd201c;
+  }
+}
+
+// Welcome Popup Modal Styles
+.welcomePopupOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: clamp(1rem, 3vw, 2rem);
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif;
+  overflow: auto;
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
+
+  // High contrast mode
+  @media (prefers-contrast: high) {
+    background: rgba(0, 0, 0, 0.9);
+  }
+
+  // Reduced motion
+  @media (prefers-reduced-motion: reduce) {
+    backdrop-filter: none;
+  }
+}
+
+.welcomePopup {
+  max-width: 1000px;
+  width: 100%;
+  max-height: 95vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: linear-gradient(135deg, #f5f7fa 0%, #f0f4f8 50%, #e8f0f8 100%);
+  border-radius: 24px;
+  border: 1px solid rgba(205, 32, 28, 0.1);
+  box-shadow: 0 25px 50px -12px rgba(205, 32, 28, 0.25),
+    0 0 0 1px rgba(205, 32, 28, 0.05) inset, 0 8px 32px rgba(0, 0, 0, 0.2);
+  position: relative;
+  transform: translateZ(0);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(205, 32, 28, 0.3) rgba(205, 32, 28, 0.1);
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+
+  // Responsive design
+  @media (max-width: 640px) {
+    max-width: 98vw;
+    max-height: 90vh;
+    border-radius: 16px;
+    margin: 0 0.5rem;
+  }
+
+  @media (min-width: 641px) and (max-width: 768px) {
+    max-width: 95vw;
+    max-height: 92vh;
+    border-radius: 20px;
+  }
+
+  @media (min-width: 769px) and (max-width: 1024px) {
+    max-width: 90vw;
+    max-height: 94vh;
+    border-radius: 22px;
+  }
+
+  @media (min-width: 1025px) {
+    max-width: 1100px;
+    max-height: 95vh;
+    border-radius: 24px;
+  }
+
+  // High contrast mode
+  @media (prefers-contrast: high) {
+    background: #ffffff;
+    border: 2px solid #cd201c;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  }
+
+  // Custom scrollbar for webkit browsers
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(205, 32, 28, 0.1);
+    border-radius: 4px;
+    margin: 4px 0;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(205, 32, 28, 0.3);
+    border-radius: 4px;
+    border: 1px solid rgba(205, 32, 28, 0.1);
+
+    &:hover {
+      background: rgba(205, 32, 28, 0.5);
+    }
+  }
+
+  &::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+}
+
+.welcomeActions {
+  margin-top: clamp(2rem, 4vw, 3rem);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding-top: clamp(1.5rem, 3vw, 2rem);
+  border-top: 1px solid rgba(205, 32, 28, 0.1);
+
+  @media (max-width: 640px) {
+    margin-top: clamp(1.5rem, 3vw, 2rem);
+    padding-top: clamp(1rem, 2.5vw, 1.5rem);
+  }
+}
+
+.continueButton {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: clamp(1rem, 2.5vw, 1.5rem) clamp(2rem, 4vw, 3rem);
+  background: linear-gradient(135deg, #cd201c 0%, #b81c18 50%, #a91815 100%);
+  color: white;
+  border: none;
+  border-radius: 16px;
+  font-size: clamp(1.1rem, 3vw, 1.4rem);
+  font-weight: 600;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 16px rgba(205, 32, 28, 0.3), 0 3px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.2),
+      transparent
+    );
+    transition: left 0.5s ease;
+  }
+
+  &:hover::before {
+    left: 100%;
+  }
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 24px rgba(205, 32, 28, 0.4),
+      0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(205, 32, 28, 0.3),
+      0 6px 16px rgba(205, 32, 28, 0.3), 0 3px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  svg {
+    transition: transform 0.3s ease;
+    width: 24px;
+    height: 24px;
+  }
+
+  &:hover svg {
+    transform: translateX(6px);
+  }
+
+  // Responsive design
+  @media (max-width: 640px) {
+    padding: clamp(0.875rem, 2.5vw, 1.25rem) clamp(1.5rem, 4vw, 2.5rem);
+    font-size: clamp(1rem, 3.5vw, 1.2rem);
+    border-radius: 12px;
+
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  @media (min-width: 641px) and (max-width: 768px) {
+    padding: clamp(1rem, 3vw, 1.375rem) clamp(1.75rem, 4.5vw, 2.75rem);
+    font-size: clamp(1.1rem, 3.2vw, 1.3rem);
+  }
+
+  @media (min-width: 769px) and (max-width: 1024px) {
+    padding: clamp(1.125rem, 2.8vw, 1.5rem) clamp(2rem, 3.5vw, 3rem);
+    font-size: clamp(1.2rem, 3vw, 1.4rem);
+  }
+
+  @media (min-width: 1025px) {
+    padding: clamp(1rem, 2.5vw, 1.5rem) clamp(2rem, 4vw, 3rem);
+    font-size: clamp(1.1rem, 3vw, 1.4rem);
+  }
+
+  // High contrast mode
+  @media (prefers-contrast: high) {
+    background: #cd201c;
+    border: 2px solid #000000;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+
+    &:hover {
+      background: #b81c18;
+    }
+  }
+
+  // Reduced motion
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+
+    &:hover {
+      transform: none;
+    }
+
+    &::before {
+      display: none;
+    }
+
+    svg {
+      transition: none;
+    }
+
+    &:hover svg {
+      transform: none;
+    }
   }
 }
