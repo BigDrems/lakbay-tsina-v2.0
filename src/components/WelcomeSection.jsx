@@ -181,21 +181,33 @@ export default function WelcomePopup({ isOpen, onClose }) {
                 variants={itemVariants}
               >
                 <motion.p variants={itemVariants}>
-                  Kami ay mga mag-aaral mula sa kursong Bachelor of Secondary
-                  Education major in Social Studies, at ang website na ito ay
-                  bahagi ng aming course requirement sa asignaturang Research in
-                  Social Studies. Layunin naming pagbutihin ang paraan ng
-                  pagtuturo at pagkatuto ng Sinaunang Kabihasnan sa Tsina sa
-                  pamamagitan ng isang interakibong web-based material.
+                  Ang Lakbay Tsina ay isang interaktibong web-based na nilikha
+                  upang palalimin ang kaalaman ng mga mag-aaral hinggil sa
+                  sinaunang kabihasnang Tsino. Ang nilalaman nito ay hango sa
+                  Most Essential Learning Competencies (MELCs) ng Department of
+                  Education para sa Araling Panlipunan 8, partikular sa Quarter
+                  1, Week 7–8: Nasusuri ang mga sinaunang kabihasnan ng Egypt,
+                  Mesopotamia, India, at China batay sa politika, ekonomiya,
+                  kultura, relihiyon, paniniwala, at lipunan.
                 </motion.p>
 
                 <motion.p variants={itemVariants}>
-                  Ang mga nilalaman ng Lakbay Tsina ay hango sa Most Essential
-                  Learning Competencies (MELCs) ng Department of Education
-                  (DepEd) para sa Araling Panlipunan 8, partikular sa Quarter 1,
-                  Week 7-8. Dito, masusing tatalakayin at susuriin ang
-                  kabihasnang Tsino batay sa mga aspeto ng politika, ekonomiya,
-                  kultura, relihiyon, paniniwala, at lipunan.
+                  Batay sa isinagawang pagsusuri ng mga mananaliksik, natuklasan
+                  na sa apat na kabihasnang nabanggit, ang Tsina ang nakapagtamo
+                  ng pinakamababang marka ng mga mag-aaral sa Lucsoon National
+                  High School, Naval, Biliran. Dahil dito, naging pangunahing
+                  layunin ng Lakbay Tsina na masusing talakayin at suriin ang
+                  kabihasnang Tsino—mula sa aspeto ng politika at ekonomiya,
+                  hanggang sa kultura, relihiyon, paniniwala, at lipunan—upang
+                  mapunan ang mga puwang sa kaalaman ng mga mag-aaral.
+                </motion.p>
+                <motion.p variants={itemVariants}>
+                  Sa pamamagitan ng makabagong disenyo at interaktibong
+                  nilalaman, layon ng Lakbay Tsina na gawing mas kawili-wili,
+                  mas malinaw, at mas epektibo ang pagkatuto ng sinaunang
+                  kabihasnang Tsino. Nawa’y magsilbing gabay at inspirasyon ito
+                  para sa mas malalim na pag-unawa sa kasaysayan ng isa sa mga
+                  pinakamatandang sibilisasyon sa mundo.
                 </motion.p>
                 <motion.p
                   className={styles.welcomeHighlight}

@@ -35,8 +35,8 @@ const PresentationsSection = memo(({ onPresentationSelect }) => {
       id: 1,
       title: "Xia Dynasty",
       description:
-        "Ang unang dinastiya ng Tsina at ang mga sinaunang tradisyon nito",
-      pdfUrl: "/presentations/xia.pdf",
+        "Ang unang dinastiya ng Tsina na naglatag ng pundasyon ng sinaunang tradisyon at pamahalaan.",
+      pdfUrl: "/Lessons/xia.pdf",
       thumbnail: "/dynasty/xia.jpg",
       category: "Kasaysayan",
     },
@@ -44,8 +44,8 @@ const PresentationsSection = memo(({ onPresentationSelect }) => {
       id: 2,
       title: "Shang Dynasty",
       description:
-        "Ang ikalawang dinastiya ng Tsina at ang mga kontribusyon nito sa sibilisasyon",
-      pdfUrl: "/presentations/shang.pdf",
+        "Ang ikalawang dinastiya ng Tsina na kilala sa paggamit ng bronse at unang sistema ng pagsusulat.",
+      pdfUrl: "/Lessons/shang.pdf",
       thumbnail: "/dynasty/shang.jpg",
       category: "Kasaysayan",
     },
@@ -53,9 +53,63 @@ const PresentationsSection = memo(({ onPresentationSelect }) => {
       id: 3,
       title: "Song Dynasty",
       description:
-        "Pag-aaral tungkol sa Song Dynasty at ang mga kontribusyon nito sa kasaysayan ng Tsina",
-      pdfUrl: "/presentations/song.pdf",
+        "Isang makapangyarihang dinastiya na nagpasimula ng pag-unlad sa sining, agham, at ekonomiya.",
+      pdfUrl: "/Lessons/song.pdf",
       thumbnail: "/dynasty/song.jpg",
+      category: "Kasaysayan",
+    },
+    {
+      id: 4,
+      title: "Han Dynasty",
+      description:
+        "Isang ginintuang panahon ng Tsina na nagpalaganap ng Confucianism at pinalawak ang Silk Road.",
+      pdfUrl: "/Lessons/han.pdf",
+      thumbnail: "/dynasty/han.jpg",
+      category: "Kasaysayan",
+    },
+    {
+      id: 5,
+      title: "Ming Dynasty",
+      description:
+        "Kilala sa mahuhusay na arkitektura tulad ng Great Wall at pag-unlad ng sining at kalakalan.",
+      pdfUrl: "/Lessons/ming.pdf",
+      thumbnail: "/dynasty/ming.jpg",
+      category: "Kasaysayan",
+    },
+    {
+      id: 6,
+      title: "Qin Dynasty",
+      description:
+        "Unang nagbigay ng pagkakaisa sa Tsina sa ilalim ng isang emperador at nagpatayo ng Great Wall.",
+      pdfUrl: "/Lessons/qin.pdf",
+      thumbnail: "/dynasty/qin.jpg",
+      category: "Kasaysayan",
+    },
+    {
+      id: 7,
+      title: "Qing Dynasty",
+      description:
+        "Huling dinastiya ng Tsina na nagtagal ng mahigit 250 taon bago bumagsak noong ika-20 siglo.",
+      pdfUrl: "/Lessons/qing.pdf",
+      thumbnail: "/dynasty/qing.jpg",
+      category: "Kasaysayan",
+    },
+    {
+      id: 8,
+      title: "Tang Dynasty",
+      description:
+        "Isang panahon ng kasiningan at kalakalan na tinuturing na gintong panahon ng kultura ng Tsina.",
+      pdfUrl: "/Lessons/tang.pdf",
+      thumbnail: "/dynasty/tang.jpg",
+      category: "Kasaysayan",
+    },
+    {
+      id: 9,
+      title: "Yuan Dynasty",
+      description:
+        "Itinatag ng mga Mongol sa ilalim ni Kublai Khan at nagbukas ng Tsina sa internasyonal na kalakalan.",
+      pdfUrl: "/Lessons/yuan.pdf",
+      thumbnail: "/dynasty/yuan.jpg",
       category: "Kasaysayan",
     },
   ];

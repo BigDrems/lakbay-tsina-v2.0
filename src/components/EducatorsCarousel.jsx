@@ -4,44 +4,32 @@ const studentEducators = [
   {
     id: 1,
     image: "/teacher/abetto.jpg",
-    name: "Abetto Palconit",
-    description:
-      '"Ang kaalaman ay ang pinakamagandang kayamanan na hindi mananakaw sa atin."\n\n- Confucius',
+    name: "Abetto C. Palconit",
   },
   {
     id: 2,
     image: "/teacher/angela.jpg",
-    name: "Cristina Magdaraog",
-    description:
-      '"Ang pag-aaral ay isang paglalakbay, hindi isang destinasyon."\n\n- Ralph Waldo Emerson',
+    name: "Cristina D. Magdaraog",
   },
   {
     id: 3,
     image: "/teacher/cristina.jpg",
-    name: "Angela Bacunawa",
-    description:
-      '"Ang edukasyon ay hindi paghahanda para sa buhay; ito ay buhay mismo."\n\n- John Dewey',
+    name: "Angela E. Bacunawa",
   },
   {
     id: 4,
     image: "/teacher/jenilyn.jpg",
-    name: "Jenilyn Verian Florito",
-    description:
-      '"Ang karunungan ay nagsisimula sa pagkamangha."\n\n- Socrates',
+    name: "Jenilyn V. Florito",
   },
   {
     id: 5,
     image: "/teacher/maybeline.jpg",
-    name: "Maybeline Lastimado",
-    description:
-      '"Ang sining ay ang pinakamagandang paraan ng pagpapahayag ng katotohanan."\n\n- Pablo Picasso',
+    name: "Maybeline B. Lastimado",
   },
   {
     id: 6,
     image: "/teacher/ralph.jpg",
-    name: "Ralph Joshua Mapula",
-    description:
-      '"Ang mundo ay isang aklat, at ang mga hindi naglalakbay ay nagbabasa lamang ng isang pahina."\n\n- Saint Augustine',
+    name: "Ralph Joshua P. Mapula",
   },
 ];
 
@@ -133,11 +121,6 @@ const StudentEducatorsCarousel = () => {
           <h2 className="text-3xl md:text-5xl font-bold text-gray-800 mb-6">
             Learning & Teaching Together
           </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Our student educators are passionate learners who also help others
-            discover Chinese language, history, and culture through peer-to-peer
-            learning.
-          </p>
         </div>
 
         <div className="relative px-10">
@@ -192,8 +175,8 @@ const StudentEducatorsCarousel = () => {
                       {studentEducator.name}
                     </h3>
 
-                    <p className="text-center text-gray-600 mb-6 whitespace-pre-line italic">
-                      {studentEducator.description}
+                    <p className="text-center text-black font-bold mb-6 whitespace-pre-line italic">
+                      Bachelor of Secondary Education Major in Social Studies
                     </p>
                   </div>
                 ))}
@@ -236,7 +219,8 @@ const StudentEducatorsCarousel = () => {
                         </h3>
 
                         <p className="text-center text-gray-600 mb-6 whitespace-pre-line italic">
-                          {studentEducator.description}
+                          Bachelor of Secondary Education Major in Social
+                          Studies
                         </p>
                       </div>
                     )

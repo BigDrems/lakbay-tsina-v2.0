@@ -18,7 +18,66 @@ import {
   playBackgroundMusic,
   stopBackgroundMusic,
 } from "../../utils/soundManager";
-import locationsData from "../../data/locations.json";
+
+// Chinese landmarks data
+const locationsData = {
+  locations: [
+    {
+      id: 1,
+      name: "Great Wall of China",
+      description:
+        "Ang pinakamahabang pader sa mundo na itinayo upang protektahan ang Tsina mula sa mga mandarambang tribong hilagang Asya.",
+      coordinates: [40.4319, 116.5704],
+      image:
+        "https://images.unsplash.com/photo-1508804185872-d7badad00f7d?w=400&h=300&fit=crop",
+    },
+    {
+      id: 2,
+      name: "Terracotta Army",
+      description:
+        "Libu-libong mga rebultong mandirigma na ginawa mula sa luwad upang bantayan ang libingan ng Emperor Qin Shi Huang.",
+      coordinates: [34.3853, 109.2734],
+      image:
+        "https://images.unsplash.com/photo-1539037116277-4db20889f2d4?w=400&h=300&fit=crop",
+    },
+    {
+      id: 3,
+      name: "Huang Ho River (Yellow River)",
+      description:
+        "Ang pangalawang pinakamahabang ilog sa Tsina na kilala rin bilang 'Duugong Ilog' dahil sa kulay ng tubig nito.",
+      coordinates: [35.7448, 111.3442],
+      image:
+        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop",
+    },
+    {
+      id: 4,
+      name: "Silk Road",
+      description:
+        "Ang sinaunang ruta ng kalakalan na nag-uugnay sa Tsina sa Kanlurang Asya at Europa, kilala sa pagpapalitan ng sutla at iba pang produkto.",
+      coordinates: [42.8746, 87.6177],
+      image:
+        "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop",
+    },
+    {
+      id: 5,
+      name: "Temple of Heaven",
+      description:
+        "Isang kumplikadong templong itinayo sa Beijing kung saan nanalangin ang mga emperador sa langit para sa magandang ani.",
+      coordinates: [39.8822, 116.4066],
+      image:
+        "https://images.unsplash.com/photo-1580504813043-5e5ef7a46b36?w=400&h=300&fit=crop",
+    },
+    {
+      id: 6,
+      name: "Yangtze River",
+      description:
+        "Ang pinakamahabang ilog sa Tsina at pangatlong pinakamahabang ilog sa mundo na dumadaan sa maraming lungsod.",
+      coordinates: [30.5928, 114.3055],
+      image:
+        "https://images.unsplash.com/photo-1539650116574-75c0c6d73a2e?w=400&h=300&fit=crop",
+    },
+  ],
+};
 
 // China GeoJSON data
 const chinaGeoJSON = {
@@ -99,7 +158,7 @@ const ChinaMask = () => {
 const defaultIcon = createMarkerIcon("red");
 const correctIcon = createMarkerIcon("green");
 const selectedIcon = createMarkerIcon("blue");
-
+const hintIcon = createMarkerIcon("orange");
 const MapClickHandler = ({ onMapClick }) => {
   useMapEvents({
     click: (e) => {
@@ -233,7 +292,7 @@ const GeographyExplorer = () => {
 
         <div className="bg-white rounded-lg shadow-lg p-3 sm:p-6 relative">
           <h1 className="text-xl sm:text-3xl font-bold text-[#6B3100] mb-2 text-center">
-            Taggalug ng Heograpiya
+            Lakbay Dinastiya
           </h1>
           <p className="text-center text-gray-600 mb-4 text-xs sm:text-base">
             Hanapin ang mga kilalang lugar sa buong China
@@ -300,18 +359,28 @@ const GeographyExplorer = () => {
 
                     <MapClickHandler onMapClick={handleMapClick} />
 
-                    {discoveredLocations.map((id) => {
-                      const location = locations.find((loc) => loc.id === id);
+                    {locations.map((location) => {
+                      const isDiscovered = discoveredLocations.includes(
+                        location.id
+                      );
                       return (
                         <Marker
                           key={location.id}
                           position={location.coordinates}
-                          icon={correctIcon}
+                          icon={isDiscovered ? correctIcon : hintIcon}
                         >
-                          <Popup>{location.name}</Popup>
+                          {isDiscovered && <Popup>{location.name}</Popup>}
                         </Marker>
                       );
                     })}
+
+                    {selectedLocation &&
+                      !discoveredLocations.includes(selectedLocation.id) && (
+                        <Marker
+                          position={selectedLocation.coordinates}
+                          icon={hintIcon}
+                        />
+                      )}
 
                     {clickedPosition && (
                       <Marker position={clickedPosition} icon={selectedIcon} />

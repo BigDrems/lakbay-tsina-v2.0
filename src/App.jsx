@@ -13,6 +13,7 @@ import LessonDetail from "./pages/LessonDetail";
 import CourseContent from "./pages/CourseContent";
 import DynastyExplorer from "./components/DynastyExplorer";
 import ImagePreloader from "./components/ImagePreloader";
+import PyramidGame from "./components/games/PyramidGame";
 
 // Lazy load game components
 const CharacterMatch = lazy(() => import("./components/games/CharacterMatch"));
@@ -149,7 +150,7 @@ function App() {
               path="/games/music-memory"
               element={
                 <Suspense fallback={<GameLoading />}>
-                  <MusicMemory />
+                  <PyramidGame />
                 </Suspense>
               }
             />

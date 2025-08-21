@@ -65,7 +65,8 @@ const WorldMap = ({ onComplete }) => {
     { name: "South America", position: [-20, -60] },
     { name: "Europe", position: [54, 15] },
     { name: "Africa", position: [0, 20] },
-    { name: "Asia", position: [25, 120] },
+    // Move Asia marker to the center of Asia (approximate: Mongolia/China/Kazakhstan border)
+    { name: "Asia", position: [40, 90] },
     { name: "Australia", position: [-25, 135] },
     { name: "Antarctica", position: [-80, 0] },
   ];

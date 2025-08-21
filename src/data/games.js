@@ -48,19 +48,19 @@ export const GAMES_DATA = [
   },
   {
     id: 4,
-    title: "Dakilang Tagapagluto ng Lutuing Tsino",
+    title: "Pyramid ng Lipunan (Drag & Drop Activity)",
     description:
-      "Matuto magluto ng mga kilalang putahe ng Tsino at tuklasin ang mga tradisyon sa pagluluto. I-drag ang mga sangkap at sundin ang mga hakbang sa pagluluto!",
-    icon: "ChefHat",
+      "I-drag at i-drop ang mga salita upang buuin ang tamang pagkakasunod-sunod ng lipunan mula sa pinakamataas hanggang pinakamababa.",
+    icon: "Pyramide",
     difficulty: "Madali",
     category: "Kultura",
-    image: "/images/chef.png",
+    image: "/images/pyramide.png",
     path: "/games/music-memory",
     popular: true,
   },
   {
     id: 5,
-    title: "Taggalug ng Heograpiya",
+    title: "Lakbay Dinastiya",
     description:
       "Tuklasin ang heograpiya ng China sa pamamagitan ng interactive na laro sa mapa. Matuto tungkol sa mga lalawigan at mga landmark!",
     icon: "Gamepad2",

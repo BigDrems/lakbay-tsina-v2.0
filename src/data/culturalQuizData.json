@@ -2,123 +2,123 @@
   "questions": [
     {
       "id": 1,
-      "question": "What is the most important festival in China?",
+      "question": "Ano ang pinakamahalagang pista sa Tsina?",
       "options": [
-        { "id": "a", "text": "Chinese New Year" },
-        { "id": "b", "text": "Christmas" },
+        { "id": "a", "text": "Bagong Taong Tsino" },
+        { "id": "b", "text": "Pasko" },
         { "id": "c", "text": "Halloween" },
-        { "id": "d", "text": "Valentine's Day" }
+        { "id": "d", "text": "Araw ng mga Puso" }
       ],
       "correctAnswer": "a",
-      "explanation": "Chinese New Year (Spring Festival) is the most important festival in China, celebrated on the first day of the first month of the lunar calendar."
+      "explanation": "Ang Bagong Taong Tsino (Spring Festival) ang pinakamahalagang pista sa Tsina, na ipinagdiriwang sa unang araw ng unang buwan ng kalendaryong lunar."
     },
     {
       "id": 2,
-      "question": "What is the traditional color of marriage in China?",
+      "question": "Ano ang tradisyunal na kulay ng kasal sa Tsina?",
       "options": [
-        { "id": "a", "text": "White" },
-        { "id": "b", "text": "Red" },
-        { "id": "c", "text": "Black" },
-        { "id": "d", "text": "Green" }
+        { "id": "a", "text": "Puti" },
+        { "id": "b", "text": "Pula" },
+        { "id": "c", "text": "Itim" },
+        { "id": "d", "text": "Berde" }
       ],
       "correctAnswer": "b",
-      "explanation": "Red is considered the color of good luck and prosperity in China, so it is the traditional color of marriage."
+      "explanation": "Ang pula ay itinuturing na kulay ng suwerte at kasaganaan sa Tsina, kaya ito ang tradisyunal na kulay ng kasal."
     },
     {
       "id": 3,
-      "question": "What is the most important element in Chinese cuisine?",
+      "question": "Ano ang pinakamahalagang pagkain sa lutuing Tsino?",
       "options": [
-        { "id": "a", "text": "Meat" },
-        { "id": "b", "text": "Fish" },
-        { "id": "c", "text": "Rice" },
-        { "id": "d", "text": "Fruit" }
+        { "id": "a", "text": "Karne" },
+        { "id": "b", "text": "Isda" },
+        { "id": "c", "text": "Bigas" },
+        { "id": "d", "text": "Prutas" }
       ],
       "correctAnswer": "c",
-      "explanation": "Rice is the most important element in Chinese cuisine, eaten with almost every meal."
+      "explanation": "Ang bigas ang pinakamahalagang pagkain sa lutuing Tsino, at halos laging kasama sa bawat pagkain."
     },
     {
       "id": 4,
-      "question": "What is the most important animal in the Chinese zodiac?",
+      "question": "Ano ang pinakamahalagang hayop sa Chinese zodiac?",
       "options": [
         { "id": "a", "text": "Dragon" },
-        { "id": "b", "text": "Tiger" },
-        { "id": "c", "text": "Rat" },
-        { "id": "d", "text": "Monkey" }
+        { "id": "b", "text": "Tigre" },
+        { "id": "c", "text": "Daga" },
+        { "id": "d", "text": "Unggoy" }
       ],
       "correctAnswer": "c",
-      "explanation": "The Rat (Mouse) is the first animal in the Chinese zodiac cycle, starting the cycle."
+      "explanation": "Ang Daga ang unang hayop sa Chinese zodiac cycle, kaya ito ang nagsisimula ng siklo."
     },
     {
       "id": 5,
-      "question": "What is the most important element in Feng Shui?",
+      "question": "Ano ang pinakamahalagang elemento sa Feng Shui?",
       "options": [
-        { "id": "a", "text": "Water" },
-        { "id": "b", "text": "Fire" },
-        { "id": "c", "text": "Earth" },
-        { "id": "d", "text": "All of the above" }
+        { "id": "a", "text": "Tubig" },
+        { "id": "b", "text": "Apoy" },
+        { "id": "c", "text": "Lupa" },
+        { "id": "d", "text": "Lahat ng nabanggit" }
       ],
       "correctAnswer": "d",
-      "explanation": "Feng Shui consists of five elements: Water, Fire, Earth, Metal, and Wood. All are important for balance."
+      "explanation": "Binubuo ang Feng Shui ng limang elemento: Tubig, Apoy, Lupa, Metal, at Kahoy. Lahat ay mahalaga para sa balanse."
     },
     {
       "id": 6,
-      "question": "What is the most important philosophy in China?",
+      "question": "Ano ang pinakamahalagang pilosopiya sa Tsina?",
       "options": [
         { "id": "a", "text": "Confucianism" },
         { "id": "b", "text": "Taoism" },
         { "id": "c", "text": "Buddhism" },
-        { "id": "d", "text": "All of the above" }
+        { "id": "d", "text": "Lahat ng nabanggit" }
       ],
       "correctAnswer": "d",
-      "explanation": "Confucianism, Taoism, and Buddhism are all important philosophies in China, with different influences on society."
+      "explanation": "Ang Confucianism, Taoism, at Buddhism ay pawang mahahalagang pilosopiya sa Tsina, na may kanya-kanyang impluwensya sa lipunan."
     },
     {
       "id": 7,
-      "question": "What is the most important element in Chinese painting?",
+      "question": "Ano ang pinakamahalagang elemento sa pagpipintang Tsino?",
       "options": [
-        { "id": "a", "text": "Color" },
-        { "id": "b", "text": "Line" },
-        { "id": "c", "text": "Space" },
-        { "id": "d", "text": "All of the above" }
+        { "id": "a", "text": "Kulay" },
+        { "id": "b", "text": "Guhit" },
+        { "id": "c", "text": "Espasyo" },
+        { "id": "d", "text": "Lahat ng nabanggit" }
       ],
       "correctAnswer": "d",
-      "explanation": "Chinese painting consists of color, line, and space, all of which are important for the whole art."
+      "explanation": "Ang pagpipintang Tsino ay binubuo ng kulay, guhit, at espasyo, at lahat ng ito ay mahalaga para mabuo ang sining."
     },
     {
       "id": 8,
-      "question": "What is the most important element in Chinese calligraphy?",
+      "question": "Ano ang pinakamahalagang elemento sa kaligrapiyang Tsino?",
       "options": [
         { "id": "a", "text": "Brush" },
-        { "id": "b", "text": "Ink" },
-        { "id": "c", "text": "Paper" },
-        { "id": "d", "text": "All of the above" }
+        { "id": "b", "text": "Tintang Tsino" },
+        { "id": "c", "text": "Papel" },
+        { "id": "d", "text": "Lahat ng nabanggit" }
       ],
       "correctAnswer": "d",
-      "explanation": "Chinese calligraphy requires brush, ink, and paper, all of which are important for the art."
+      "explanation": "Kailangan sa kaligrapiyang Tsino ang brush, tinta, at papel, at lahat ng ito ay mahalaga para sa sining."
     },
     {
       "id": 9,
-      "question": "What is the most important element in Chinese tea ceremony?",
+      "question": "Ano ang pinakamahalagang elemento sa seremonya ng tsaa sa Tsina?",
       "options": [
-        { "id": "a", "text": "Tea" },
-        { "id": "b", "text": "Teapot" },
-        { "id": "c", "text": "Cups" },
-        { "id": "d", "text": "All of the above" }
+        { "id": "a", "text": "Tsaa" },
+        { "id": "b", "text": "Takureng Tsaa" },
+        { "id": "c", "text": "Tasa" },
+        { "id": "d", "text": "Lahat ng nabanggit" }
       ],
       "correctAnswer": "d",
-      "explanation": "Chinese tea ceremony requires tea, teapot, and cups, all of which are important for the ceremony."
+      "explanation": "Kailangan sa seremonya ng tsaa ang tsaa, takure, at tasa, at lahat ng ito ay mahalaga para sa seremonya."
     },
     {
       "id": 10,
-      "question": "What is the most important element in Chinese garden?",
+      "question": "Ano ang pinakamahalagang elemento sa harding Tsino?",
       "options": [
-        { "id": "a", "text": "Plants" },
-        { "id": "b", "text": "Water" },
-        { "id": "c", "text": "Rocks" },
-        { "id": "d", "text": "All of the above" }
+        { "id": "a", "text": "Mga Halaman" },
+        { "id": "b", "text": "Tubig" },
+        { "id": "c", "text": "Mga Bato" },
+        { "id": "d", "text": "Lahat ng nabanggit" }
       ],
       "correctAnswer": "d",
-      "explanation": "Chinese garden consists of plants, water, and rocks, all of which are important for the whole garden."
+      "explanation": "Ang harding Tsino ay binubuo ng mga halaman, tubig, at bato, na lahat ay mahalaga para sa kabuuang disenyo ng hardin."
     }
   ]
 }

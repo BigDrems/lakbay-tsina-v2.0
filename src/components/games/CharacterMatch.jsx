@@ -8,54 +8,77 @@ import {
   stopBackgroundMusic,
 } from "../../utils/soundManager";
 
-const characters = [
+const emperors = [
   {
     id: 1,
-    character: "爱",
-    pinyin: "ài",
-    meaning: "love",
-    example: "我爱你 (Wǒ ài nǐ) - I love you",
+    name: "Confucius",
+    title: "Dakilang Pilosopo",
+    dynasty: "Panahon ng Spring at Autumn",
+    description:
+      "Tagapagtatag ng Confucianism, nagbigay-diin sa moral na paghubog at pagkakaisa ng lipunan",
+    image: "/character/confucius.avif",
+    image2: "/character/confucius.avif", // Second image for matching
+    reign: "551-479 BC",
   },
   {
     id: 2,
-    character: "家",
-    pinyin: "jiā",
-    meaning: "home/family",
-    example: "家人 (jiā rén) - family members",
+    name: "Laozi",
+    title: "Pantas ng Taoism",
+    dynasty: "Sinaunang Tsina",
+    description: "Alamat na tagapagtatag ng Taoism, may-akda ng Tao Te Ching",
+    image: "/character/laozi.jpg",
+    image2: "/character/laozi.jpg",
+    reign: "Ika-6 na siglo BC",
   },
   {
     id: 3,
-    character: "朋",
-    pinyin: "péng",
-    meaning: "friend",
-    example: "朋友 (péng you) - friend",
+    name: "Emperor Taizu",
+    title: "Tagapagtatag ng Song Dynasty",
+    dynasty: "Dinastiyang Song",
+    description:
+      "Itinatag ang Dinastiyang Song, kilala sa repormang militar at administratibo",
+    image: "/character/taizu.jpg",
+    image2: "/character/taizu.jpg",
+    reign: "960-976 AD",
   },
   {
     id: 4,
-    character: "学",
-    pinyin: "xué",
-    meaning: "study/learn",
-    example: "学习 (xué xí) - to study",
+    name: "Emperor Tianzhang",
+    title: "Emperador ng Ming",
+    dynasty: "Dinastiyang Ming",
+    description:
+      "Kilala bilang emperador ng Dinastiyang Ming na nagtaguyod ng mga kultural na tagumpay",
+    image: "/character/tianxiang.webp",
+    image2: "/character/tianxiang.webp",
+    reign: "Panahon ng Ming",
   },
   {
     id: 5,
-    character: "心",
-    pinyin: "xīn",
-    meaning: "heart",
-    example: "开心 (kāi xīn) - happy",
+    name: "Yu the Great",
+    title: "Alamat na Tagapagtatag",
+    dynasty: "Dinastiyang Xia",
+    description:
+      "Alamat na tagapagtatag ng Dinastiyang Xia, tanyag sa pagkontrol ng pagbaha",
+    image: "/character/yuthegreat.jpg",
+    image2: "/character/yuthegreat.jpg",
+    reign: "c. 2123-2025 BC",
   },
   {
     id: 6,
-    character: "好",
-    pinyin: "hǎo",
-    meaning: "good",
-    example: "很好 (hěn hǎo) - very good",
+    name: "Wu Zetian",
+    title: "Nag-iisang Babaeng Emperador",
+    dynasty: "Dinastiyang Tang",
+    description:
+      "Ang tanging babae na humawak ng titulong Emperador sa kasaysayan ng Tsina",
+    image: "/character/zetian.jpg",
+    image2: "/character/zetian.jpg",
+    reign: "690-705 AD",
   },
 ];
 
-const CharacterMatch = () => {
+const EmperorMatch = () => {
   const navigate = useNavigate();
-  const [shuffledCharacters, setShuffledCharacters] = useState([]);
+  const [shuffledEmperors, setShuffledEmperors] = useState([]);
   const [flippedCards, setFlippedCards] = useState([]);
   const [matchedPairs, setMatchedPairs] = useState([]);
   const [score, setScore] = useState(0);
@@ -102,7 +125,7 @@ const CharacterMatch = () => {
         setScore((prev) => prev + 10);
         playSound("correct"); // Play correct sound for successful matches
 
-        if (matchedPairs.length + 1 === characters.length) {
+        if (matchedPairs.length + 1 === emperors.length) {
           setGameComplete(true);
           playSound("complete"); // Play complete sound for game completion
         }
@@ -121,11 +144,12 @@ const CharacterMatch = () => {
   };
 
   const resetGame = () => {
-    const pairs = characters.flatMap((char) => [
-      { ...char, type: "character" },
-      { ...char, type: "meaning" },
+    // Create pairs of images (primary and secondary) for each emperor
+    const pairs = emperors.flatMap((emperor) => [
+      { ...emperor, type: "primary" },
+      { ...emperor, type: "secondary" },
     ]);
-    setShuffledCharacters([...pairs].sort(() => Math.random() - 0.5));
+    setShuffledEmperors([...pairs].sort(() => Math.random() - 0.5));
     setFlippedCards([]);
     setMatchedPairs([]);
     setScore(0);
@@ -168,10 +192,10 @@ const CharacterMatch = () => {
 
         <div className="bg-white rounded-lg shadow-lg p-3 sm:p-6">
           <h1 className="text-xl sm:text-3xl font-bold text-[#6B3100] mb-2 text-center">
-            Character Match
+            Emperor Match
           </h1>
           <p className="text-center text-gray-600 mb-4 text-xs sm:text-base">
-            Match Chinese characters with their meanings
+            Hanapin ang Kapareha
           </p>
 
           {gameComplete ? (
@@ -205,18 +229,18 @@ const CharacterMatch = () => {
                       className="h-2 bg-[#6B3100] rounded-full transition-all duration-300"
                       style={{
                         width: `${
-                          (matchedPairs.length / characters.length) * 100
+                          (matchedPairs.length / emperors.length) * 100
                         }%`,
                       }}
                     ></div>
                   </div>
                   <p className="text-center text-[#6B3100] font-medium text-xs sm:text-sm">
-                    {matchedPairs.length} / {characters.length} Matched
+                    {matchedPairs.length} / {emperors.length} Matched
                   </p>
                 </div>
 
                 <div className="grid grid-cols-4 lg:grid-cols-4 md:grid-cols-4 gap-2 lg:gap-2">
-                  {shuffledCharacters.map((card) => (
+                  {shuffledEmperors.map((card) => (
                     <motion.div
                       key={`${card.id}-${card.type}`}
                       className="relative aspect-square"
@@ -230,17 +254,19 @@ const CharacterMatch = () => {
                         className={`
                           absolute inset-0 lg:w-full lg:h-full backface-hidden w-22 h-22
                           rounded-lg border-4 flex flex-col items-center justify-center text-center
-                          bg-[#6B3100] border-[#6B3100]/80 shadow-md
+                          bg-gradient-to-br from-amber-600 to-amber-800 border-amber-700 shadow-md
                           ${
                             matchedPairs.includes(card.id)
                               ? "cursor-default"
-                              : "cursor-pointer hover:border-[#6B3100] hover:shadow-lg transition-all duration-200"
+                              : "cursor-pointer hover:border-amber-600 hover:shadow-lg transition-all duration-200"
                           }
                         `}
                         onClick={() => handleCardClick(card)}
                         disabled={matchedPairs.includes(card.id) || isChecking}
                       >
-                        <span className="text-lg sm:text-xl text-white">?</span>
+                        <span className="text-2xl sm:text-3xl text-white">
+                          👑
+                        </span>
                       </motion.button>
                       <motion.div
                         initial={false}
@@ -250,7 +276,7 @@ const CharacterMatch = () => {
                         transition={{ duration: 0.4 }}
                         className={`
                           absolute w-22 h-22 inset-0 lg:w-full lg:h-full backface-hidden
-                          rounded-lg border-4 flex flex-col items-center justify-center text-center
+                          rounded-lg border-4 flex flex-col items-center justify-center text-center p-2
                           ${
                             matchedPairs.includes(card.id)
                               ? "bg-green-100 border-green-500 shadow-md"
@@ -258,20 +284,27 @@ const CharacterMatch = () => {
                           }
                         `}
                       >
-                        {card.type === "character" ? (
-                          <>
-                            <span className="text-2xl sm:text-3xl font-bold text-[#6B3100] mb-1">
-                              {card.character}
-                            </span>
-                            <span className="text-xs text-gray-600">
-                              {card.pinyin}
-                            </span>
-                          </>
-                        ) : (
-                          <div className="text-xs sm:text-sm text-[#6B3100] px-2">
-                            {card.meaning}
+                        <div className="w-full h-full relative rounded-lg overflow-hidden">
+                          <img
+                            src={
+                              card.type === "primary" ? card.image : card.image2
+                            }
+                            alt={card.name}
+                            className="w-full h-full object-cover"
+                            onError={(e) => {
+                              e.target.style.display = "none";
+                              e.target.nextSibling.style.display = "flex";
+                            }}
+                          />
+                          <div className="w-full h-full hidden items-center justify-center bg-gradient-to-br from-amber-100 to-amber-200">
+                            <span className="text-lg sm:text-xl">🎭</span>
                           </div>
-                        )}
+                          <div className="absolute bottom-0 left-0 right-0 bg-black/70 text-white px-2 py-1">
+                            <span className="text-xs sm:text-sm font-bold text-center block leading-tight">
+                              {card.name}
+                            </span>
+                          </div>
+                        </div>
                         {matchedPairs.includes(card.id) && (
                           <Check className="absolute top-1 right-1 text-green-500 w-3 h-3 sm:w-4 sm:h-4" />
                         )}
@@ -291,47 +324,9 @@ const CharacterMatch = () => {
 
                 <div className="mt-4 sm:mt-6 text-center">
                   <p className="text-xs sm:text-sm text-gray-600">
-                    Click on a card to reveal it, then find its matching pair
+                    Click on a card to reveal it, then find its matching image
+                    of the same emperor
                   </p>
-                </div>
-              </div>
-
-              {/* Reference Guide */}
-              <div className="w-full lg:w-64 bg-[#F5E6D3] rounded-lg p-4 shadow-md mt-4 lg:mt-0">
-                <h3 className="text-[#6B3100] font-semibold mb-3 text-sm sm:text-base flex items-center gap-2">
-                  <span>Character Guide</span>
-                  <span className="text-xs text-[#6B3100]/60">
-                    ({matchedPairs.length}/{characters.length} matched)
-                  </span>
-                </h3>
-                <div className="space-y-2 max-h-[400px] overflow-y-auto pr-2">
-                  {characters.map((char) => (
-                    <div
-                      key={char.id}
-                      className={`p-2 rounded border transition-colors duration-200 ${
-                        matchedPairs.includes(char.id)
-                          ? "bg-green-100 border-green-500"
-                          : "bg-white border-[#6B3100]/20 hover:border-[#6B3100]/40"
-                      }`}
-                    >
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <span className="text-lg font-bold text-[#6B3100]">
-                            {char.character}
-                          </span>
-                          <span className="text-xs text-gray-600">
-                            {char.pinyin}
-                          </span>
-                        </div>
-                        {matchedPairs.includes(char.id) && (
-                          <Check className="text-green-500 w-4 h-4 flex-shrink-0" />
-                        )}
-                      </div>
-                      <div className="text-xs text-[#6B3100] mt-1">
-                        {char.meaning}
-                      </div>
-                    </div>
-                  ))}
                 </div>
               </div>
             </div>
@@ -342,4 +337,4 @@ const CharacterMatch = () => {
   );
 };
 
-export default CharacterMatch;
+export default EmperorMatch;
