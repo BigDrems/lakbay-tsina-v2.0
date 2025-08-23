@@ -50,7 +50,7 @@ export const conversation = [
     options: [{ label: "Sige, subukan natin!", nextStep: 5 }],
   },
   {
-    text: "🧠 Pagsusulit sa Sinaunang Tsina<br><br>May 25 masayang tanong tayo tungkol sa sinaunang Tsina! Hindi ito graded, kaya huwag kang mag-alala. Gusto mo bang subukan?",
+    text: "🧠 Pagsusulit sa Sinaunang Tsina<br><br>May 40 masayang tanong tayo tungkol sa sinaunang Tsina! Hindi ito graded, kaya huwag kang mag-alala. Gusto mo bang subukan?",
     options: [
       { label: "Opo, handa na ako! 🚀", nextStep: "pretest" },
       { label: "Hindi pa, may tanong ako 🤔", nextStep: 6 },

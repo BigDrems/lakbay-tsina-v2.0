@@ -112,6 +112,15 @@ const PresentationsSection = memo(({ onPresentationSelect }) => {
       thumbnail: "/dynasty/yuan.jpg",
       category: "Kasaysayan",
     },
+    {
+      id: 10,
+      title: "Zhou Dynasty",
+      description:
+        "Pinakamahabang dinastiyang namamahala sa Tsina (1046-256 BCE) na nagpakilala ng Mandate of Heaven at feudal system.",
+      pdfUrl: "/Lessons/zhou.pdf",
+      thumbnail: "/dynasty/zhou.jpg",
+      category: "Kasaysayan",
+    },
   ];
 
   return (

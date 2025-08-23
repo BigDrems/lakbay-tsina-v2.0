@@ -42,16 +42,19 @@ const EmbeddedWorldMap = ({ onComplete }) => {
       type: "Polygon",
       coordinates: [
         [
-          [134.7, 48.5], // Northeast corner
+          [134.8, 48.5], // Northeast corner - most eastern point
           [87.3, 49.2], // Northwest corner
           [73.6, 39.5], // Western point
           [79.8, 30.3], // Southwest Himalayas
           [97.5, 18.2], // Southern border with Myanmar
           [108.0, 17.0], // Southern border with Vietnam
-          [121.9, 23.5], // Taiwan region
-          [122.1, 31.2], // Eastern coast
-          [126.0, 41.8], // Northeast near North Korea
-          [134.7, 48.5], // Back to Northeast
+          [117.5, 18.5], // Hainan Island area
+          [119.5, 23.5], // Eastern coast - Fujian province (mainland side)
+          [120.9, 31.2], // Eastern coast - Shanghai area
+          [124.5, 40.1], // Eastern coast - Liaoning province
+          [126.0, 41.8], // Northeast near North Korea border
+          [133.5, 45.8], // Far northeast - Heilongjiang
+          [134.8, 48.5], // Back to Northeast - most eastern point
         ],
       ],
     },
@@ -63,7 +66,7 @@ const EmbeddedWorldMap = ({ onComplete }) => {
     { name: "South America", position: [-20, -60] },
     { name: "Europe", position: [54, 15] },
     { name: "Africa", position: [0, 20] },
-    { name: "Asia", position: [25, 120] },
+    { name: "Asia", position: [20, 77] },
     { name: "Australia", position: [-25, 135] },
     { name: "Antarctica", position: [-80, 0] },
   ];
@@ -162,8 +165,8 @@ const EmbeddedWorldMap = ({ onComplete }) => {
                     style={() => ({
                       color: "#dc2626",
                       weight: 3,
-                      fillColor: "#fef3c7",
-                      fillOpacity: 0.8,
+                      fillColor: "transparent",
+                      fillOpacity: 0,
                       dashArray: "10, 8",
                     })}
                   />

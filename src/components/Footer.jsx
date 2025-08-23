@@ -11,8 +11,8 @@ const Footer = () => {
           <div className="col-span-1 md:col-span-2">
             <h2 className="text-2xl font-bold mb-4">Lakbay Tsina</h2>
             <p className="text-slate-300 mb-6">
-              Exploring Chinese culture, history, and language through
-              interactive learning experiences.
+              Paggalugad sa kulturang Tsino, kasaysayan, at wika sa pamamagitan
+              ng mga interaktibong karanasan sa pagkatuto.
             </p>
             <div className="flex space-x-4">
               <a
@@ -79,14 +79,16 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
+            <h3 className="text-lg font-semibold mb-4">
+              Mga Mabibilis na Link
+            </h3>
             <ul className="space-y-2">
               <li>
                 <Link
                   to="/"
                   className="text-slate-300 hover:text-white transition-colors"
                 >
-                  Home
+                  Panimula
                 </Link>
               </li>
               <li>
@@ -94,7 +96,7 @@ const Footer = () => {
                   to="/about"
                   className="text-slate-300 hover:text-white transition-colors"
                 >
-                  About
+                  Tungkol
                 </Link>
               </li>
               <li>
@@ -102,7 +104,7 @@ const Footer = () => {
                   to="/lessons"
                   className="text-slate-300 hover:text-white transition-colors"
                 >
-                  Lessons
+                  Aralin
                 </Link>
               </li>
               <li>
@@ -110,7 +112,7 @@ const Footer = () => {
                   to="/entertainment"
                   className="text-slate-300 hover:text-white transition-colors"
                 >
-                  Entertainment
+                  Libangan
                 </Link>
               </li>
               <li>
@@ -118,7 +120,7 @@ const Footer = () => {
                   to="/dynasty-explorer"
                   className="text-slate-300 hover:text-white transition-colors"
                 >
-                  Dynasty Explorer
+                  Tagagalugad ng Dinastiya
                 </Link>
               </li>
             </ul>
@@ -133,7 +135,7 @@ const Footer = () => {
                   to="/games/character-match"
                   className="text-slate-300 hover:text-white transition-colors"
                 >
-                  Pagpapares ng mga Karakter
+                  Pagpapares ng mga Karakter ng Tsino
                 </Link>
               </li>
               <li>
@@ -157,7 +159,7 @@ const Footer = () => {
                   to="/games/music-memory"
                   className="text-slate-300 hover:text-white transition-colors"
                 >
-                  Dakilang Tagapagluto ng Lutuing Tsino
+                  Pyramid ng Lipunan (Drag & Drop Activity)
                 </Link>
               </li>
               <li>
@@ -165,7 +167,15 @@ const Footer = () => {
                   to="/games/geography-explorer"
                   className="text-slate-300 hover:text-white transition-colors"
                 >
-                  Taggalug ng Heograpiya
+                  Lakbay Dinastiya
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/games/term-definition"
+                  className="text-slate-300 hover:text-white transition-colors"
+                >
+                  Pagsusulit sa mga Termino
                 </Link>
               </li>
             </ul>
@@ -175,26 +185,26 @@ const Footer = () => {
         <div className="border-t border-slate-700 mt-12 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-slate-400 text-sm">
-              &copy; {currentYear} Lakbay Tsina. All rights reserved.
+              &copy; {currentYear} Lakbay Tsina. Lahat ng karapatan ay nakalaan.
             </p>
             <div className="flex space-x-6 mt-4 md:mt-0">
               <a
                 href="#"
                 className="text-sm text-slate-400 hover:text-white transition-colors"
               >
-                Privacy Policy
+                Patakaran sa Pagkapribado
               </a>
               <a
                 href="#"
                 className="text-sm text-slate-400 hover:text-white transition-colors"
               >
-                Terms of Service
+                Mga Tuntunin sa Serbisyo
               </a>
               <a
                 href="#"
                 className="text-sm text-slate-400 hover:text-white transition-colors"
               >
-                Contact
+                Makipag-ugnayan
               </a>
             </div>
           </div>

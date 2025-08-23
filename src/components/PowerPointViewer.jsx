@@ -37,7 +37,7 @@ const PowerPointViewer = ({
   const [useAlternativeRendering, setUseAlternativeRendering] = useState(false);
   const containerRef = useRef(null);
 
-  // Memoize the PDF options
+  // Improved PDF options with better image handling
   const pdfOptions = useMemo(
     () => ({
       cMapUrl: `//unpkg.com/pdfjs-dist@${pdfjs.version}/cmaps/`,
@@ -45,34 +45,42 @@ const PowerPointViewer = ({
       disableAutoFetch: false,
       disableStream: false,
       disableRange: false,
-      maxImageSize: useAlternativeRendering ? 65536 : 32768, // Even larger for alternative mode
+
+      // Significantly increased limits for better image rendering
+      maxImageSize: useAlternativeRendering ? 262144 : 131072, // 256KB vs 128KB
+      maxCanvasPixels: useAlternativeRendering ? 268435456 : 134217728, // 256M vs 128M pixels
+      canvasMaxArea: useAlternativeRendering ? 268435456 : 134217728,
+
+      // Image-specific improvements
       isEvalSupported: false,
-      useSystemFonts: false,
-      // Additional options for better image handling
-      verbosity: 1, // Increased verbosity for debugging
-      maxCanvasPixels: useAlternativeRendering ? 67108864 : 33554432, // 64M vs 32M pixels
-      canvasMaxArea: useAlternativeRendering ? 67108864 : 33554432, // 64M vs 32M pixels
-      enableXfa: false,
+      useSystemFonts: true, // Changed to true for better font rendering
+      verbosity: 0, // Reduced verbosity for production
+      enableXfa: true, // Enable XFA forms which might contain images
       disableFontFace: false,
       standardFontDataUrl: `//unpkg.com/pdfjs-dist@${pdfjs.version}/standard_fonts/`,
-      // Force image rendering
-      forceDataSchema: false,
-      // Additional debugging
+
+      // Better image handling
+      forceDataSchema: true, // Force data schema for images
       enableScripting: false,
-      // Image handling
-      imageResourcesPath: "",
-      // Force all content to render
       renderInteractiveForms: true,
-      // Alternative rendering options
+
+      // Graphics state improvements
+      maxCanvasDrawOperations: 100000, // Increase draw operations limit
+
+      // Alternative rendering options for problematic PDFs
       ...(useAlternativeRendering && {
-        disableRange: true,
-        disableStream: true,
-        disableAutoFetch: true,
+        disableRange: false, // Keep false for better streaming
+        disableStream: false, // Keep false for better streaming
+        disableAutoFetch: false,
+        // Force canvas rendering instead of SVG
+        useOnlyCSS: false,
+        // Increase memory limits even more
+        maxImageSize: 524288, // 512KB
+        maxCanvasPixels: 536870912, // 512M pixels
       }),
     }),
     [useAlternativeRendering]
   );
-
   // Reset state when pdfUrl changes
   useEffect(() => {
     setLoading(true);
@@ -110,60 +118,151 @@ const PowerPointViewer = ({
     [pdfUrl]
   );
 
+  // Enhanced error handling for document loading
   const onDocumentLoadError = useCallback(
     (error) => {
       console.error("PDF load error:", error);
       console.error("PDF URL that failed:", pdfUrl);
       console.error("Error details:", error.message, error.name, error.stack);
-      setError("May problema sa pag-load ng PDF. Subukan muli.");
+
+      // Check if it's an image-related error
+      if (
+        error.message?.includes("image") ||
+        error.message?.includes("decode")
+      ) {
+        console.log(
+          "Image-related error detected, trying alternative rendering"
+        );
+        if (!useAlternativeRendering) {
+          setUseAlternativeRendering(true);
+          return; // Don't set error state yet, try alternative rendering
+        }
+      }
+
+      setError(
+        `May problema sa pag-load ng PDF: ${error.message || "Unknown error"}`
+      );
       setLoading(false);
     },
-    [pdfUrl]
+    [pdfUrl, useAlternativeRendering]
   );
 
+  // Add image error recovery
+  const onPageLoadError = useCallback(
+    (error) => {
+      console.error("Page load error:", error);
+      console.error("Page number:", pageNumber);
+      console.error("Current scale:", scale);
+      console.error("Alternative rendering mode:", useAlternativeRendering);
+
+      // If it's an image or memory error, try alternative rendering
+      if (
+        error.message?.includes("image") ||
+        error.message?.includes("memory") ||
+        error.message?.includes("canvas") ||
+        error.message?.includes("decode")
+      ) {
+        console.log(
+          "Detected image/memory error, enabling alternative rendering"
+        );
+        if (!useAlternativeRendering) {
+          setUseAlternativeRendering(true);
+          // Reset the page to retry with new settings
+          setTimeout(() => {
+            setPageNumber(pageNumber);
+          }, 100);
+        }
+      }
+    },
+    [pageNumber, scale, useAlternativeRendering]
+  );
+
+  // Enhanced document load progress
   const onDocumentLoadProgress = useCallback(({ loaded, total }) => {
     if (total > 0) {
       const progress = Math.round((loaded / total) * 100);
       setImageLoadingProgress(progress);
-      console.log(`PDF loading progress: ${progress}%`);
+      console.log(
+        `PDF loading progress: ${progress}% (${loaded}/${total} bytes)`
+      );
+
+      // Log if it's a large file
+      if (total > 10 * 1024 * 1024) {
+        // > 10MB
+        console.log(
+          "Large PDF detected, may need more time for image processing"
+        );
+      }
     }
   }, []);
 
+  // Improved page load success handler
   const onPageLoadSuccess = useCallback(
     (page) => {
       console.log("Page loaded successfully:", page);
-      console.log("Page viewport:", page.getViewport({ scale: 1 }));
-      console.log("Page number:", page.pageNumber);
-
-      // Get page info for debugging
-      page
-        .getOperatorList()
-        .then((opList) => {
-          console.log("Page operator list length:", opList.fnArray.length);
-          console.log("Page has images:", opList.fnArray.includes(83)); // 83 is the image operator
-        })
-        .catch((err) => {
-          console.error("Error getting operator list:", err);
-        });
 
       const viewport = page.getViewport({ scale: 1 });
       setPageWidth(viewport.width);
 
-      // Auto-fit to container width if container is available
-      if (containerWidth && viewport.width > containerWidth) {
-        const newScale = containerWidth / viewport.width;
-        setScale(newScale);
-        console.log("Auto-fitted scale:", newScale);
+      // Better auto-scaling logic
+      if (containerWidth && viewport.width > 0) {
+        const padding = 32; // Account for padding
+        const availableWidth = containerWidth - padding;
+
+        if (viewport.width > availableWidth) {
+          // Only scale down if necessary, maintain quality
+          const newScale = Math.max(0.7, availableWidth / viewport.width);
+          setScale(newScale);
+          console.log("Auto-fitted scale:", newScale);
+        } else {
+          // For smaller PDFs, use a reasonable minimum scale
+          setScale(Math.max(1.0, availableWidth / viewport.width));
+        }
       }
 
-      // Give extra time for images to load
+      // Extended timeout for complex images
       setTimeout(() => {
         setImageLoadingProgress(100);
-        console.log("Image loading timeout completed");
-      }, 2000); // Increased timeout
+        console.log("Extended image loading timeout completed");
+      }, 5000); // Increased to 5 seconds
     },
     [containerWidth]
   );
+
+  // Better Page component with quality settings
+  <Page
+    pageNumber={pageNumber}
+    scale={scale}
+    rotate={rotation}
+    className="shadow-lg mx-auto max-w-full"
+    renderTextLayer={false} // Keep disabled for performance
+    renderAnnotationLayer={true} // Enable for better form/image rendering
+    onLoadSuccess={onPageLoadSuccess}
+    onLoadError={(error) => {
+      console.error("Page load error:", error);
+      console.error("Page number:", pageNumber);
+      // Try alternative rendering on page error
+      if (!useAlternativeRendering) {
+        setUseAlternativeRendering(true);
+      }
+    }}
+    // Additional rendering options
+    canvasBackground="white" // Ensure white background
+    devicePixelRatio={window.devicePixelRatio || 1} // Use device pixel ratio for quality
+    loading={
+      <div className="flex items-center justify-center h-64 sm:h-96">
+        <div className="text-center px-4">
+          <div className="animate-spin rounded-full h-6 w-6 sm:h-8 sm:w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600 text-sm sm:text-base">
+            Naglo-load ng page {pageNumber}...
+          </p>
+          <p className="text-xs text-gray-500 mt-2">
+            Loading images and designs...
+          </p>
+        </div>
+      </div>
+    }
+  />;
 
   const changePage = useCallback(
     (offset) => {
