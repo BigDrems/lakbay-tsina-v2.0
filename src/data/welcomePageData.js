@@ -28,44 +28,44 @@ export const pages = [
 export const conversation = [
   {
     text: `${websitePurpose} Kaya tara na, at sabay-sabay nating lakbayin ang nakaraan upang mas maunawaan ang kasalukuyan!`,
-    options: [{ label: "Magpatuloy", nextStep: 1 }],
+    options: [{label: 'Magpatuloy', nextStep: 1}],
   },
   {
-    text: "Nakakita ako ng isang kapana-panabik na lugar na may mga lihim tungkol sa kulturang Tsino. Maaari mo ba akong tulungang matukoy ang lugar na ito?",
+    text: 'Nakakita ako ng isang kapana-panabik na lugar na may mga lihim tungkol sa kulturang Tsino. Maaari mo ba akong tulungang matukoy ang lugar na ito?',
     options: [
-      { label: "Opo, Tutulungan Kita!", nextStep: 2 },
-      { label: "Sabihin mo muna sa akin ang mga detalye!", nextStep: 3 },
+      {label: 'Opo, Tutulungan Kita!', nextStep: 2},
+      {label: 'Sabihin mo muna sa akin ang mga detalye!', nextStep: 3},
     ],
   },
   {
-    text: "Tingnan natin ang mapa ng mundo at tuklasin kung saan matatagpuan ang bansang ito!",
-    type: "puzzle",
+    text: 'Tingnan natin ang mapa ng mundo at tuklasin kung saan matatagpuan ang bansang ito!',
+    type: 'puzzle',
   },
   {
-    text: "Sige! Ang bansang ito ay isa sa pinakamalaking bansa sa mundo. Mayroon itong mahaba at mayamang kasaysayan na umaabot ng libu-libong taon. Kilala ito sa mga sinaunang dinastiya, magagandang templo, at kamangha-manghang kultura. Ngayon, tingnan natin kung saan ito matatagpuan sa mapa!",
-    options: [{ label: "Tingnan ang Mapa", nextStep: 2 }],
+    text: 'Sige! Ang bansang ito ay isa sa pinakamalaking bansa sa mundo. Mayroon itong mahaba at mayamang kasaysayan na umaabot ng libu-libong taon. Kilala ito sa mga sinaunang dinastiya, magagandang templo, at kamangha-manghang kultura. Ngayon, tingnan natin kung saan ito matatagpuan sa mapa!',
+    options: [{label: 'Tingnan ang Mapa', nextStep: 2}],
   },
   {
-    text: "Magaling! Natukoy mo ang China sa mapa! Bago tayo magpatuloy sa mga landas, gusto kong malaman kung gaano na kalawak ang iyong kaalaman tungkol sa sinaunang kabihasnang Tsina. May maliit na pagsusulit tayo!",
-    options: [{ label: "Sige, subukan natin!", nextStep: 5 }],
+    text: 'Magaling! Natukoy mo ang bansang Tsina sa mapa! Bago tayo magpatuloy sa mga landas, gusto kong malaman kung gaano na kalawak ang iyong kaalaman tungkol sa sinaunang kabihasnang Tsina. May maliit na pagsusulit tayo!',
+    options: [{label: 'May Paunahing Pagsusulit Tayo!', nextStep: 5}],
   },
   {
-    text: "🧠 Pagsusulit sa Sinaunang Tsina<br><br>May 40 masayang tanong tayo tungkol sa sinaunang Tsina! Hindi ito graded, kaya huwag kang mag-alala. Gusto mo bang subukan?",
+    text: '🧠Layunin ng pagsusulit na ito na masukat ang iyong paunang kaalaman, kaya basahing mabuti ang bawat tanong at piliin ang titik ng wastong sagot.',
     options: [
-      { label: "Opo, handa na ako! 🚀", nextStep: "pretest" },
-      { label: "Hindi pa, may tanong ako 🤔", nextStep: 6 },
+      {label: 'Opo, handa na ako! 🚀', nextStep: 'pretest'},
+      {label: 'Hindi pa, may tanong ako 🤔', nextStep: 6},
     ],
   },
   {
-    text: "Ano ang iyong tanong? Ang pagsusulit na ito ay para malaman natin kung gaano na kalawak ang iyong kaalaman tungkol sa sinaunang Tsina. Hindi ito graded, kaya huwag kang mag-alala!",
-    options: [{ label: "Sige, simulan na natin! 🎯", nextStep: "pretest" }],
+    text: 'Ano ang iyong tanong? Ang pagsusulit na ito ay para malaman natin kung gaano na kalawak ang iyong kaalaman tungkol sa sinaunang Tsina. Hindi ito graded, kaya huwag kang mag-alala!',
+    options: [{label: 'Sige, simulan na natin! 🎯', nextStep: 'pretest'}],
   },
   {
-    text: "🎉 Napakahusay! Natapos mo ang pagsusulit! Ngayon na alam na natin ang iyong kaalaman, may apat na kamangha-manghang landas na maaari mong tuklasin. Bawat landas ay naglalaman ng mga kapanapanabik at kawili-wiling impormasyon tungkol sa Tsina!",
-    options: [{ label: "Ipakita mo sa akin ang mga daan! 🗺️", nextStep: 8 }],
+    text: '🎉 Napakahusay! Natapos mo ang pagsusulit! Ngayon na alam na natin ang iyong kaalaman, may apat na kamangha-manghang landas na maaari mong tuklasin. Bawat landas ay naglalaman ng mga kapanapanabik at kawili-wiling impormasyon tungkol sa Tsina!',
+    options: [{label: 'Ipakita mo sa akin ang mga daan! 🗺️', nextStep: 8}],
   },
   {
-    text: "Aling landas ang nais mong pag-aralan muna?",
+    text: 'Aling landas ang nais mong pag-aralan muna?',
     options: pages.map((page) => ({
       label: `${page.name}`,
       nextStep: page.path,

@@ -9,11 +9,10 @@ import WorldMap from "./components/WorldMap";
 import Tungkol from "./pages/Tungkol";
 import Aralin from "./pages/Aralin";
 import Libangan from "./pages/Libangan";
-import LessonDetail from "./pages/LessonDetail";
-import CourseContent from "./pages/CourseContent";
 import DynastyExplorer from "./components/DynastyExplorer";
 import ImagePreloader from "./components/ImagePreloader";
 import PyramidGame from "./components/games/PyramidGame";
+import PostTest from "./components/games/PostTest";
 
 // Lazy load game components
 const CharacterMatch = lazy(() => import("./components/games/CharacterMatch"));
@@ -21,7 +20,6 @@ const DynastyTimeline = lazy(() =>
   import("./components/games/DynastyTimeline")
 );
 const CulturalQuiz = lazy(() => import("./components/games/CulturalQuiz"));
-const MusicMemory = lazy(() => import("./components/games/MusicMemory"));
 const GeographyExplorer = lazy(() =>
   import("./components/games/GeographyExplorer")
 );
@@ -118,8 +116,6 @@ function App() {
         <div className="mt-18 h-full">
           <Routes>
             <Route path="/about" element={<Tungkol />} />
-            <Route path="/lessons/:id" element={<LessonDetail />} />
-            <Route path="/course-content/:id" element={<CourseContent />} />
             <Route path="/lessons" element={<Aralin />} />
             <Route path="/entertainment" element={<Libangan />} />
             <Route
@@ -175,6 +171,14 @@ function App() {
               element={
                 <Suspense fallback={<GameLoading />}>
                   <Pretest />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/games/posttest"
+              element={
+                <Suspense fallback={<GameLoading />}>
+                  <PostTest />
                 </Suspense>
               }
             />

@@ -1,13 +1,11 @@
-import { memo, useEffect, useState } from "react";
+import { memo, useState } from "react";
 import { motion } from "framer-motion";
 
 // Components
 import PowerPointViewer from "../components/PowerPointViewer";
-import LessonCard from "../components/LessonCard";
 
 // Data and constants
-import { courseOverview } from "../data/courseData";
-import { preloadImages } from "../utils/imageUtils";
+import { courseContent } from "../data/courseData";
 
 // Memoized section components for better performance
 const HeroSection = memo(() => (
@@ -170,24 +168,76 @@ const PresentationsSection = memo(({ onPresentationSelect }) => {
     </div>
   );
 });
+const VideoCard = memo(({ lesson }) => {
+  return (
+    <div className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group">
+      {/* Video Player */}
+      <div className="relative aspect-video bg-gray-100">
+        <iframe
+          src={`https://www.youtube.com/embed/${lesson.embedId}?enablejsapi=1&origin=${window.location.origin}`}
+          title={lesson.title}
+          className="w-full h-full rounded-t-xl"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowFullScreen
+          loading="lazy"
+        />
+      </div>
 
-// Lessons Section Component
+      {/* Content */}
+      <div className="p-6">
+        <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">
+          {lesson.title}
+        </h3>
+        <p className="text-gray-600 text-sm mb-2 font-medium">
+          Credit: {lesson.owner}
+        </p>
+        <p className="text-gray-600 text-sm mb-4 leading-relaxed">
+          {lesson.description}
+        </p>
+
+        {/* Direct Link Button */}
+        <div className="flex items-center justify-between">
+          <a
+            href={lesson.videoUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-colors font-medium text-sm"
+          >
+            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+            </svg>
+            Manood sa YouTube
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+});
+// Updated Lessons Section Component - Now uses VideoCard instead of LessonCard
 const LessonsSection = memo(() => {
   return (
     <div className="mb-12">
       <div className="mb-6">
         <h2 className="text-2xl font-bold text-gray-900">
-          Mga Nakakatuwang Aralin 🎓
+          Mga Nakakatuwang Video Aralin 🎓
         </h2>
         <p className="text-gray-600 mt-2">
-          Halika! Matuto tayo tungkol sa kasaysayan, kultura, pulitika,
-          ekonomiya, at heograpiya ng Tsina sa masayang paraan!
+          Halika! Manood tayo ng mga nakakatuwang video tungkol sa kasaysayan,
+          kultura, pulitika, ekonomiya, at heograpiya ng Tsina!
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {courseOverview.map((lesson, index) => (
-          <LessonCard key={lesson.id} lesson={lesson} index={index} />
+      <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-6">
+        {courseContent.map((lesson, index) => (
+          <motion.div
+            key={lesson.id}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.1 }}
+          >
+            <VideoCard lesson={lesson} />
+          </motion.div>
         ))}
       </div>
     </div>
@@ -196,37 +246,7 @@ const LessonsSection = memo(() => {
 
 // Main component
 const Aralin = () => {
-  const [isLoading, setIsLoading] = useState(true);
   const [selectedPresentation, setSelectedPresentation] = useState(null);
-
-  // Preload lesson images when component mounts
-  useEffect(() => {
-    setIsLoading(true);
-
-    const lessonImages = courseOverview.map((lesson) => lesson.image);
-    const avatarImages = courseOverview.map(
-      (lesson) =>
-        `https://api.dicebear.com/7.x/avataaars/svg?seed=${lesson.instructor}`
-    );
-
-    // Preload all lesson images first
-    preloadImages(lessonImages)
-      .then(() => {
-        console.log("Lesson images preloaded successfully");
-        // Then preload instructor avatars
-        return preloadImages(avatarImages);
-      })
-      .then(() => {
-        console.log("Instructor avatars preloaded successfully");
-        // Set loading to false when all images are preloaded
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.warn("Some images failed to preload", error);
-        // Even if preloading fails, stop showing loading state after 3 seconds
-        setTimeout(() => setIsLoading(false), 3000);
-      });
-  }, []);
 
   const handlePresentationSelect = (presentation) => {
     setSelectedPresentation(presentation);

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, RefreshCw, Check, X, Trophy, Target } from "lucide-react";
+import { ArrowLeft, RefreshCw, Check, X, Trophy, Target, Volume2, VolumeX } from "lucide-react";
+import { playSound, playBackgroundMusic, stopBackgroundMusic, setBackgroundVolume } from '../../utils/soundManager';
 
 // Actual pyramid data
 const PYRAMID_DATA = [
@@ -20,10 +21,30 @@ const PyramidGame = ({ onComplete, onBack }) => {
   const [attempts, setAttempts] = useState(0);
   const [draggedItem, setDraggedItem] = useState(null);
   const [showHint, setShowHint] = useState(false);
+  const [soundEnabled, setSoundEnabled] = useState(true);
 
   useEffect(() => {
     initializeGame();
+
+    // Start background music when component mounts
+    if (soundEnabled) {
+      playBackgroundMusic();
+    }
+
+    // Cleanup background music when component unmounts
+    return () => {
+      stopBackgroundMusic();
+    };
   }, []);
+
+  useEffect(() => {
+    // Handle background music when sound is toggled
+    if (soundEnabled) {
+      playBackgroundMusic();
+    } else {
+      stopBackgroundMusic();
+    }
+  }, [soundEnabled]);
 
   const initializeGame = () => {
     // Shuffle the items for dragging
@@ -57,6 +78,11 @@ const PyramidGame = ({ onComplete, onBack }) => {
     e.dataTransfer.setData("text/plain", JSON.stringify(item));
     setDraggedItem(item);
     e.dataTransfer.effectAllowed = "move";
+
+    // Play flip sound when starting to drag
+    if (soundEnabled) {
+      playSound('flip');
+    }
   };
 
   const handleDragEnd = () => {
@@ -77,10 +103,11 @@ const PyramidGame = ({ onComplete, onBack }) => {
 
     // Update slots
     const newSlots = [...slots];
+    const isCorrect = droppedItem.content === newSlots[slotIndex].correctContent;
     newSlots[slotIndex] = {
       ...newSlots[slotIndex],
       content: droppedItem.content,
-      isCorrect: droppedItem.content === newSlots[slotIndex].correctContent,
+      isCorrect: isCorrect,
     };
     setSlots(newSlots);
 
@@ -92,6 +119,16 @@ const PyramidGame = ({ onComplete, onBack }) => {
     );
 
     setAttempts((prev) => prev + 1);
+
+    // Play sound based on correctness
+    if (soundEnabled) {
+      if (isCorrect) {
+        playSound('correct');
+      } else {
+        playSound('wrong');
+      }
+    }
+
     checkCompletion(newSlots);
   };
 
@@ -114,6 +151,11 @@ const PyramidGame = ({ onComplete, onBack }) => {
       isCorrect: false,
     };
     setSlots(newSlots);
+
+    // Play flip sound when removing item
+    if (soundEnabled) {
+      playSound('flip');
+    }
   };
 
   const checkCompletion = (currentSlots) => {
@@ -126,15 +168,30 @@ const PyramidGame = ({ onComplete, onBack }) => {
         setIsComplete(true);
         const finalScore = Math.max(100 - attempts * 5, 20);
         setScore(finalScore);
+
+        // Play completion sound
+        if (soundEnabled) {
+          setTimeout(() => {
+            playSound('complete');
+          }, 500); // Delay to let the last correct sound finish
+        }
       }
     }
   };
 
   const handleReset = () => {
     initializeGame();
+
+    // Play flip sound for reset
+    if (soundEnabled) {
+      playSound('flip');
+    }
   };
 
   const handleContinue = () => {
+    // Stop background music before leaving
+    stopBackgroundMusic();
+
     if (onComplete) {
       onComplete(score);
     } else {
@@ -144,6 +201,15 @@ const PyramidGame = ({ onComplete, onBack }) => {
 
   const toggleHint = () => {
     setShowHint(!showHint);
+
+    // Play flip sound for UI interactions
+    if (soundEnabled) {
+      playSound('flip');
+    }
+  };
+
+  const toggleSound = () => {
+    setSoundEnabled(!soundEnabled);
   };
 
   const getSlotWidth = (level) => {
@@ -188,6 +254,19 @@ const PyramidGame = ({ onComplete, onBack }) => {
           </div>
 
           <div className="flex gap-2">
+            <button
+              onClick={toggleSound}
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
+                soundEnabled
+                  ? 'bg-green-500 hover:bg-green-600 text-white'
+                  : 'bg-gray-500 hover:bg-gray-600 text-white'
+              }`}
+            >
+              {soundEnabled ? <Volume2 size={20} /> : <VolumeX size={20} />}
+              <span className="hidden sm:inline">
+                {soundEnabled ? 'Sound On' : 'Sound Off'}
+              </span>
+            </button>
             <button
               onClick={toggleHint}
               className="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
@@ -340,7 +419,7 @@ const PyramidGame = ({ onComplete, onBack }) => {
               📝 <strong>Paano maglaro:</strong> I-drag ang mga salita mula sa
               kaliwa at i-drop sa tamang posisyon sa pyramid. I-click ang mga
               slot upang ibalik ang mga item. Subukan mong makakuha ng mataas na
-              score!
+              score! {soundEnabled && "🔊 May sound effects para sa mas masayang karanasan!"}
             </p>
           </div>
         </div>

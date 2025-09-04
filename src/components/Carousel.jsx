@@ -189,16 +189,6 @@ const Carousel = () => {
                       {slide.description}
                     </p>
 
-                    {/* Button with animated arrow */}
-                    <div className="mt-1 sm:mt-2">
-                      <button className="group bg-[#daff0d] text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-full text-sm sm:text-base font-semibold hover:bg-opacity-90 transition-all duration-300 flex items-center gap-2">
-                        {slide.buttonText}
-                        <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">
-                          →
-                        </span>
-                      </button>
-                    </div>
-
                     {/* Navigation hint - Hidden on smallest screens */}
                     <div className="hidden sm:flex items-center gap-2 text-xs sm:text-sm text-gray-500 mt-4 sm:mt-8">
                       <span className="w-6 sm:w-8 h-[1px] bg-gray-300"></span>

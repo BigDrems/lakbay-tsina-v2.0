@@ -5,6 +5,8 @@ const sounds = {
   complete: new Audio("/sounds/complete.mp3"),
   background: new Audio("/sounds/background.mp3"),
   flip: new Audio("/sounds/flip.mp3"),
+  success: new Audio("/sounds/pass.mp3"),
+  fail: new Audio("/sounds/fail.mp3"),
 };
 
 // Configure background music

@@ -87,7 +87,7 @@ const GameCard = React.memo(
               className="w-full bg-gradient-to-r from-amber-600 to-red-600 text-white py-3 rounded-lg flex items-center justify-center gap-2 hover:from-amber-700 hover:to-red-700 transition-all duration-300 font-medium focus:outline-none focus:ring-2 focus:ring-amber-500 shadow-sm"
               aria-label={`Play ${title}`}
             >
-              Simulan ang Laro
+              Simulan
               <ArrowRight className="w-4 h-4" />
             </button>
           </div>

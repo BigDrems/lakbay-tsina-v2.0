@@ -1,371 +1,58 @@
 // Course content data
-export const courseContent = {
-  1: [
-    {
-      id: 1,
-      title: "Kabihasnang Tsino",
-      duration: "29 min",
-      completed: false,
-      locked: false,
-      videoUrl: "https://www.youtube.com/watch?v=Xs3zziJB8nI",
-    },
-    {
-      id: 2,
-      title: "Sinaunang Kabihasnan sa Tsina: Dinastiyang Shang",
-      duration: "8 min",
-      completed: false,
-      locked: false,
-      videoUrl: "https://www.youtube.com/watch?v=EoFuYQaMr90",
-    },
-    {
-      id: 3,
-      title: "Ang Gintong Panahon ng Tang Dynasty",
-      duration: "20 min",
-      completed: false,
-      locked: false,
-      videoUrl: "https://www.youtube.com/watch?v=T0LBrwnoMzc",
-    },
-    {
-      id: 4,
-      title: "Ang Silk Road at ang Kulturang Tsino",
-      duration: "11 min",
-      completed: false,
-      locked: false,
-      videoUrl: "https://www.youtube.com/watch?v=aGG0kgVqhWY&t=119s",
-    },
-    {
-      id: 5,
-      title: "Ang Ming Dynasty at ang Great Wall",
-      duration: "8 min",
-      completed: false,
-      locked: false,
-      videoUrl: "https://www.youtube.com/watch?v=Yp2_VbDyTZ8",
-    },
-    {
-      id: 6,
-      title: "Una at Ikalawang Digmaang Opyo",
-      duration: "16 min",
-      completed: false,
-      locked: false,
-      videoUrl: "https://www.youtube.com/watch?v=fG-kYjI0RJs",
-    },
-  ],
-  2: [
-    {
-      id: 1,
-      title: "Mga Pangunahing Pistang Tsino",
-      duration: "2 min",
-      completed: false,
-      locked: false,
-      videoUrl: "http://youtube.com/watch?v=tF7JAQoKP0M",
-    },
-    {
-      id: 2,
-      title: "Tradisyonal na Sining at Musika",
-      duration: "2 min",
-      completed: false,
-      locked: false,
-      videoUrl: "https://www.youtube.com/watch?v=8pU5i4zTbRg",
-    },
-    {
-      id: 3,
-      title: "Pamumuhay at Pamilyang Tsino",
-      duration: "23 min",
-      completed: false,
-      locked: false,
-      videoUrl: "https://www.youtube.com/watch?v=TOeWJqQkiYs",
-    },
-    {
-      id: 4,
-      title: "Relihiyon at Pilosopiya",
-      duration: "14 min",
-      completed: false,
-      locked: false,
-      videoUrl: "https://www.youtube.com/watch?v=0-fYJ88WGvI",
-    },
-    {
-      id: 5,
-      title: "Modernong Kulturang Tsino",
-      duration: "17 min",
-      completed: false,
-      locked: false,
-      videoUrl: "https://www.youtube.com/watch?v=P5A8BCsu5No",
-    },
-  ],
-  3: [
-    {
-      id: 1,
-      title: "Sistema ng Pamahalaan sa Tsina",
-      duration: "7 min",
-      completed: false,
-      locked: false,
-      videoUrl: "https://www.youtube.com/watch?v=Uzn8f38sw90",
-    },
-    {
-      id: 2,
-      title: "Ang Communist Party of China",
-      duration: "12 min",
-      completed: false,
-      locked: false,
-      videoUrl: "https://www.youtube.com/watch?v=NVSMI9dc4Xc",
-    },
-    {
-      id: 3,
-      title: "Ugnayan ng Tsina sa Pilipinas",
-      duration: "9 min",
-      completed: false,
-      locked: false,
-      videoUrl: "https://www.youtube.com/watch?v=ijFk3HnIiJA",
-    },
-    {
-      id: 4,
-      title: "Pamahalaang Lokal sa Tsina",
-      duration: "8 min",
-      completed: false,
-      locked: false,
-      videoUrl: "https://www.youtube.com/watch?v=example4",
-    },
-    {
-      id: 5,
-      title: "Mga Reporma at Patakaran sa Tsina",
-      duration: "14 min",
-      completed: false,
-      locked: false,
-      videoUrl: "https://www.youtube.com/watch?v=example5",
-    },
-  ],
-  4: [
-    {
-      id: 1,
-      title: "Ekonomiya ng Tsina: Isang Pangkalahatang Tanaw",
-      duration: "1 min",
-      completed: false,
-      locked: false,
-      videoUrl: "https://www.youtube.com/watch?v=qZS2vtVojCU",
-    },
-    {
-      id: 2,
-      title: "Ang Pag-unlad ng Ekonomiya ng Tsina",
-      duration: "15 min",
-      completed: false,
-      locked: false,
-      videoUrl: "https://www.youtube.com/watch?v=JRqGmWWcyPo",
-    },
-    {
-      id: 3,
-      title: "Kalakalan at Pangangalakal sa Tsina",
-      duration: "1 min",
-      completed: false,
-      locked: false,
-      videoUrl: "https://www.youtube.com/watch?v=Vs0CrmeQAis",
-    },
-    {
-      id: 4,
-      title: "Teknolohiya at Inobasyon sa Tsina",
-      duration: "32 min",
-      completed: false,
-      locked: false,
-      videoUrl: "https://www.youtube.com/watch?v=w-SvNjOVsSw",
-    },
-    {
-      id: 5,
-      title: "Ekonomiya ng Tsina sa Global na Larangan",
-      duration: "5 min",
-      completed: false,
-      locked: false,
-      videoUrl: "https://www.youtube.com/watch?v=eTS6IJFQOvU",
-    },
-  ],
-  5: [
-    {
-      id: 1,
-      title: "Heograpiya ng Tsina: Pangkalahatang Tanaw",
-      duration: "2 min",
-      completed: false,
-      locked: false,
-      videoUrl: "https://www.youtube.com/watch?v=tWzipcJW7tc",
-    },
-    {
-      id: 2,
-      title: "Mga Rehiyon at Klima sa Tsina",
-      duration: "12 min",
-      completed: false,
-      locked: false,
-      videoUrl: "https://www.youtube.com/watch?v=A3JooHAGYHQ",
-    },
-    {
-      id: 3,
-      title: "Mga Likas na Yaman ng Tsina",
-      duration: "5 min",
-      completed: false,
-      locked: false,
-      videoUrl: "https://www.youtube.com/watch?v=y6EK9yopYQA",
-    },
-    {
-      id: 4,
-      title: "Mga Pangunahing Lungsod at Lalawigan",
-      duration: "16 min",
-      completed: false,
-      locked: false,
-      videoUrl: "https://www.youtube.com/watch?v=ENWzAFzWVg8",
-    },
-    {
-      id: 5,
-      title: "Mga Pambansang Liwasan at Tanawin",
-      duration: "32 min",
-      completed: false,
-      locked: false,
-      videoUrl: "http://youtube.com/watch?v=Yw9AHtGuWKw",
-    },
-  ],
-};
-
-// Course overview data
-export const courseOverview = [
-  {
-    id: 1,
-    title: "Kasaysayan at Dinastiya",
-    instructor: "Ralph Joshua Mapula",
-    description:
-      "Pag-aralan ang mayamang kasaysayan ng Tsina, mula sa mga sinaunang dinastiya hanggang sa modernong panahon.",
-    image: "/images/history.png",
-    category: "History",
-    topics: [
-      "Kabihasnang Tsino",
-      "Sinaunang Kabihasnan sa Tsina: Dinastiyang Shang",
-      "Ang Gintong Panahon ng Tang Dynasty",
-      "Ang Silk Road at ang Kulturang Tsino",
-      "Ang Ming Dynasty at ang Great Wall",
-      "Una at Ikalawang Digmaang Opyo",
-    ],
-    requirements: [
-      "Walang kinakailangang background sa Chinese history",
-      "Bukas na isipan para sa bagong kaalaman",
-      "Basic reading comprehension skills",
-    ],
-    objectives: [
-      "Maunawaan ang mahahalagang kaganapan sa kasaysayan ng Tsina",
-      "Matukoy ang mga pangunahing dinastiya at ang kanilang ambag",
-      "Maintindihan ang kulturang Tsino at ang epekto nito sa mundo",
-      "Masuri ang modernong Tsina at ang papel nito sa kasalukuyan",
-    ],
-  },
-  {
-    id: 2,
-    title: "Kultura at Tradisyon",
-    instructor: "Maybeline Lastimado",
-    description:
-      "Tuklasin ang mga natatanging kaugalian at tradisyon ng Tsina, kabilang ang mga pista, ritwal, at pamumuhay.",
-    image: "/images/kultura (2).png",
-    category: "Culture",
-    topics: [
-      "Mga Pangunahing Pistang Tsino",
-      "Tradisyonal na Sining at Musika",
-      "Pamumuhay at Pamilyang Tsino",
-      "Relihiyon at Pilosopiya",
-      "Modernong Kulturang Tsino",
-    ],
-    requirements: [
-      "Interes sa kulturang Asyano",
-      "Pagpapahalaga sa ibang kultura",
-      "Basic understanding of social studies",
-    ],
-    objectives: [
-      "Maintindihan ang kahalagahan ng mga pistang Tsino",
-      "Matutuhan ang iba't ibang aspeto ng kulturang Tsino",
-      "Masuri ang impluwensya ng kulturang Tsino sa Asya",
-      "Mapag-ugnay ang tradisyonal at modernong kultura",
-    ],
-  },
-  {
-    id: 3,
-    title: "Pulitika at Pamahalaan",
-    instructor: "Cristina Magdaraog",
-    description:
-      "Pag-aralan ang sistema ng pamahalaan sa Tsina, ang Communist Party, at ang mga patakaran nito sa modernong panahon.",
-    image: "/images/culture.jpg",
-    category: "Politics",
-    topics: [
-      "Sistema ng Pamahalaan sa Tsina",
-      "Ang Communist Party of China",
-      "Ugnayan ng Tsina sa Pilipinas",
-      "Pamahalaang Lokal sa Tsina",
-      "Mga Reporma at Patakaran sa Tsina",
-    ],
-    requirements: [
-      "Basic understanding of political systems",
-      "Interes sa international relations",
-      "Critical thinking skills",
-    ],
-    objectives: [
-      "Maunawaan ang sistema ng pamahalaan sa Tsina",
-      "Matukoy ang mga pangunahing institusyon at patakaran",
-      "Maintindihan ang ugnayan ng Tsina sa ibang bansa",
-      "Masuri ang mga reporma at pagbabago sa sistema",
-    ],
-  },
-  {
-    id: 4,
-    title: "Ekonomiya sa Tsina",
-    instructor: "Angela Bacunawa",
-    description:
-      "Tuklasin ang ekonomiya ng Tsina, ang pag-unlad nito, at ang papel nito sa global na ekonomiya.",
-    image: "/images/economy.jpg",
-    category: "Economics",
-    topics: [
-      "Ekonomiya ng Tsina: Isang Pangkalahatang Tanaw",
-      "Ang Pag-unlad ng Ekonomiya ng Tsina",
-      "Kalakalan at Pangangalakal sa Tsina",
-      "Teknolohiya at Inobasyon sa Tsina",
-      "Ekonomiya ng Tsina sa Global na Larangan",
-    ],
-    requirements: [
-      "Basic understanding of economics",
-      "Interes sa global trade",
-      "Analytical thinking skills",
-    ],
-    objectives: [
-      "Maunawaan ang kasalukuyang estado ng ekonomiya ng Tsina",
-      "Matukoy ang mga pangunahing sektor at industriya",
-      "Maintindihan ang global na impluwensya ng Tsina",
-      "Masuri ang mga hamon at oportunidad sa ekonomiya",
-    ],
-  },
-  {
-    id: 5,
-    title: "Heograpiya sa China",
-    instructor: "Abetto Palconit | Jenilyn Verian Florito",
-    description:
-      "Pag-aralan ang heograpiya ng Tsina, ang mga rehiyon nito, at ang epekto nito sa kultura at ekonomiya.",
-    image: "/images/geography.jpg",
-    category: "Geography",
-    topics: [
-      "Heograpiya ng Tsina: Pangkalahatang Tanaw",
-      "Mga Rehiyon at Klima sa Tsina",
-      "Mga Likas na Yaman ng Tsina",
-      "Mga Pangunahing Lungsod at Lalawigan",
-      "Mga Pambansang Liwasan at Tanawin",
-    ],
-    requirements: [
-      "Basic knowledge of geography",
-      "Interes sa environmental studies",
-      "Map reading skills",
-    ],
-    objectives: [
-      "Maunawaan ang pisikal na heograpiya ng Tsina",
-      "Matukoy ang mga pangunahing rehiyon at klima",
-      "Maintindihan ang distribusyon ng likas na yaman",
-      "Masuri ang epekto ng heograpiya sa pag-unlad",
-    ],
-  },
-];
 
 // Utility function to extract YouTube video ID
 export const getYouTubeVideoId = (url) => {
   if (!url) return null;
 
-  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+  const regExp =
+    /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*$/;
   const match = url.match(regExp);
 
   return match && match[2].length === 11 ? match[2] : null;
 };
+
+export const courseContent = [
+  {
+    id: 1,
+    title:
+      "Araling Panlipunan 8 MATATAG Q1 Week 2-4 Sinaunang Kabihasnan sa llog Huang He at Yangtze w/ PPT/DLL",
+    duration: "12:32 min",
+    owner: `Ma'am Eve`,
+    videoUrl: "https://youtu.be/AeJZArR2d8g?si=Vix7qstuqeQzqmh7",
+    embedId: getYouTubeVideoId(
+      "https://youtu.be/AeJZArR2d8g?si=Vix7qstuqeQzqmh7"
+    ),
+  },
+  {
+    id: 2,
+    title:
+      "MGA DINASTIYANG TSINO: ANU-ANO ANG MGA DINASTIYANG UMUSBONG SA TSINA?",
+    duration: "15:25 min",
+    owner: `Ser Ian's Class`,
+    videoUrl: "https://youtu.be/-JM_m0FykTo?si=E8NAYCCI687FHeLw",
+    embedId: getYouTubeVideoId(
+      "https://youtu.be/-JM_m0FykTo?si=E8NAYCCI687FHeLw"
+    ),
+  },
+  {
+    id: 3,
+    title: "AP 8 WEEK 7 ARALIN 1 : SINAUNANG KABIHASNAN NG CHINA (MELC-BASED)",
+    duration: "15:02 min",
+    owner: `Sir Mike's Class`,
+    videoUrl: "https://youtu.be/-wMAmk3UXK0?si=3mMtVbzie5srqifw",
+    embedId: getYouTubeVideoId(
+      "https://youtu.be/-wMAmk3UXK0?si=3mMtVbzie5srqifw"
+    ),
+  },
+  {
+    id: 4,
+    title:
+      "MGA DINASTIYA SA KABIHASNANG TSINA AMBAG AT KONTRIBUSYON ARALING PANLIPUNAN",
+    duration: "14:52 min",
+    owner: "Eu Sunt",
+    videoUrl: "https://youtu.be/Xj6tfh7bEQY?si=FNCu8vPQy9Z6t-LS",
+    embedId: getYouTubeVideoId(
+      "https://youtu.be/Xj6tfh7bEQY?si=FNCu8vPQy9Z6t-LS"
+    ),
+  },
+];

@@ -82,6 +82,18 @@ export const GAMES_DATA = [
     path: "/games/term-definition",
     popular: true,
   },
+  {
+    id: 6,
+    title: "Pangwakas na Pagsusulit",
+    description:
+      " Basahin at unawaing mabuti ang mga katanungan. Pagkatapos ay piliin ang titik ng tamang sagot base sa ating napag-aralan sa website na ito",
+    icon: "BookOpen",
+    difficulty: "Mahirap",
+    category: "Pagsusulit",
+    image: "/images/history.png",
+    path: "/games/posttest",
+    popular: true,
+  },
 ];
 
 // Animation variants
