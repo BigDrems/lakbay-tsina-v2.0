@@ -8,14 +8,14 @@ export const POSTTEST_DATA = {
       question:
         "Aling dinastiya ang itinuturing na kauna-unahan sa kasaysayan ng Tsina?",
       options: ["Qin", "Han", "Xia", "Zhou"],
-      answer: "Xia",
+      correctAnswer: 2,
     },
     {
       id: 2,
       question:
         "Sino ang unang emperador ng Qin Dynasty na nagpatupad ng mahigpit na batas at Legalism?",
       options: ["Wu Di", "Laozi", "Confucius", "Shi Huangdi"],
-      answer: "Shi Huangdi",
+      correctAnswer: 3,
     },
     {
       id: 3,
@@ -26,7 +26,7 @@ export const POSTTEST_DATA = {
         "Karapatan ng hukbo na mamahala",
         "Kapangyarihan ng mga pari",
       ],
-      answer: "Basbas ng kalangitan upang mamuno",
+      correctAnswer: 1,
     },
     {
       id: 4,
@@ -38,7 +38,7 @@ export const POSTTEST_DATA = {
         "Pamahalaang walang pinuno",
         "Pamahalaang pulitikal na kolektibo",
       ],
-      answer: "Monarkiyang sentralisado",
+      correctAnswer: 1,
     },
     {
       id: 5,
@@ -50,7 +50,7 @@ export const POSTTEST_DATA = {
         "Monarkiyang militar",
         "Civil service examination",
       ],
-      answer: "Civil service examination",
+      correctAnswer: 3,
     },
     {
       id: 6,
@@ -62,7 +62,7 @@ export const POSTTEST_DATA = {
         "Mga nagbabayad ng buwis",
         "Mga mangangalakal",
       ],
-      answer: "Mga opisyal na nagsilbi sa burukrasya",
+      correctAnswer: 0,
     },
     {
       id: 7,
@@ -74,7 +74,7 @@ export const POSTTEST_DATA = {
         "Ang emperador ay may natatanging banal na kapangyarihan",
         "Walang malinaw na pagkakaiba ang lipunan",
       ],
-      answer: "Ang emperador ay may natatanging banal na kapangyarihan",
+      correctAnswer: 2,
     },
     {
       id: 8,
@@ -86,7 +86,7 @@ export const POSTTEST_DATA = {
         "Inihahalal ng mamamayan",
         "Itinuturing na anak ng langit",
       ],
-      answer: "Itinuturing na anak ng langit",
+      correctAnswer: 3,
     },
     {
       id: 9,
@@ -98,21 +98,20 @@ export const POSTTEST_DATA = {
         "Ang emperador ay inihalal, ang mandarins ay namamana",
         "Parehong walang kapangyarihan",
       ],
-      answer:
-        "Ang emperador ay anak ng langit, ang mandarins ay nagsisilbi lamang",
+      correctAnswer: 0,
     },
     {
       id: 10,
       question:
         "Alin sa mga sumusunod ang pangunahing produkto ng Tsina na ipinagpalit sa ibang bansa?",
       options: ["Seda", "Ginto", "Palay", "Bakal"],
-      answer: "Seda",
+      correctAnswer: 0,
     },
     {
       id: 11,
       question: "Alin sa mga ito ang hindi produkto ng kalakalan ng Tsina?",
       options: ["Porselana", "Seda", "Tsaa", "Papyrus"],
-      answer: "Papyrus",
+      correctAnswer: 3,
     },
     {
       id: 12,
@@ -124,7 +123,7 @@ export const POSTTEST_DATA = {
         "Bilang tirahan ng pamilya",
         "Bilang palaruan ng hukbo",
       ],
-      answer: "Bilang daan upang makipagpalitan ng produkto sa ibang lugar",
+      correctAnswer: 1,
     },
     {
       id: 13,
@@ -136,7 +135,7 @@ export const POSTTEST_DATA = {
         "Lumaganap ang digmaan",
         "Naging sanhi ng pagbagsak ng dinastiya",
       ],
-      answer: "Umangat ang ani at ekonomiya",
+      correctAnswer: 0,
     },
     {
       id: 14,
@@ -147,7 +146,7 @@ export const POSTTEST_DATA = {
         "Naging limitado ang sakahan",
         "Hindi nakaapekto sa agrikultura",
       ],
-      answer: "Lumakas ang ani dahil sa matibay na kagamitan",
+      correctAnswer: 1,
     },
     {
       id: 15,
@@ -159,7 +158,7 @@ export const POSTTEST_DATA = {
         "Naging dahilan ng pagbagsak ng kalakalan",
         "Nagpatibay ng pamahalaang demokratiko",
       ],
-      answer: "Nagbigay ng trabaho at oportunidad",
+      correctAnswer: 0,
     },
     {
       id: 16,
@@ -171,7 +170,7 @@ export const POSTTEST_DATA = {
         "Lugar ng emperador sa kanyang libingan",
         "Pook ng pagsamba sa mga diyos",
       ],
-      answer: "Naging mahalagang ruta ng kalakalan at agrikultura",
+      correctAnswer: 1,
     },
     {
       id: 17,
@@ -182,7 +181,7 @@ export const POSTTEST_DATA = {
         "Katiwalian at paghihirap ng tao",
         "Paghihimagsik ng mga samurai",
       ],
-      answer: "Katiwalian at paghihirap ng tao",
+      correctAnswer: 2,
     },
     {
       id: 18,
@@ -194,7 +193,7 @@ export const POSTTEST_DATA = {
         "Terracotta Army",
         "Temple of Heaven",
       ],
-      answer: "Great Wall of China",
+      correctAnswer: 1,
     },
     {
       id: 19,
@@ -205,7 +204,7 @@ export const POSTTEST_DATA = {
         "Mga alamat ng hari",
         "Panuto sa pagsasaka",
       ],
-      answer: "Pagsusulat ng hinaharap o hula",
+      correctAnswer: 1,
     },
     {
       id: 20,
@@ -216,7 +215,7 @@ export const POSTTEST_DATA = {
         "Paggunita sa emperador",
         "Pag-aayos ng kalakalan",
       ],
-      answer: "Pagpapasya kung kailan magtatanim at aanihin",
+      correctAnswer: 1,
     },
     {
       id: 21,
@@ -228,7 +227,7 @@ export const POSTTEST_DATA = {
         "Bumagsak ang dinastiya",
         "Naging dahilan ng digmaan",
       ],
-      answer: "Lumaganap ang kaalaman at pagsulat",
+      correctAnswer: 0,
     },
     {
       id: 22,
@@ -240,7 +239,7 @@ export const POSTTEST_DATA = {
         "Nag-alis ng kapangyarihan sa emperador",
         "Nagpatalsik ng dinastiya",
       ],
-      answer: "Naging daan upang maging opisyal ng pamahalaan",
+      correctAnswer: 0,
     },
     {
       id: 23,
@@ -251,7 +250,7 @@ export const POSTTEST_DATA = {
         "Nagaalis ng pananampalataya",
         "Nagbigay ng kapangyarihan sa mga kababaihan",
       ],
-      answer: "Nagpatibay ng respeto at pagkakaisa",
+      correctAnswer: 1,
     },
     {
       id: 24,
@@ -262,7 +261,7 @@ export const POSTTEST_DATA = {
         "Pamumuhay na ayon sa kalikasan",
         "Pagsamba sa mga ninuno",
       ],
-      answer: "Pamumuhay na ayon sa kalikasan",
+      correctAnswer: 2,
     },
     {
       id: 25,
@@ -274,7 +273,7 @@ export const POSTTEST_DATA = {
         "Pagsamba sa maraming diyos",
         "Sistema ng pagsusulit para sa opisyal",
       ],
-      answer: "Sistema ng pagsusulit para sa opisyal",
+      correctAnswer: 3,
     },
     {
       id: 26,
@@ -285,7 +284,7 @@ export const POSTTEST_DATA = {
         "Pagpapalakas ng pamahalaan",
         "Pagpapalawak ng teritoryo",
       ],
-      answer: "Pagbibigay-galang at proteksiyon mula sa espiritu",
+      correctAnswer: 1,
     },
     {
       id: 27,
@@ -296,13 +295,13 @@ export const POSTTEST_DATA = {
         "Pagbibigay ng yaman sa pamahalaan",
         "Pagsunod sa batas ng lipunan",
       ],
-      answer: "Pagtanggap na ang tao ay bahagi ng kalikasan",
+      correctAnswer: 1,
     },
     {
       id: 28,
       question: "Ito ang itinuturing duyan o pinagmulan ng kabihasnang Tsina?",
       options: ["Huang Ho", "Yang Tze", "Great Wall", "Forbidden City"],
-      answer: "Huang Ho",
+      correctAnswer: 0,
     },
     {
       id: 29,
@@ -314,7 +313,7 @@ export const POSTTEST_DATA = {
         "Pagpapaunlad ng agrikultura at kabuhayan",
         "Paglalatag ng ideya ng “Mandate of Heaven”",
       ],
-      answer: "Pagtatag ng Song Dynasty",
+      correctAnswer: 0,
     },
     {
       id: 30,
@@ -325,7 +324,7 @@ export const POSTTEST_DATA = {
         "Paggalang sa magulang at nakatatanda",
         "Pagbibigay ng buwis sa emperador",
       ],
-      answer: "Paggalang sa magulang at nakatatanda",
+      correctAnswer: 2,
     },
     {
       id: 31,
@@ -336,14 +335,14 @@ export const POSTTEST_DATA = {
         "Mangangalakal",
         "Alipin",
       ],
-      answer: "Emperador at pamilya niya",
+      correctAnswer: 1,
     },
     {
       id: 32,
       question:
         "Sino ang bumubuo ng pinakamalaking bahagi ng lipunan sa sinaunang Tsina?",
       options: ["Mangangalakal", "Sundalo", "Magsasaka", "Opisyal"],
-      answer: "Magsasaka",
+      correctAnswer: 2,
     },
     {
       id: 33,
@@ -354,7 +353,7 @@ export const POSTTEST_DATA = {
         "Pagtuturo ng Confucianism",
         "Pagbibigay ng pagkain at buwis",
       ],
-      answer: "Pagbibigay ng pagkain at buwis",
+      correctAnswer: 3,
     },
     {
       id: 34,
@@ -366,7 +365,7 @@ export const POSTTEST_DATA = {
         "Walang namumuno",
         "Batay sa gulong ng kalakalan",
       ],
-      answer: "May malinaw na hierarkiya ng tao",
+      correctAnswer: 1,
     },
     {
       id: 35,
@@ -378,7 +377,7 @@ export const POSTTEST_DATA = {
         "Hindi sila miyembro ng pamahalaan",
         "Wala silang lupain",
       ],
-      answer: "Kumikita sila mula sa paggawa ng iba",
+      correctAnswer: 1,
     },
     {
       id: 36,
@@ -389,7 +388,7 @@ export const POSTTEST_DATA = {
         "Pinatibay ang karapatan ng mga bata",
         "Pinantay ang karapatan ng lahat",
       ],
-      answer: "Nagbigay-diin sa kapangyarihan ng lalaki sa pamilya",
+      correctAnswer: 1,
     },
     {
       id: 37,
@@ -400,7 +399,7 @@ export const POSTTEST_DATA = {
         "Nagbigay ng kapangyarihan sa hukbo",
         "Nagpatalsik sa Emperador",
       ],
-      answer: "Nagpatibay ng respeto at tamang asal",
+      correctAnswer: 0,
     },
     {
       id: 38,
@@ -412,7 +411,7 @@ export const POSTTEST_DATA = {
         "Pagbibigay ng Kalayaan sa lahat",
         "Disiplina at malinaw na tungkulin ng bawat tao",
       ],
-      answer: "Disiplina at malinaw na tungkulin ng bawat tao",
+      correctAnswer: 3,
     },
     {
       id: 39,
@@ -423,7 +422,7 @@ export const POSTTEST_DATA = {
         "Nag-alis ng karapatan ng mga opisyal",
         "Nagbigay ng kapangyarihan sa ibang bansa",
       ],
-      answer: "Naging batayan ng pagkakaisa at suporta sa pamilya",
+      correctAnswer: 0,
     },
     {
       id: 40,
@@ -435,7 +434,7 @@ export const POSTTEST_DATA = {
         "Nagpatalsik sa mga emperador",
         "Nagpahina sa kabihasnan",
       ],
-      answer: "Naging daan sa mas maayos na pamahalaan",
+      correctAnswer: 0,
     },
   ],
 };

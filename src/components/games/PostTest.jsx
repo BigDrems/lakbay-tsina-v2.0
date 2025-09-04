@@ -104,7 +104,6 @@ const PostTest = ({ onComplete }) => {
     let correctAnswers = 0;
     POSTTEST_DATA.questions.forEach((question) => {
       const userAnswer = answers[question.id];
-      // Only count as correct if user actually selected an answer AND it's correct
       if (userAnswer !== undefined && userAnswer === question.correctAnswer) {
         correctAnswers++;
       }
@@ -120,9 +119,9 @@ const PostTest = ({ onComplete }) => {
 
     // Play appropriate sound based on score
     if (finalScore >= 30) {
-      playSound("success"); // Happy/passing sound
+      playSound("success");
     } else {
-      playSound("fail"); // Fail sound
+      playSound("fail");
     }
 
     setIsComplete(true);
@@ -244,7 +243,6 @@ const PostTest = ({ onComplete }) => {
 
           <div className="text-6xl font-bold mb-4">{score}%</div>
 
-          {/* Score message */}
           <div
             className={`p-4 rounded-lg mb-6 ${scoreMessage.bgColor} ${scoreMessage.borderColor} border-2`}
           >
@@ -281,7 +279,6 @@ const PostTest = ({ onComplete }) => {
           </div>
         </div>
 
-        {/* Score History */}
         {scoreHistory.length > 0 && (
           <div className="bg-white rounded-lg p-6 shadow-md">
             <h3 className="text-lg font-bold text-[#6B3100] mb-4 flex items-center gap-2">
@@ -329,9 +326,9 @@ const PostTest = ({ onComplete }) => {
         <div className="space-y-6 max-h-96 overflow-y-auto">
           {POSTTEST_DATA.questions.map((question, index) => {
             const userAnswer = answers[question.id];
-            // Check if user answered AND if it's correct
             const isCorrect =
               userAnswer !== undefined && userAnswer === question.correctAnswer;
+
             const correctAnswerText = question.options[question.correctAnswer];
             const userAnswerText =
               userAnswer !== undefined
@@ -379,7 +376,7 @@ const PostTest = ({ onComplete }) => {
                       </p>
                       <p className="text-gray-600">
                         <span className="font-medium">Tamang sagot:</span>{" "}
-                        {POSTTEST_DATA.questions[index].answer}
+                        {correctAnswerText}
                       </p>
                     </div>
 
@@ -455,7 +452,6 @@ const PostTest = ({ onComplete }) => {
             </p>
           </div>
 
-          {/* Progress bar */}
           {!isComplete && (
             <div className="mb-6">
               <div className="flex justify-between text-sm text-gray-600 mb-2">
@@ -475,7 +471,6 @@ const PostTest = ({ onComplete }) => {
             </div>
           )}
 
-          {/* Content */}
           {!isComplete && renderQuestion()}
           {isComplete && !showResults && renderResults()}
           {isComplete && showResults && renderAnswerReview()}
