@@ -216,7 +216,7 @@ const PostTest = ({onComplete}) => {
           </div>
 
           <p className='text-gray-600 mb-6'>
-            {correctAnswers} sa {totalQuestions} tanong ang tama
+            {correctAnswers} sa {totalQuestions} sagot ang tama
           </p>
 
           <div className='flex flex-wrap justify-center gap-4'>
@@ -243,7 +243,7 @@ const PostTest = ({onComplete}) => {
                   <div>
                     <span className={`font-semibold ${entry.score >= 75 ? 'text-green-600' : 'text-red-600'}`}>{entry.score}%</span>
                     <span className='text-gray-500 ml-2'>
-                      ({entry.correct || 0}/{entry.questions}) tama
+                      ({entry.correct || 0}/{entry.questions}) tamang sagot
                     </span>
                   </div>
                   <span className='text-sm text-gray-500'>{entry.date}</span>
