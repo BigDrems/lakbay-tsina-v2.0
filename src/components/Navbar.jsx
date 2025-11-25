@@ -1,13 +1,22 @@
-import { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
-import { CircleUser, Menu, X } from "lucide-react";
+import { useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import { CircleUser, Menu, X, LogOut } from "lucide-react";
 import logo_1_1 from "/images/logo.png";
 import { motion, useMotionValueEvent, useScroll } from "framer-motion";
+import { useAuth } from "../context/AuthContext";
 
 export default function NavBar() {
   const [isOpen, setIsOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
   const { scrollY } = useScroll();
+  const { user, role, signOut } = useAuth();
+  const navigate = useNavigate();
+
+  const handleSignOut = async () => {
+    await signOut();
+    localStorage.removeItem('welcomeDismissed');
+    navigate('/signin');
+  };
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     const previous = scrollY.getPrevious();
@@ -69,8 +78,33 @@ export default function NavBar() {
         </div>
 
         {/* User Icon (Always Visible) */}
-        <div className="hidden md:block">
-          <CircleUser size={25} color="white" />
+        <div className="hidden md:flex items-center gap-4">
+          {user ? (
+            <div className="flex items-center gap-3">
+              {role === 'admin' && (
+                <NavLink 
+                  to="/admin" 
+                  className="text-white hover:text-gray-200 text-sm font-medium"
+                >
+                  Admin Dashboard
+                </NavLink>
+              )}
+              <div className="w-8 h-8 rounded-full bg-[#efe9d7] text-[#cd201c] flex items-center justify-center font-bold">
+                {user.email?.charAt(0).toUpperCase()}
+              </div>
+              <button 
+                onClick={handleSignOut} 
+                className="text-white hover:text-gray-200 flex items-center gap-2 bg-transparent border-none p-0"
+                title="Sign Out"
+              >
+                <LogOut size={20} />
+              </button>
+            </div>
+          ) : (
+            <NavLink to="/signin" className="text-white hover:text-gray-200 font-medium">
+              Sign In
+            </NavLink>
+          )}
         </div>
       </div>
 
@@ -88,6 +122,35 @@ export default function NavBar() {
               {page.name}
             </NavLink>
           ))}
+          {user && role === 'admin' && (
+            <NavLink
+              to="/admin"
+              onClick={() => setIsOpen(false)}
+              style={{ color: "white" }}
+              className="block text-[#efe9d7] hover:text-white transition"
+            >
+              Admin Dashboard
+            </NavLink>
+          )}
+          {user ? (
+            <button
+              onClick={() => {
+                handleSignOut();
+                setIsOpen(false);
+              }}
+              className="block w-full text-[#efe9d7] hover:text-white transition bg-transparent border-none"
+            >
+              Sign Out
+            </button>
+          ) : (
+            <NavLink
+              to="/signin"
+              onClick={() => setIsOpen(false)}
+              className="block text-[#efe9d7] hover:text-white transition"
+            >
+              Sign In
+            </NavLink>
+          )}
         </div>
       )}
     </motion.nav>

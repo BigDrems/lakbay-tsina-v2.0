@@ -4,9 +4,12 @@ import {ArrowLeft, RefreshCw, Check, X, Clock, BookOpen, SkipForward, ChevronLef
 import {useNavigate} from 'react-router-dom';
 import {PRETEST_DATA} from '../../data/pretestData';
 import {playSound, playBackgroundMusic, stopBackgroundMusic} from '../../utils/soundManager';
+import { supabase } from '../../utils/supabase';
+import { useAuth } from '../../context/AuthContext';
 
 const Pretest = ({onComplete}) => {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState({});
   const [skippedQuestions, setSkippedQuestions] = useState(new Set());
@@ -16,8 +19,41 @@ const Pretest = ({onComplete}) => {
   const [score, setScore] = useState(0);
   const [showExplanation, setShowExplanation] = useState(false);
   const [showSkipConfirmation, setShowSkipConfirmation] = useState(false);
+  const [checkingStatus, setCheckingStatus] = useState(true);
+  const [alreadyTaken, setAlreadyTaken] = useState(false);
 
   useEffect(() => {
+    const checkPretestStatus = async () => {
+      if (!user) {
+        setCheckingStatus(false);
+        return;
+      }
+      
+      try {
+        const { data, error } = await supabase
+          .from('exam_scores')
+          .select('*')
+          .eq('user_id', user.id)
+          .eq('exam_type', 'pretest')
+          .single();
+          
+        if (data) {
+          setAlreadyTaken(true);
+          setScore(data.score);
+        }
+      } catch (error) {
+        // Ignore error if no row found (it means not taken yet)
+      } finally {
+        setCheckingStatus(false);
+      }
+    };
+    
+    checkPretestStatus();
+  }, [user]);
+
+  useEffect(() => {
+    if (alreadyTaken || checkingStatus) return;
+
     // Start background music when component mounts
     playBackgroundMusic();
 
@@ -38,7 +74,7 @@ const Pretest = ({onComplete}) => {
       clearInterval(timer);
       stopBackgroundMusic();
     };
-  }, []);
+  }, [alreadyTaken, checkingStatus]);
 
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60);
@@ -110,7 +146,7 @@ const Pretest = ({onComplete}) => {
     return -1; // All questions answered
   };
 
-  const handleComplete = () => {
+  const handleComplete = async () => {
     let correctAnswers = 0;
     PRETEST_DATA.questions.forEach((question) => {
       if (answers[question.id] === question.correctAnswer) {
@@ -118,10 +154,30 @@ const Pretest = ({onComplete}) => {
       }
     });
 
-    const finalScore = Math.round((correctAnswers / PRETEST_DATA.questions.length) * 100);
+    // Store raw score instead of percentage
+    const finalScore = correctAnswers;
     setScore(finalScore);
     setIsComplete(true);
     playSound('complete');
+
+    if (user) {
+      try {
+        const { error } = await supabase.from('exam_scores').insert({
+          user_id: user.id,
+          exam_type: 'pretest',
+          score: finalScore,
+          total_items: PRETEST_DATA.questions.length,
+          created_at: new Date().toISOString()
+        });
+        
+        if (error) {
+          console.error('Supabase error saving score:', error);
+          alert('Failed to save score: ' + error.message);
+        }
+      } catch (error) {
+        console.error('Error saving score:', error);
+      }
+    }
   };
 
   const handleShowResults = () => {
@@ -263,7 +319,7 @@ const Pretest = ({onComplete}) => {
       <div className='bg-white rounded-lg p-6 shadow-md text-center'>
         <h2 className='text-2xl font-bold text-[#6B3100] mb-4'>🎉 Natapos ang Pagsusulit!</h2>
 
-        <div className='text-6xl font-bold mb-4'>{score}%</div>
+        <div className='text-6xl font-bold mb-4'>{score}/{totalQuestions}</div>
 
         <div className='grid grid-cols-3 gap-4 mb-6 text-sm'>
           <div className='bg-green-50 p-3 rounded-lg'>
@@ -356,6 +412,37 @@ const Pretest = ({onComplete}) => {
     </motion.div>
   );
 
+  if (checkingStatus) {
+    return (
+      <div className="min-h-screen bg-[#F5E6D3] flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#6B3100] mx-auto mb-4"></div>
+          <p className="text-[#6B3100]">Checking status...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (alreadyTaken) {
+    return (
+      <div className='min-h-screen bg-[#F5E6D3] py-4 sm:py-8 px-2 sm:px-4 flex items-center justify-center'>
+        <div className='max-w-md w-full bg-white rounded-lg shadow-lg p-6 text-center'>
+          <h2 className='text-2xl font-bold text-[#6B3100] mb-4'>🎉 Natapos na ang Pagsusulit!</h2>
+          <p className='text-gray-600 mb-6'>
+            Natapos mo na ang pretest. Ang iyong score ay:
+          </p>
+          <div className='text-6xl font-bold text-[#6B3100] mb-8'>{score}/{PRETEST_DATA.questions.length}</div>
+          <button 
+            onClick={() => navigate('/entertainment')} 
+            className='px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 flex items-center gap-2 mx-auto'
+          >
+            Magpatuloy 🚀
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className='min-h-screen bg-[#F5E6D3] py-4 sm:py-8 px-2 sm:px-4'>
       <div className='max-w-4xl mx-auto'>
@@ -370,14 +457,6 @@ const Pretest = ({onComplete}) => {
           <div className='flex gap-2'>
             {!isComplete && (
               <>
-                <button
-                  onClick={handleShowSkipConfirmation}
-                  className='flex items-center gap-1 text-orange-600 hover:text-orange-700 text-sm sm:text-base bg-orange-50 hover:bg-orange-100 px-2 sm:px-3 py-1 rounded-lg transition-colors'
-                >
-                  <FastForward size={16} className='sm:w-5 sm:h-5' />
-                  <span className='hidden sm:inline'>Laktawan ang Pagsusulit</span>
-                  <span className='sm:hidden'>Laktawan Lahat</span>
-                </button>
                 <button onClick={handleReset} className='flex items-center gap-1 text-[#6B3100] hover:text-[#6B3100]/80 text-sm sm:text-base'>
                   <RefreshCw size={16} className='sm:w-5 sm:h-5' />
                   <span className='hidden sm:inline'>I-reset</span>

@@ -313,7 +313,7 @@ const EmperorMatch = () => {
                   ))}
                 </div>
 
-                <style jsx>{`
+                <style>{`
                   .backface-hidden {
                     backface-visibility: hidden;
                     -webkit-backface-visibility: hidden;

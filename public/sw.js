@@ -137,11 +137,23 @@ self.addEventListener("fetch", (event) => {
         // If not in cache, fetch from network
         return fetch(event.request)
           .then((networkResponse) => {
-            // Cache the fetched asset for future use
-            return caches.open(CACHE_NAME).then((cache) => {
-              cache.put(event.request, networkResponse.clone());
+            // Only cache valid 200 responses
+            // The Cache API does not support 206 Partial Content responses
+            if (
+              !networkResponse || 
+              networkResponse.status !== 200 || 
+              networkResponse.type !== 'basic'
+            ) {
               return networkResponse;
+            }
+
+            // Cache the fetched asset for future use
+            const responseToCache = networkResponse.clone();
+            caches.open(CACHE_NAME).then((cache) => {
+              cache.put(event.request, responseToCache);
             });
+            
+            return networkResponse;
           })
           .catch((error) => {
             console.error("Fetch failed:", error);

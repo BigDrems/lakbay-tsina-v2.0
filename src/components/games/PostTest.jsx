@@ -4,9 +4,12 @@ import {ArrowLeft, RefreshCw, Check, X, BookOpen, Trophy, RotateCcw} from 'lucid
 import {useNavigate} from 'react-router-dom';
 import {POSTTEST_DATA} from '../../data/postTest';
 import {playSound, playBackgroundMusic, stopBackgroundMusic} from '../../utils/soundManager';
+import { supabase } from '../../utils/supabase';
+import { useAuth } from '../../context/AuthContext';
 
 const PostTest = ({onComplete}) => {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState({});
   const [timeLeft, setTimeLeft] = useState(1800); // 30 minutes
@@ -16,6 +19,39 @@ const PostTest = ({onComplete}) => {
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [showExplanation, setShowExplanation] = useState(false);
   const [scoreHistory, setScoreHistory] = useState([]);
+  const [checkingStatus, setCheckingStatus] = useState(true);
+  const [alreadyTaken, setAlreadyTaken] = useState(false);
+
+  useEffect(() => {
+    const checkPostTestStatus = async () => {
+      if (!user) {
+        setCheckingStatus(false);
+        return;
+      }
+      
+      try {
+        const { data, error } = await supabase
+          .from('exam_scores')
+          .select('*')
+          .eq('user_id', user.id)
+          .eq('exam_type', 'posttest');
+          
+        if (data && data.length > 0) {
+          // Use the most recent score if multiple exist
+          const latestScore = data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at))[0];
+          setAlreadyTaken(true);
+          setScore(latestScore.score);
+          setCorrectAnswers(latestScore.score);
+        }
+      } catch (error) {
+        console.error('Error checking status:', error);
+      } finally {
+        setCheckingStatus(false);
+      }
+    };
+    
+    checkPostTestStatus();
+  }, [user]);
 
   // Load score history from localStorage on component mount
   useEffect(() => {
@@ -49,6 +85,8 @@ const PostTest = ({onComplete}) => {
   };
 
   useEffect(() => {
+    if (alreadyTaken || checkingStatus) return;
+
     // Start background music when component mounts
     playBackgroundMusic();
 
@@ -69,7 +107,7 @@ const PostTest = ({onComplete}) => {
       clearInterval(timer);
       stopBackgroundMusic();
     };
-  }, []);
+  }, [alreadyTaken, checkingStatus]);
 
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60);
@@ -88,7 +126,7 @@ const PostTest = ({onComplete}) => {
     playSound('flip');
   };
 
-  const handleComplete = () => {
+  const handleComplete = async () => {
     let correctCount = 0;
     POSTTEST_DATA.questions.forEach((question) => {
       const userAnswer = answers[question.id];
@@ -97,21 +135,67 @@ const PostTest = ({onComplete}) => {
       }
     });
 
-    const finalScore = Math.round((correctCount / POSTTEST_DATA.questions.length) * 100);
+    // Calculate percentage for pass/fail logic
+    const percentageScore = Math.round((correctCount / POSTTEST_DATA.questions.length) * 100);
+    
+    // Store raw score
+    const finalScore = correctCount;
     setScore(finalScore);
     setCorrectAnswers(correctCount);
 
-    // Save score to history
+    // Save score to history (using raw score now)
     saveScoreToHistory(finalScore, correctCount);
 
     // Play appropriate sound based on score (75% passing rate)
-    if (finalScore >= 75) {
+    if (percentageScore >= 75) {
       playSound('success');
     } else {
       playSound('fail');
     }
 
     setIsComplete(true);
+
+    if (user) {
+      try {
+        // Check if score exists
+        const { data: existingScores } = await supabase
+          .from('exam_scores')
+          .select('id')
+          .eq('user_id', user.id)
+          .eq('exam_type', 'posttest')
+          .order('created_at', { ascending: false });
+
+        if (existingScores && existingScores.length > 0) {
+          // Update existing score (most recent one)
+          const { error } = await supabase
+            .from('exam_scores')
+            .update({
+              score: finalScore,
+              total_items: POSTTEST_DATA.questions.length,
+              created_at: new Date().toISOString()
+            })
+            .eq('id', existingScores[0].id);
+
+          if (error) {
+            console.error('Supabase update error:', error);
+            throw error;
+          }
+        } else {
+          // Insert new score
+          const { error } = await supabase.from('exam_scores').insert({
+            user_id: user.id,
+            exam_type: 'posttest',
+            score: finalScore,
+            total_items: POSTTEST_DATA.questions.length,
+            created_at: new Date().toISOString()
+          });
+          
+          if (error) throw error;
+        }
+      } catch (error) {
+        console.error('Error saving score:', error);
+      }
+    }
   };
 
   const handleShowResults = () => {
@@ -137,8 +221,14 @@ const PostTest = ({onComplete}) => {
     setShowExplanation(false);
   };
 
-  const getScoreMessage = (score) => {
-    if (score >= 75) {
+  const handleRetake = () => {
+    setAlreadyTaken(false);
+    handleReset();
+  };
+
+  const getScoreMessage = (rawScore) => {
+    const percentage = (rawScore / POSTTEST_DATA.questions.length) * 100;
+    if (percentage >= 75) {
       return {
         message: 'Pagpupugay, ikaw ay PASADO!',
         color: 'text-green-600',
@@ -207,7 +297,7 @@ const PostTest = ({onComplete}) => {
             Natapos ang Post-test!
           </h2>
 
-          <div className='text-6xl font-bold mb-4'>{score}%</div>
+          <div className='text-6xl font-bold mb-4'>{score}/{totalQuestions}</div>
 
           <div className={`p-4 rounded-lg mb-6 ${scoreMessage.bgColor} ${scoreMessage.borderColor} border-2`}>
             <p className={`text-xl font-semibold ${scoreMessage.color}`}>
@@ -241,7 +331,7 @@ const PostTest = ({onComplete}) => {
               {scoreHistory.map((entry, index) => (
                 <div key={index} className='flex justify-between items-center p-3 bg-gray-50 rounded-lg'>
                   <div>
-                    <span className={`font-semibold ${entry.score >= 75 ? 'text-green-600' : 'text-red-600'}`}>{entry.score}%</span>
+                    <span className={`font-semibold ${entry.score >= (entry.questions * 0.75) ? 'text-green-600' : 'text-red-600'}`}>{entry.score}/{entry.questions}</span>
                     <span className='text-gray-500 ml-2'>
                       ({entry.correct || 0}/{entry.questions}) tamang sagot
                     </span>
@@ -318,6 +408,57 @@ const PostTest = ({onComplete}) => {
       </div>
     </motion.div>
   );
+
+  if (checkingStatus) {
+    return (
+      <div className="min-h-screen bg-[#F5E6D3] flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#6B3100] mx-auto mb-4"></div>
+          <p className="text-[#6B3100]">Checking status...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (alreadyTaken) {
+    const scoreMessage = getScoreMessage(score);
+    return (
+      <div className='min-h-screen bg-[#F5E6D3] py-4 sm:py-8 px-2 sm:px-4 flex items-center justify-center'>
+        <div className='max-w-md w-full bg-white rounded-lg shadow-lg p-6 text-center'>
+          <h2 className='text-2xl font-bold text-[#6B3100] mb-4'>
+            <Trophy className='inline-block mr-2' size={24} />
+            Natapos na ang Post-test!
+          </h2>
+          <p className='text-gray-600 mb-6'>
+            Natapos mo na ang post-test. Ang iyong score ay:
+          </p>
+          <div className='text-6xl font-bold text-[#6B3100] mb-4'>{score}/{POSTTEST_DATA.questions.length}</div>
+          
+          <div className={`p-4 rounded-lg mb-6 ${scoreMessage.bgColor} ${scoreMessage.borderColor} border-2`}>
+            <p className={`text-xl font-semibold ${scoreMessage.color}`}>
+              {scoreMessage.icon} {scoreMessage.message}
+            </p>
+          </div>
+
+          <div className='flex flex-col sm:flex-row gap-3 justify-center'>
+            <button 
+              onClick={() => navigate('/entertainment')} 
+              className='px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 flex items-center justify-center gap-2'
+            >
+              Magpatuloy 🚀
+            </button>
+            <button 
+              onClick={handleRetake} 
+              className='px-6 py-3 border border-[#6B3100] text-[#6B3100] rounded-lg hover:bg-[#6B3100]/10 flex items-center justify-center gap-2'
+            >
+              <RefreshCw size={16} />
+              Kumuha Ulit
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className='min-h-screen bg-[#F5E6D3] py-4 sm:py-8 px-2 sm:px-4'>

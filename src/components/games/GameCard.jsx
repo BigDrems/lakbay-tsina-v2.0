@@ -40,7 +40,7 @@ const GameCard = React.memo(
             alt={title}
             className="w-full h-56 object-cover transition-transform duration-500 hover:scale-105"
             loading={priority ? "eager" : "lazy"}
-            fetchpriority={priority ? "high" : "auto"}
+            fetchPriority={priority ? "high" : "auto"}
             decoding="async"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300"></div>

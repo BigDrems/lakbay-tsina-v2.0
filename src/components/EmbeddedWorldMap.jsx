@@ -237,7 +237,7 @@ const EmbeddedWorldMap = ({ onComplete }) => {
       </div>
 
       {/* Custom CSS for continent labels */}
-      <style jsx>{`
+      <style>{`
         .continent-label {
           background: transparent !important;
           border: none !important;

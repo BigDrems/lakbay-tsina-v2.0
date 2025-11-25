@@ -13,6 +13,12 @@ import DynastyExplorer from "./components/DynastyExplorer";
 import ImagePreloader from "./components/ImagePreloader";
 import PyramidGame from "./components/games/PyramidGame";
 import PostTest from "./components/games/PostTest";
+import { AuthProvider } from "./context/AuthContext";
+import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
+import ProtectedRoute from "./components/ProtectedRoute";
+import AdminRoute from "./components/AdminRoute";
+import AdminDashboard from "./pages/AdminDashboard";
 
 // Lazy load game components
 const CharacterMatch = lazy(() => import("./components/games/CharacterMatch"));
@@ -40,16 +46,9 @@ const GameLoading = () => (
 
 function App() {
   const location = useLocation();
-  const SESSION_DURATION = 3 * 60 * 60 * 1000; // 3 hours in milliseconds
-
   const [welcomeDismissed, setWelcomeDismissed] = useState(() => {
     try {
-      // Check if session exists and hasn't expired
-      const sessionData = JSON.parse(sessionStorage.getItem("welcomeSession"));
-      if (sessionData && sessionData.expiry > Date.now()) {
-        return true;
-      }
-      return false;
+      return localStorage.getItem("welcomeDismissed") === "true";
     } catch (error) {
       return false;
     }
@@ -59,40 +58,9 @@ function App() {
   const showNavbar = welcomeDismissed || location.pathname !== "/";
 
   const handleWelcomeComplete = () => {
-    // Create session with expiration time
-    const sessionData = {
-      dismissed: true,
-      expiry: Date.now() + SESSION_DURATION,
-    };
-    sessionStorage.setItem("welcomeSession", JSON.stringify(sessionData));
+    localStorage.setItem("welcomeDismissed", "true");
     setWelcomeDismissed(true);
   };
-
-  // Refresh session timer when user is active
-  useEffect(() => {
-    if (welcomeDismissed) {
-      const refreshSession = () => {
-        const sessionData = {
-          dismissed: true,
-          expiry: Date.now() + SESSION_DURATION,
-        };
-        sessionStorage.setItem("welcomeSession", JSON.stringify(sessionData));
-      };
-
-      // Refresh session on user activity
-      window.addEventListener("click", refreshSession);
-      window.addEventListener("keypress", refreshSession);
-      window.addEventListener("scroll", refreshSession);
-      window.addEventListener("mousemove", refreshSession);
-
-      return () => {
-        window.removeEventListener("click", refreshSession);
-        window.removeEventListener("keypress", refreshSession);
-        window.removeEventListener("scroll", refreshSession);
-        window.removeEventListener("mousemove", refreshSession);
-      };
-    }
-  }, [welcomeDismissed, SESSION_DURATION]);
 
   // Determine what to show on the home route
   const renderHomeContent = () => {
@@ -104,94 +72,143 @@ function App() {
   };
 
   return (
-    <>
+    <AuthProvider>
       <ImagePreloader />
       <main className="flex flex-col max-w-screen overflow-x-hidden relative bg-white">
         {showNavbar && <NavBar />}
-        <div className="max-w-[1920px] relative">
-          <Routes>
-            <Route path="/" element={renderHomeContent()} />
-          </Routes>
-        </div>
-        <div className="mt-18 h-full">
-          <Routes>
-            <Route path="/about" element={<Tungkol />} />
-            <Route path="/lessons" element={<Aralin />} />
-            <Route path="/entertainment" element={<Libangan />} />
-            <Route
-              path="/games/character-match"
-              element={
-                <Suspense fallback={<GameLoading />}>
-                  <CharacterMatch />
-                </Suspense>
-              }
-            />
-            <Route
-              path="/games/dynasty-timeline"
-              element={
-                <Suspense fallback={<GameLoading />}>
-                  <DynastyTimeline />
-                </Suspense>
-              }
-            />
-            <Route
-              path="/games/cultural-quiz"
-              element={
-                <Suspense fallback={<GameLoading />}>
-                  <CulturalQuiz />
-                </Suspense>
-              }
-            />
-            <Route
-              path="/games/music-memory"
-              element={
-                <Suspense fallback={<GameLoading />}>
-                  <PyramidGame />
-                </Suspense>
-              }
-            />
-            <Route
-              path="/games/geography-explorer"
-              element={
-                <Suspense fallback={<GameLoading />}>
-                  <GeographyExplorer />
-                </Suspense>
-              }
-            />
-            <Route
-              path="/games/term-definition"
-              element={
-                <Suspense fallback={<GameLoading />}>
-                  <TermDefinitionGame />
-                </Suspense>
-              }
-            />
-            <Route
-              path="/games/pretest"
-              element={
-                <Suspense fallback={<GameLoading />}>
-                  <Pretest />
-                </Suspense>
-              }
-            />
-            <Route
-              path="/games/posttest"
-              element={
-                <Suspense fallback={<GameLoading />}>
-                  <PostTest />
-                </Suspense>
-              }
-            />
-            <Route path="/dynasty-explorer" element={<DynastyExplorer />} />
-            <Route
-              path="/dynasty-explorer/:dynasty"
-              element={<DynastyExplorer />}
-            />
-          </Routes>
-        </div>
+        <Routes>
+          <Route path="/" element={
+            <div className="max-w-[1920px] relative">
+              <ProtectedRoute>
+                {renderHomeContent()}
+              </ProtectedRoute>
+            </div>
+          } />
+          <Route path="/*" element={
+            <div className="mt-18 h-full">
+              <Routes>
+                <Route path="/signin" element={<SignIn />} />
+                <Route path="/signup" element={<SignUp />} />
+                <Route path="/admin" element={
+                  <AdminRoute>
+                    <AdminDashboard />
+                  </AdminRoute>
+                } />
+                <Route path="/about" element={
+                  <ProtectedRoute>
+                    <Tungkol />
+                  </ProtectedRoute>
+                } />
+                <Route path="/lessons" element={
+                  <ProtectedRoute>
+                    <Aralin />
+                  </ProtectedRoute>
+                } />
+                <Route path="/entertainment" element={
+                  <ProtectedRoute>
+                    <Libangan />
+                  </ProtectedRoute>
+                } />
+                <Route
+                  path="/games/character-match"
+                  element={
+                    <ProtectedRoute>
+                      <Suspense fallback={<GameLoading />}>
+                        <CharacterMatch />
+                      </Suspense>
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/games/dynasty-timeline"
+                  element={
+                    <ProtectedRoute>
+                      <Suspense fallback={<GameLoading />}>
+                        <DynastyTimeline />
+                      </Suspense>
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/games/cultural-quiz"
+                  element={
+                    <ProtectedRoute>
+                      <Suspense fallback={<GameLoading />}>
+                        <CulturalQuiz />
+                      </Suspense>
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/games/music-memory"
+                  element={
+                    <ProtectedRoute>
+                      <Suspense fallback={<GameLoading />}>
+                        <PyramidGame />
+                      </Suspense>
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/games/geography-explorer"
+                  element={
+                    <ProtectedRoute>
+                      <Suspense fallback={<GameLoading />}>
+                        <GeographyExplorer />
+                      </Suspense>
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/games/term-definition"
+                  element={
+                    <ProtectedRoute>
+                      <Suspense fallback={<GameLoading />}>
+                        <TermDefinitionGame />
+                      </Suspense>
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/games/pretest"
+                  element={
+                    <ProtectedRoute>
+                      <Suspense fallback={<GameLoading />}>
+                        <Pretest />
+                      </Suspense>
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/games/posttest"
+                  element={
+                    <ProtectedRoute>
+                      <Suspense fallback={<GameLoading />}>
+                        <PostTest />
+                      </Suspense>
+                    </ProtectedRoute>
+                  }
+                />
+                <Route path="/dynasty-explorer" element={
+                  <ProtectedRoute>
+                    <DynastyExplorer />
+                  </ProtectedRoute>
+                } />
+                <Route
+                  path="/dynasty-explorer/:dynasty"
+                  element={
+                    <ProtectedRoute>
+                      <DynastyExplorer />
+                    </ProtectedRoute>
+                  }
+                />
+              </Routes>
+            </div>
+          } />
+        </Routes>
         {showNavbar && <Footer />}
       </main>
-    </>
+    </AuthProvider>
   );
 }
 

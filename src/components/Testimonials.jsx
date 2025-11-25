@@ -37,43 +37,27 @@ const Testimonials = () => {
   const testimonials = [
     {
       id: 0,
-      name: "Pavel Nedved",
-      role: "BUSINESSMAN",
-      image: "https://randomuser.me/api/portraits/men/32.jpg",
+      name: "Respondent 4",
+      role: "USER",
+      image: "https://api.dicebear.com/7.x/bottts/svg?seed=Luna",
       quote:
-        "Some people dream of success, while other people get up every morning and make it happen.",
+        "The landing page can be improved by slightly adjusting the text contrast for better readability, optimizing the layout for smaller screens, and adding subtle animations or hover effects to make it more dynamic. Include a short background image or cultural element from China to enhance visual storytelling.",
     },
     {
       id: 1,
-      name: "Michel Platini",
-      role: "DESIGNER",
-      image: "https://randomuser.me/api/portraits/men/41.jpg",
+      name: "Respondent 2",
+      role: "USER",
+      image: "https://api.dicebear.com/7.x/bottts/svg?seed=Leo",
       quote:
-        "Some people dream of success, while other people get up every morning and make it happen.",
+        "Lakbay Tsina is nice and will be useful to learners to better understand the Chinese dynasties.",
     },
     {
       id: 2,
-      name: "Alfredo Stefano",
-      role: "MARKETER",
-      image: "https://randomuser.me/api/portraits/men/68.jpg",
+      name: "Respondent 3",
+      role: "USER",
+      image: "https://api.dicebear.com/7.x/bottts/svg?seed=Milo",
       quote:
-        "Some people dream of success, while other people get up every morning and make it happen.",
-    },
-    {
-      id: 3,
-      name: "Sofia Chen",
-      role: "DEVELOPER",
-      image: "https://randomuser.me/api/portraits/women/44.jpg",
-      quote:
-        "Innovation distinguishes between a leader and a follower. Success comes to those who pursue excellence.",
-    },
-    {
-      id: 4,
-      name: "Maria Garcia",
-      role: "CONSULTANT",
-      image: "https://randomuser.me/api/portraits/women/65.jpg",
-      quote:
-        "The difference between ordinary and extraordinary is that little extra. Put in the work, reap the rewards.",
+        "It creatively promotes learning about Chinese history and Culture through technology, making education.",
     },
   ];
 
@@ -118,31 +102,47 @@ const Testimonials = () => {
   };
 
   return (
-    <section className="py-16 md:py-24 px-4 w-full bg-white overflow-hidden">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-12">
-          <h3 className="text-blue-600 font-medium uppercase mb-2">
-            TESTIMONIALS
-          </h3>
-          <h2 className="text-3xl md:text-5xl font-bold text-gray-800 mb-6">
-            Clients testimonials
+    <section className="py-20 md:py-32 px-4 w-full bg-gradient-to-b from-slate-50 to-white overflow-hidden relative">
+      {/* Decorative background elements */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0 opacity-30 pointer-events-none">
+        <div className="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-blue-200 blur-3xl mix-blend-multiply"></div>
+        <div className="absolute top-1/2 right-0 w-72 h-72 rounded-full bg-red-200 blur-3xl mix-blend-multiply"></div>
+      </div>
+
+      <div className="max-w-7xl mx-auto relative z-10">
+        <div className="text-center mb-16 relative">
+          <div className="inline-block mb-4 relative group">
+            <div className="absolute inset-0 bg-blue-400 blur-xl opacity-20 group-hover:opacity-30 transition-opacity duration-500 rounded-full"></div>
+            <span className="relative inline-flex items-center gap-2 py-1.5 px-5 rounded-full bg-white border border-blue-100 text-blue-600 text-sm font-bold tracking-wider shadow-sm">
+              <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
+              TESTIMONIALS
+            </span>
+          </div>
+          
+          <h2 className="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-slate-900 via-blue-700 to-slate-900 mb-6 tracking-tight drop-shadow-sm">
+            What Our Users Say
           </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Our approach thrives at the intersection between data-driven market
-            research and traditional management consultancies.
+          
+          <p className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed">
+            Discover how <span className="text-blue-600 font-bold relative inline-block">
+              Lakbay Tsina
+              <svg className="absolute w-full h-2 -bottom-1 left-0 text-blue-200 -z-10" viewBox="0 0 100 10" preserveAspectRatio="none">
+                <path d="M0 5 Q 50 10 100 5" stroke="currentColor" strokeWidth="3" fill="none" />
+              </svg>
+            </span> is helping learners explore Chinese history and culture.
           </p>
         </div>
 
-        <div className="relative px-10">
+        <div className="relative px-4 md:px-10">
           {/* Navigation buttons */}
           <button
             onClick={handlePrev}
-            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-3 shadow-md hover:bg-gray-100 transition-all"
+            className="absolute left-0 md:left-4 top-1/2 -translate-y-1/2 z-20 bg-white/80 backdrop-blur-sm rounded-full p-3 shadow-lg hover:bg-white hover:scale-110 transition-all text-slate-700 border border-slate-100"
             aria-label="Previous testimonial"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              fill="none"
+              fill="none" 
               viewBox="0 0 24 24"
               strokeWidth={2}
               stroke="currentColor"
@@ -156,7 +156,7 @@ const Testimonials = () => {
             </svg>
           </button>
 
-          <div ref={carouselRef} className="relative">
+          <div ref={carouselRef} className="relative py-10">
             {isMobile ? (
               // Mobile carousel
               <div className="transition-all duration-500 ease-in-out">
@@ -165,11 +165,13 @@ const Testimonials = () => {
                     key={testimonial.id}
                     className={`
                       transition-all duration-500 ease-in-out flex flex-col items-center
-                      ${index === activeIndex ? "block" : "hidden"}
-                      p-6 bg-white rounded-xl shadow-md
+                      ${index === activeIndex ? "opacity-100 scale-100" : "opacity-0 scale-95 absolute top-0 left-0 w-full pointer-events-none"}
+                      p-8 bg-white rounded-2xl shadow-xl border border-slate-100 relative overflow-hidden
                     `}
                   >
-                    <div className="w-24 h-24 rounded-full overflow-hidden mb-4">
+                    <div className="absolute top-4 right-6 text-9xl text-slate-50 font-serif opacity-50 pointer-events-none">"</div>
+                    
+                    <div className="w-20 h-20 rounded-full overflow-hidden mb-6 ring-4 ring-blue-50 shadow-sm z-10">
                       <img
                         src={testimonial.image}
                         alt={testimonial.name}
@@ -181,25 +183,14 @@ const Testimonials = () => {
                       />
                     </div>
 
-                    <h3 className="text-xl font-bold text-gray-800">
-                      {testimonial.name}
-                    </h3>
-                    <p className="text-sm text-gray-500 uppercase tracking-wider mb-4">
-                      {testimonial.role}
-                    </p>
-
-                    <p className="text-center text-gray-600 mb-6">
-                      {testimonial.quote}
-                    </p>
-
-                    <div className="flex text-orange-400">
+                    <div className="flex text-yellow-400 mb-4 z-10">
                       {[...Array(5)].map((_, i) => (
                         <svg
                           key={i}
                           xmlns="http://www.w3.org/2000/svg"
                           viewBox="0 0 24 24"
                           fill="currentColor"
-                          className="w-5 h-5"
+                          className="w-4 h-4"
                         >
                           <path
                             fillRule="evenodd"
@@ -209,30 +200,43 @@ const Testimonials = () => {
                         </svg>
                       ))}
                     </div>
+
+                    <p className="text-center text-slate-600 mb-6 italic leading-relaxed z-10 relative">
+                      "{testimonial.quote}"
+                    </p>
+
+                    <h3 className="text-lg font-bold text-slate-800 z-10">
+                      {testimonial.name}
+                    </h3>
+                    <p className="text-xs text-blue-500 font-bold uppercase tracking-widest z-10">
+                      {testimonial.role}
+                    </p>
                   </div>
                 ))}
               </div>
             ) : (
               // Desktop carousel
-              <div className="flex justify-center items-center">
-                <div className="flex gap-6 md:gap-8 items-center justify-center">
+              <div className="flex justify-center items-center perspective-1000">
+                <div className="flex gap-6 items-center justify-center w-full">
                   {getVisibleTestimonials().map(({ testimonial, position }) => (
                     <div
                       key={testimonial.id}
                       className={`
-                        transition-all duration-500 ease-in-out flex flex-col items-center
-                        p-6 rounded-xl 
+                        transition-all duration-700 ease-out flex flex-col items-center
+                        p-8 rounded-2xl border relative overflow-hidden
                         ${
                           position === 0
-                            ? "z-10 scale-105 shadow-xl bg-white"
-                            : "scale-95 opacity-70 bg-white shadow-md"
+                            ? "z-10 scale-110 shadow-2xl bg-white border-slate-100 opacity-100"
+                            : "scale-90 opacity-40 bg-white/50 border-transparent blur-[1px] grayscale-[50%]"
                         }
-                        ${position === -1 ? "transform -translate-x-4" : ""}
-                        ${position === 1 ? "transform translate-x-4" : ""}
-                        min-w-[280px] max-w-sm
+                        ${position === -1 ? "transform -translate-x-12 rotate-y-12" : ""}
+                        ${position === 1 ? "transform translate-x-12 -rotate-y-12" : ""}
+                        w-[350px] min-h-[400px]
                       `}
                     >
-                      <div className="w-24 h-24 rounded-full overflow-hidden mb-4">
+                      <div className="absolute top-2 right-6 text-9xl text-slate-50 font-serif opacity-80 pointer-events-none">"</div>
+
+                      <div className={`w-24 h-24 rounded-full overflow-hidden mb-6 ring-4 shadow-sm z-10 transition-all ${position === 0 ? 'ring-blue-100' : 'ring-transparent'}`}>
                         <img
                           src={testimonial.image}
                           alt={testimonial.name}
@@ -244,18 +248,7 @@ const Testimonials = () => {
                         />
                       </div>
 
-                      <h3 className="text-xl font-bold text-gray-800">
-                        {testimonial.name}
-                      </h3>
-                      <p className="text-sm text-gray-500 uppercase tracking-wider mb-4">
-                        {testimonial.role}
-                      </p>
-
-                      <p className="text-center text-gray-600 mb-6">
-                        {testimonial.quote}
-                      </p>
-
-                      <div className="flex text-orange-400">
+                      <div className="flex text-yellow-400 mb-6 z-10">
                         {[...Array(5)].map((_, i) => (
                           <svg
                             key={i}
@@ -272,6 +265,16 @@ const Testimonials = () => {
                           </svg>
                         ))}
                       </div>
+
+                      <p className="text-center text-slate-600 mb-8 italic leading-relaxed z-10 relative px-2">
+                        "{testimonial.quote}"
+                      </p>
+
+                      <div className="mt-auto text-center z-10">
+                        <h3 className="text-xl font-bold text-slate-800">
+                          {testimonial.name}
+                        </h3>
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -281,7 +284,7 @@ const Testimonials = () => {
 
           <button
             onClick={handleNext}
-            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-3 shadow-md hover:bg-gray-100 transition-all"
+            className="absolute right-0 md:right-4 top-1/2 -translate-y-1/2 z-20 bg-white/80 backdrop-blur-sm rounded-full p-3 shadow-lg hover:bg-white hover:scale-110 transition-all text-slate-700 border border-slate-100"
             aria-label="Next testimonial"
           >
             <svg
@@ -301,14 +304,14 @@ const Testimonials = () => {
           </button>
         </div>
 
-        {/* Dot indicators (visible on both mobile and desktop) */}
-        <div className="flex justify-center mt-8">
+        {/* Dot indicators */}
+        <div className="flex justify-center mt-12 gap-2">
           {testimonials.map((_, index) => (
             <button
               key={index}
               onClick={() => handleDotClick(index)}
-              className={`w-3 h-3 mx-1 rounded-full transition-all duration-300 ${
-                index === activeIndex ? "bg-blue-600 scale-125" : "bg-red-400"
+              className={`h-2 rounded-full transition-all duration-500 ${
+                index === activeIndex ? "w-8 bg-blue-600" : "w-2 bg-slate-300 hover:bg-blue-300"
               }`}
               aria-label={`Go to testimonial ${index + 1}`}
             />

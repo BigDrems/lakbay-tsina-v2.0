@@ -83,7 +83,7 @@ export const GAMES_DATA = [
     popular: true,
   },
   {
-    id: 6,
+    id: 7,
     title: "Pangwakas na Pagsusulit",
     description:
       " Basahin at unawaing mabuti ang mga katanungan. Pagkatapos ay piliin ang titik ng tamang sagot base sa ating napag-aralan sa website na ito",
