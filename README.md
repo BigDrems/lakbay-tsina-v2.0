@@ -55,7 +55,3 @@ src/
 │   └── ...
 └── ...
 ```
-
-## Contributing
-
-Feel free to contribute to this project by adding new games, improving existing features, or enhancing the educational content.
